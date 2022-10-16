@@ -33,7 +33,7 @@ F11 | Uređivanje profila | Sustav će omogućiti korisniku uređivanje profila 
 Pri implementaciji programskog proizvoda primarno će biti korištena razvojna okolina Android Studio te programski jezik Kotlin. Za verzioniranje programskog koda koristit će se git i Github
 
 ## Baza podataka i web server
-Nastavnici vam mogu pripremiti MySQL bazu podataka i web server na kojem možete postaviti jednostavne php web servise. Ako želite da vam pripremimo ove sustave obavezno to navedite umjesto ovog teksta s napomenom "Trebamo bazu podataka i pristup serveru za PHP skripte". Alternativno, možete koristiti bilo koji online dostupan sustav kao i studentske licence na pojedinim platformama kao što su Heroku ili Azure.
+Trebamo bazu podataka i pristup serveru za PHP skripte
 
 ## .gitignore
 Uzmite u obzir da je u mapi Software .gitignore konfiguriran za nekoliko tehnologija, ali samo ako će projekti biti smješteni direktno u mapu Software ali ne i u neku pod mapu. Nakon odabira konačne tehnologije i projekta obavezno dopunite/premjestite gitignore kako bi vaš projekt zadovoljavao kriterije koji su opisani u ReadMe.md dokumentu dostupnom u mapi Software.
