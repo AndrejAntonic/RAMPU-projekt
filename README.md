@@ -26,6 +26,8 @@ Matija Kljaić | mkljaic20@student.foi.hr | 0016147637 | mkljaic20 | G01
 ## Opis domene
 Umjesto ovih uputa opišite domenu ili problem koji pokrivate vašim projektom. Domena može biti proizvoljna, ali obratite pozornost da sukladno ishodima učenja, domena omogući primjenu zahtijevanih koncepata kako je to navedeno u sljedećem poglavlju. Priložite odgovarajuće skice gdje je to prikladno.
 
+
+Aplikacija će korisnicima omogućiti unos tjelesnih podataka i fitnes cilj. Aplikacija će generirati plan treninga i omogućiti korisniku unošenje vlastitih vježbi. Korisnik će moći pratit svoj napredak kroz razne grafove koji će prikazivati promjene u tjelesnoj težini i kilažu koju korisnici dižu prilikom odlaska na trening.
 ## Specifikacija projekta
 
 Oznaka | Naziv | Kratki opis | Odgovorni član tima
