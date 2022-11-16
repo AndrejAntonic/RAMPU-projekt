@@ -13,6 +13,7 @@
         android:text="Napredak"
         android:textColor="@color/white"
         android:textSize="25dp"
+        android:padding="15dp"
         />
 
 </FrameLayout>
