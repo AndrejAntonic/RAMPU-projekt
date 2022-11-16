@@ -12,7 +12,7 @@
         android:layout_height="75dp"
         app:tabMode="fixed"
         app:tabGravity="fill"
-        android:backgroundTint="@color/bg_dark"
+        android:backgroundTint="@color/bg_dark_2"
         app:tabTextColor="@color/white"
         app:tabIconTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
