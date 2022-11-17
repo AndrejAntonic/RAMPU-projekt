@@ -11,6 +11,7 @@
         android:id="@+id/titleRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserratbold"
         android:text="@string/register"
         android:textColor="@color/white"
         android:textSize="40sp"
@@ -24,64 +25,66 @@
         android:id="@+id/input_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/bg_dark_2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="20dp"
         android:background="@color/bg_dark_2"
+        android:backgroundTint="@color/bg_dark_2"
+        android:fontFamily="@font/montserratbold"
         android:hint="Username"
         android:padding="10dp"
         android:textColor="@color/white"
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleRegister"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="60dp" />
+        app:layout_constraintTop_toBottomOf="@+id/titleRegister" />
 
     <EditText
         android:id="@+id/input_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/bg_dark_2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
         android:background="@color/bg_dark_2"
+        android:backgroundTint="@color/bg_dark_2"
+        android:fontFamily="@font/montserratbold"
         android:hint="Email"
         android:padding="10dp"
         android:textColor="@color/white"
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_username"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp" />
+        app:layout_constraintTop_toBottomOf="@+id/input_username" />
 
     <EditText
         android:id="@+id/input_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/bg_dark_2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
         android:background="@color/bg_dark_2"
+        android:backgroundTint="@color/bg_dark_2"
+        android:fontFamily="@font/montserratbold"
         android:hint="Password"
         android:padding="10dp"
         android:textColor="@color/white"
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_email"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp" />
+        app:layout_constraintTop_toBottomOf="@+id/input_email" />
 
     <Button
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/accent_color"
-        android:text="@string/register"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="80dp"
-        />
+        android:backgroundTint="@color/accent_color"
+        android:fontFamily="@font/montserratbold"
+        android:text="@string/register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="20dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
