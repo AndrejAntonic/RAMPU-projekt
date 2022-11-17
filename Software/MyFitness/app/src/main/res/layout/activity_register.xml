@@ -28,7 +28,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="60dp"
         android:layout_marginRight="20dp"
-        android:background="@color/bg_dark_2"
+        android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
         android:fontFamily="@font/montserratbold"
         android:hint="Username"
@@ -46,7 +46,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:background="@color/bg_dark_2"
+        android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
         android:fontFamily="@font/montserratbold"
         android:hint="Email"
@@ -64,7 +64,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:background="@color/bg_dark_2"
+        android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
         android:fontFamily="@font/montserratbold"
         android:hint="Password"
@@ -75,16 +75,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_email" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="80dp"
+        android:background="@drawable/rounded_style"
         android:backgroundTint="@color/accent_color"
         android:fontFamily="@font/montserratbold"
         android:text="@string/register"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="20dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

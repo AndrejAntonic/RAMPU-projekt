@@ -20,30 +20,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_go_to_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="48dp"
         android:width="250dp"
         android:height="60dp"
+        android:background="@drawable/rounded_style"
         android:backgroundTint="@color/accent_color"
         android:fontFamily="@font/montserratbold"
         android:text="@string/register"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/btn_go_to_login"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_go_to_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
         android:width="250dp"
         android:height="60dp"
+        android:background="@drawable/rounded_style"
         android:backgroundTint="@color/accent_color"
         android:fontFamily="@font/montserratbold"
         android:text="@string/login"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
