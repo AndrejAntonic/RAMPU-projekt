@@ -1,13 +1,21 @@
 package com.example.myfitness
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.utils.Validator
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+
+//import com.google.firebase.auth.FirebaseAuth
+
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,12 +53,24 @@ class RegisterActivity : AppCompatActivity() {
             if (errors) return@setOnClickListener
 
 
+            var success : Boolean = UsersDAO.AddUser(providedUsername, providedEmail, providedPassword)
+
+            if (success) {
+                val intent = Intent(this, InputActivity::class.java)
+                startActivity(intent)
+            } else {
+
+            }
+
+
+
             // Todo spojit se na bazu
-            val intent = Intent(this, InputActivity::class.java)
-            startActivity(intent)
+
 
 //            val intent = Intent(this, MainActivity::class.java)
 //            startActivity(intent)
         }
     }
+
+
 }
