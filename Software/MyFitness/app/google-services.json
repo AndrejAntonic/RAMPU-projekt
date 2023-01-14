@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1094608743551",
+    "project_id": "rampu-projekt-5cd54",
+    "storage_bucket": "rampu-projekt-5cd54.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094608743551:android:860366aa188ff5f4b8234a",
+        "android_client_info": {
+          "package_name": "com.example.myfitness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094608743551-6mbdlsuh74o65l65tq18s49ghb6g504l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD20m01vesLNfPrmoJQFoYoScRTA949A4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094608743551-6mbdlsuh74o65l65tq18s49ghb6g504l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -46,10 +46,11 @@ class RegisterActivity : AppCompatActivity() {
 
 
             // Todo spojit se na bazu
-
-
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, InputActivity::class.java)
             startActivity(intent)
+
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
         }
     }
 }
