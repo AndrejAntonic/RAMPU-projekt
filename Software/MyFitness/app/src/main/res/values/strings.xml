@@ -9,5 +9,10 @@
     <string name="myfitness">MyFitness</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
+    <string name="generate">Generiraj trening</string>
+    <string name="preference">Vaš cilj:</string>
+    <string name="experience">Vaše iskustvo:</string>
+    <string name="days">Koliko dana u tjednu želite vježbati:</string>
+    <string name="plan">Plan</string>
 
 </resources>
