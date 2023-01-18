@@ -41,4 +41,14 @@ object UsersDAO {
 
         return user.size() > 0
     }
+
+    suspend fun LoginUser(username: String, password: String) : Boolean {
+        val db = Firebase.firestore
+        val user = db.collection("users")
+            .whereEqualTo("username", username)
+            .whereEqualTo("password", password)
+            .get().await()
+
+        return user.size() > 0
+    }
 }
