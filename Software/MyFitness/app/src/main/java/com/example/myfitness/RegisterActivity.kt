@@ -1,20 +1,15 @@
 package com.example.myfitness
 
-import android.content.ContentValues.TAG
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.utils.Validator
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.*
 
-//import com.google.firebase.auth.FirebaseAuth
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -27,10 +22,11 @@ class RegisterActivity : AppCompatActivity() {
         btnRegister.setOnClickListener {
 
             val inputUsername = findViewById<EditText>(R.id.input_username)
-            val providedUsername = inputUsername.text.toString()
             val inputEmail = findViewById<EditText>(R.id.input_email)
-            val providedEmail = inputEmail.text.toString()
             val inputPassword = findViewById<EditText>(R.id.input_password)
+
+            val providedUsername = inputUsername.text.toString()
+            val providedEmail = inputEmail.text.toString()
             val providedPassword = inputPassword.text.toString()
 
             // Validacija unosa
@@ -52,23 +48,39 @@ class RegisterActivity : AppCompatActivity() {
 
             if (errors) return@setOnClickListener
 
+            println("PRIJE")
+            val that = this
 
-            var success : Boolean = UsersDAO.AddUser(providedUsername, providedEmail, providedPassword)
+            val scope = CoroutineScope(Dispatchers.Main)
+            scope.launch {
+                val usernameInUse = UsersDAO.GetUserByUsername(providedUsername)
+                if (usernameInUse) {
+                    withContext(Dispatchers.Main) {
+                        inputUsername.setError("Korime se već koristi!")
+                    }
+                    return@launch
+                }
 
-            if (success) {
-                val intent = Intent(this, InputActivity::class.java)
-                startActivity(intent)
-            } else {
 
+                val emailInUse = UsersDAO.GetUserByEmail(providedEmail)
+                if (emailInUse) {
+                    withContext(Dispatchers.Main) {
+                        inputEmail.setError("Email se već koristi!")
+                    }
+                    return@launch
+                }
+
+                UsersDAO.AddUser(providedUsername, providedEmail, providedPassword).addOnSuccessListener {
+                    val intent = Intent(that, LoginActivity::class.java)
+                    startActivity(intent)
+                }
             }
 
 
+            println("KREIRANJE USERA")
 
-            // Todo spojit se na bazu
 
 
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
         }
     }
 
