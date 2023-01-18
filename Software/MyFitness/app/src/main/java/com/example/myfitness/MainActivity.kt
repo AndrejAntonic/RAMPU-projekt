@@ -56,6 +56,13 @@ class MainActivity : AppCompatActivity() {
                 ProfileFragment::class
             )
         )
+        mainPagerAdapter.addFragment(
+            MainPagerAdapter.FragmentItem(
+                R.string.calculator_fragment_title,
+                R.drawable.ic_baseline_person_24,
+                ProfileFragment::class
+            )
+        )
 
         viewPager2.adapter = mainPagerAdapter
 

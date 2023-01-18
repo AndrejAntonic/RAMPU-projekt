@@ -6,6 +6,7 @@
     <string name="calendar_fragment_title">Kalendar</string>
     <string name="progress_fragment_title">Napredak</string>
     <string name="profile_fragment_title">Profil</string>
+    <string name="calculator_fragment_title">BMR Kalkulator</string>
     <string name="myfitness">MyFitness</string>
     <string name="register">Registracija</string>
     <string name="login">Prijava</string>
