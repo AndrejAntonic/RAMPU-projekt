@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import com.example.myfitness.DataAccessObjects.UsersDAO
+import com.example.myfitness.utils.Hash
 import com.example.myfitness.utils.Validator
 import kotlinx.coroutines.*
 import java.security.MessageDigest
@@ -76,7 +77,7 @@ class RegisterActivity : AppCompatActivity() {
                     return@launch
                 }
 
-                UsersDAO.AddUser(providedUsername, providedEmail, hashPassword(providedPassword)).addOnSuccessListener {
+                UsersDAO.AddUser(providedUsername, providedEmail, Hash.hashPassword(providedPassword)).addOnSuccessListener {
                     val intent = Intent(that, LoginActivity::class.java)
                     startActivity(intent)
                 }
@@ -85,17 +86,4 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-
-    fun hashPassword(password: String): String {
-        val digest = MessageDigest.getInstance("SHA-256")
-        val bytes = password.toByteArray()
-        digest.update(bytes, 0, bytes.size)
-        val hashedPassword = digest.digest()
-
-        return hashedPassword.toHex()
-    }
-
-    fun ByteArray.toHex() : String {
-        return joinToString("") { "%02x".format(it) }
-    }
 }
