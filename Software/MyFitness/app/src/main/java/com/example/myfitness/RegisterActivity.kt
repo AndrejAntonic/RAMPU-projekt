@@ -55,7 +55,6 @@ class RegisterActivity : AppCompatActivity() {
 
             if (errors) return@setOnClickListener
 
-            println("PRIJE")
             val that = this
 
             val scope = CoroutineScope(Dispatchers.Main)
@@ -78,12 +77,10 @@ class RegisterActivity : AppCompatActivity() {
                 }
 
                 UsersDAO.AddUser(providedUsername, providedEmail, Hash.hashPassword(providedPassword)).addOnSuccessListener {
-                    val intent = Intent(that, LoginActivity::class.java)
+                    val intent = Intent(that, MainActivity::class.java)
                     startActivity(intent)
                 }
             }
-
         }
     }
-
 }
