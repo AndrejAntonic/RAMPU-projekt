@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_dark"
-    tools:context=".fragments.ExercisesFragment">
+    tools:context=".fragments.ExercisesFragment"
+    android:id="@+id/mainlayout">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lista Vježbi"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textColor="@color/white"
         android:padding="15dp"
         />

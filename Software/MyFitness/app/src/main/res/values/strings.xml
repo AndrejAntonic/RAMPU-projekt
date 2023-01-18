@@ -10,7 +10,7 @@
     <string name="register">Register</string>
     <string name="login">Login</string>
 
-    <string-array name="body_parts">
+    <string-array name="body_parts_array">
         <item>Odaberi dio tijela</item>
         <item>Leđa</item>
         <item>Prsa</item>
@@ -20,5 +20,23 @@
         <item>Tricepsi</item>
     </string-array>
     <string name="select_body_part">Select Body Part</string>
+    <string name="addExercise">dodaj_vjezbu</string>
+    <string name="add">dodaj</string>
+
+    <string-array name="difficulty_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="equipment_array">
+        <item>Bučice</item>
+        <item>Girje</item>
+        <item>Bench</item>
+        <item>Smith mašina</item>
+        <item>Sprava</item>
+    </string-array>
 
 </resources>
