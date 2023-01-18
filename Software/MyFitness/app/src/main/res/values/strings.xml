@@ -7,7 +7,7 @@
     <string name="progress_fragment_title">Napredak</string>
     <string name="profile_fragment_title">Profil</string>
     <string name="myfitness">MyFitness</string>
-    <string name="register">Register</string>
-    <string name="login">Login</string>
+    <string name="register">Registracija</string>
+    <string name="login">Prijava</string>
 
 </resources>
