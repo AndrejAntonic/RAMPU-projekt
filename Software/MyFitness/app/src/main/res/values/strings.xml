@@ -10,4 +10,15 @@
     <string name="register">Register</string>
     <string name="login">Login</string>
 
+    <string-array name="body_parts">
+        <item>Odaberi dio tijela</item>
+        <item>Leđa</item>
+        <item>Prsa</item>
+        <item>Noge</item>
+        <item>Ramena</item>
+        <item>Bicepsi</item>
+        <item>Tricepsi</item>
+    </string-array>
+    <string name="select_body_part">Select Body Part</string>
+
 </resources>

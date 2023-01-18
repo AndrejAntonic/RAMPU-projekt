@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Exercise"
+        android:textSize="30sp"
+        android:textColor="#000000"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        />
+
+    <EditText
+        android:id="@+id/exerciseNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Name"
+        android:inputType="text"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textSize="20sp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
+
+    <EditText
+        android:id="@+id/exerciseDescriptionEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Description"
+        android:inputType="text"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textSize="20sp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
+    <Spinner
+        android:id="@+id/bodyPartSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:entries="@array/body_parts"
+        android:hint="@string/select_body_part"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+    />
+
+    <EditText
+        android:id="@+id/imageUrlEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Image URL"
+        android:inputType="text"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textSize="20sp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
+
+    <Button
+        android:id="@+id/addExerciseBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="Add"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
+
+</LinearLayout>
