@@ -32,10 +32,9 @@ object ExerciseDAO {
         )
     }
 
-    fun getAllExercises(bodyPart: String, db: FirebaseFirestore, callback: (List<Exercise>) -> Unit) {
+    fun getAllExercises(db: FirebaseFirestore, callback: (List<Exercise>) -> Unit) {
         val exercisesRef = db.collection("exercises")
         exercisesRef
-            .whereEqualTo("bodyPart", bodyPart)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val exercises = querySnapshot.toObjects(Exercise::class.java)
