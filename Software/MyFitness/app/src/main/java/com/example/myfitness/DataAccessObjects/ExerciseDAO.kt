@@ -1,9 +1,6 @@
 package com.example.myfitness.DataAccessObjects
 
-import android.R
 import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import com.google.firebase.firestore.FirebaseFirestore
 import model.Exercise
 
@@ -21,15 +18,8 @@ object ExerciseDAO {
             }
     }
 
-    fun fillSpinner(spinner: Spinner) {
-        spinner.adapter = ArrayAdapter(
-            spinner.context,
-            R.layout.simple_spinner_item,
-            BODY_PARTS
-        )
-    }
 
-    fun getAllExercises(bodyPart: String, db: FirebaseFirestore, callback: (List<Exercise>) -> Unit) {
+    fun getExercise(bodyPart: String, db: FirebaseFirestore, callback: (List<Exercise>) -> Unit) {
         val exercisesRef = db.collection("exercises")
         exercisesRef
             .whereEqualTo("bodyPart", bodyPart)
@@ -40,9 +30,26 @@ object ExerciseDAO {
                 callback(exercises)
             }
             .addOnFailureListener {
-                Log.e("ExerciseDAO", "Neuspješno dodavanje vježbi")
+                Log.e("ExerciseDAO", "Neuspješno dohvaćanje vježbe!")
             }
     }
+
+    fun getAllExercises(db: FirebaseFirestore, callback: (List<Exercise>) -> Unit) {
+        val exercisesRef = db.collection("exercises")
+        exercisesRef
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val exercises = querySnapshot.documents.map { document ->
+                    document.toObject(Exercise::class.java)!!
+                }
+                callback(exercises)
+            }
+            .addOnFailureListener {
+                Log.e("ExerciseDAO", "Neuspješno dohvaćanje vježbi!")
+            }
+    }
+
+
 
     private val BODY_PARTS = listOf("Leđa", "Prsa", "Noge", "Ramena", "Bicepsi", "Tricepsi")
 }

@@ -7,4 +7,7 @@ data class Exercise(
     val imageUrl: String,
     val difficulty: Int,
     val equipment: String
-)
+) {
+    constructor(): this("", "", "", "", 0, "")
+}
+
