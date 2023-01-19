@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myfitness.adapters.MainPagerAdapter
-import com.example.myfitness.fragments.CalendarFragment
-import com.example.myfitness.fragments.ExercisesFragment
-import com.example.myfitness.fragments.ProfileFragment
-import com.example.myfitness.fragments.ProgressFragment
+import com.example.myfitness.fragments.*
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -30,6 +27,14 @@ class MainActivity : AppCompatActivity() {
                 R.string.exercises_fragment_title,
                 R.drawable.ic_baseline_fitness_center_24,
                 ExercisesFragment::class
+            )
+        )
+
+        mainPagerAdapter.addFragment(
+            MainPagerAdapter.FragmentItem(
+                R.string.plan,
+                R.drawable.ic_baseline_wysiwyg_24,
+                PlanFragment::class
             )
         )
 

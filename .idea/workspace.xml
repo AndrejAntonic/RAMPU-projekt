@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="45de5943-8854-449c-9959-fa411b90f863" name="Changes" comment="" />
+    <list default="true" id="45de5943-8854-449c-9959-fa411b90f863" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Software/MyFitness/app/src/main/java/com/example/myfitness/fragments/PlanFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Software/MyFitness/app/src/main/java/com/example/myfitness/fragments/PlanFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Software/MyFitness/app/src/main/res/layout/fragment_plan.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Software/MyFitness/app/src/main/res/layout/fragment_plan.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
