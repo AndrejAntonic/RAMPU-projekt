@@ -1,15 +1,10 @@
 package com.example.myfitness.DataAccessObjects
 
 import android.R
-import android.content.ContentValues
-import android.content.Intent
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import com.example.myfitness.InputActivity
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import model.Exercise
 
 
@@ -38,6 +33,7 @@ object ExerciseDAO {
         val exercisesRef = db.collection("exercises")
         exercisesRef
             .whereEqualTo("bodyPart", bodyPart)
+            .limit(5) //TODO dodati stranicenje
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val exercises = querySnapshot.toObjects(Exercise::class.java)

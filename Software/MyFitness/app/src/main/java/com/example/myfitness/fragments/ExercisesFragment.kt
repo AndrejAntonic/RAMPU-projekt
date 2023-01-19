@@ -17,19 +17,15 @@ class ExercisesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_exercises, container, false)
+        val view = inflater.inflate(R.layout.fragment_exercises, container, false)
 
-        val button = v.findViewById<Button>(R.id.addExerciseButton)
+        val button = view.findViewById<Button>(R.id.addExerciseButton)
         button.setOnClickListener{
             val frgmntAddExercise = AddExerciseFragment()
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.mainlayout, frgmntAddExercise)
             transaction.commit()
         }
-
-        return v
+        return view
     }
-
-
 }

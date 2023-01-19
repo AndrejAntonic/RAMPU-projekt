@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.myfitness.DataAccessObjects.ExerciseDAO
+import com.example.myfitness.fragments.ExercisesFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import model.Exercise
 
@@ -46,6 +48,8 @@ class AddExerciseFragment : Fragment() {
 
         val addExerciseBtn = view.findViewById<Button>(R.id.addExerciseBtn)
         addExerciseBtn.setOnClickListener {
+
+
             val exerciseName = view.findViewById<EditText>(R.id.exerciseNameEditText).text.toString()
             val exerciseDescription = view.findViewById<EditText>(R.id.exerciseDescriptionEditText).text.toString()
             val exerciseBodyPart = spinnerBodyPart.selectedItem.toString()
@@ -63,7 +67,24 @@ class AddExerciseFragment : Fragment() {
             )
             ExerciseDAO.addExercise(exercise, db)
             Toast.makeText(requireContext(), "Vježba dodana!", Toast.LENGTH_SHORT).show()
+
+            val frgmntExercise = ExercisesFragment()
+            val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.mainlayout, frgmntExercise)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
+
+        val closeButton = view.findViewById<Button>(R.id.closeBtn)
+        closeButton.setOnClickListener {
+            val frgmntExercise = ExercisesFragment()
+            val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.mainlayout, frgmntExercise)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+
         return view
     }
 }
