@@ -20,8 +20,14 @@
         <item>Tricepsi</item>
     </string-array>
     <string name="select_body_part">Select Body Part</string>
-    <string name="addExercise">dodaj_vjezbu</string>
+    <string name="addExercise">Dodaj vježbu</string>
     <string name="add">dodaj</string>
+    <string name="naziv_vjezbe">Naziv vježbe</string>
+    <string name="opis_vjezbe">Opis vježbe</string>
+    <string name="url">URL</string>
+    <string name="tezina">Težina</string>
+    <string name="oprema">Oprema</string>
+    <string name="odustani">Odustani</string>
 
     <string-array name="difficulty_array">
         <item>1</item>
