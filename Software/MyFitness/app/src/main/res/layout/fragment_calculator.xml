@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    tools:context=".CalculatorActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="220dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:text="Data Input"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/male"
+        android:layout_marginTop="-20dp"
+        android:gravity="center"
+        android:text="Basal metabolic rate:"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/display_result"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/female"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:textColor="#FFFFFF"
+        android:hint="Result"
+        android:textColorHint="#808080"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/edit_weight"
+        android:layout_width="370dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:gravity="center"
+        android:hint="kg"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#808080"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/edit_height"
+        android:layout_width="370dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/edit_weight"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:gravity="center"
+        android:hint="cm"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#808080"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/edit_age"
+        android:layout_width="370dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/edit_height"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:gravity="center"
+        android:hint="age"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#808080"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/male"
+        android:layout_width="100dp"
+        android:layout_height="65dp"
+        android:layout_below="@id/edit_age"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="#2196F3"
+        android:text="Male"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/female"
+        android:layout_width="100dp"
+        android:layout_height="65dp"
+        android:layout_below="@id/edit_age"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_toRightOf="@+id/male"
+        android:backgroundTint="#2196F3"
+        android:text="Female"
+        android:textAllCaps="false" />
+
+</RelativeLayout>
