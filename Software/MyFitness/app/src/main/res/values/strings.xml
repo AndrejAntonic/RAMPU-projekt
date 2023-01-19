@@ -25,7 +25,7 @@
     <string name="add_done_exercise">Napravljena vježba</string>
     <string name="label_reps_input">Broj ponavljanja</string>
     <string name="label_broj_serija">Broj serija</string>
-    <string name="label_unos_tezine">Kilaža</string>
+    <string name="label_unos_tezine">Kilaža (kg)</string>
     <string name="title_unos_napravljene_vjezbe_dialog">Unos napravljene vježbe</string>
     <string name="btn_save">Spremi</string>
     <string name="hint_search_exercise">Traži vježbu</string>

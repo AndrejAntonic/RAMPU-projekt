@@ -19,6 +19,7 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
     val searchExerciseEditText : EditText = dialog.findViewById(R.id.exercisePicker)
     val searchListView : ListView = dialog.findViewById(R.id.listview_exercises)
     val saveButton : Button = dialog.findViewById(R.id.btn_save_doneexercise_dialog)
+    val cancelButton : Button = dialog.findViewById(R.id.btn_cancel_doneexercise_dialog)
 
     val setsInput : EditText = dialog.findViewById(R.id.setsInput)
     val repsInput : EditText = dialog.findViewById(R.id.repsInput)
@@ -54,7 +55,14 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
             searchExerciseEditText.setText(item)
             searchListView.visibility = View.GONE
         }
+
+
         saveButton.setOnClickListener {
+
+        }
+
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
         }
 
         activateDateTimeListeners()
