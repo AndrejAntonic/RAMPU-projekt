@@ -23,6 +23,6 @@
         android:layout_height="wrap_content"
         android:text="Add Exercise"
         android:onClick="onAddExerciseButtonClick"/>
-
+<!-- TODO: Pozicionirati gumb kako spada -->
 
 </FrameLayout>

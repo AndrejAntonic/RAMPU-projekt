@@ -24,6 +24,7 @@ class ExercisesFragment : Fragment() {
             val frgmntAddExercise = AddExerciseFragment()
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.mainlayout, frgmntAddExercise)
+            button.visibility = View.GONE
             transaction.commit()
         }
         return view
