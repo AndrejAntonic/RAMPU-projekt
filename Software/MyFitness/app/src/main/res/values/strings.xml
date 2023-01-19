@@ -29,6 +29,8 @@
     <string name="title_unos_napravljene_vjezbe_dialog">Unos napravljene vježbe</string>
     <string name="btn_save">Spremi</string>
     <string name="hint_search_exercise">Traži vježbu</string>
+    <string name="label_date">Datum</string>
+    <string name="btn_cancel">Odustani</string>
 
     <string-array name="difficulty_array">
         <item>1</item>
