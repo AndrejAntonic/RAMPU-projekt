@@ -1,11 +1,11 @@
 package com.example.myfitness
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.utils.Hash
 import kotlinx.coroutines.CoroutineScope
@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val btnLogin = findViewById<Button>(R.id.btn_login);
+        val btnLogin = findViewById<Button>(R.id.btn_login)
 
         btnLogin.setOnClickListener {
             val inputUsername = findViewById<EditText>(R.id.input_username_login)
@@ -34,7 +34,6 @@ class LoginActivity : AppCompatActivity() {
             val insertedUsername = inputUsername.text.toString()
             val insertedPassword = inputPassword.text.toString()
             val hashedPassword = Hash.hashPassword(insertedPassword)
-            val intent = Intent(this, MainActivity::class.java)
 
             val that = this
 
@@ -55,6 +54,12 @@ class LoginActivity : AppCompatActivity() {
                     }
                     return@launch
                 } else {
+                    // Spremanje prijavljenog korisnika u shared storage
+                    val prefs = getSharedPreferences("user", Context.MODE_PRIVATE)
+                    val editor = prefs.edit()
+                    editor.putString("username", insertedUsername)
+                    editor.apply()
+
                     val intent = Intent(that, MainActivity::class.java)
                     startActivity(intent)
                 }
