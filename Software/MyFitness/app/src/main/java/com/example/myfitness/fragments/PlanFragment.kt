@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitness.DataAccessObjects.ExercisesDAO
-import com.example.myfitness.LoginActivity
 import com.example.myfitness.R
 import com.example.myfitness.adapters.PlanAdapter
 import com.example.myfitness.entities.Exercises
@@ -79,16 +78,49 @@ class PlanFragment : Fragment() {
 
     private fun generateFullBody(newPlanPreferences: PlanPreferences) {
         lifecycleScope.launch {
-            temp.text = "Full body"
             val finalList: MutableList<Plan> = arrayListOf()
-            val exercisesTemp: MutableList<Exercises> = ExercisesDAO.getExercise("Ruke")
-            val exercises = exercisesTemp.asSequence().shuffled().take(2).toList()
-            val exercises2 = exercisesTemp.asSequence().shuffled().take(3).toList()
-            finalList.add(Plan("Ponedjeljak", exercises))
-            finalList.add(Plan("Utorak", exercises2))
+            val selectedExercisesFinal = combineList(getList("Prsa", 2), getList("Leđa", 2), getList("Ramena", 2), getList("Noge", 2), getList("Bicepsi", 1), getList("Tricepsi", 1))
+            val listRest: MutableList<Exercises> = arrayListOf()
+            listRest.add(Exercises("Odmor"))
+            finalList.add(Plan("Ponedjeljak", selectedExercisesFinal))
+            finalList.add(Plan("Utorak", listRest))
+            finalList.add(Plan("Srijeda", listRest))
+            finalList.add(Plan("Četvrtak", listRest))
+            finalList.add(Plan("Petak", listRest))
+            finalList.add(Plan("Subota", listRest))
+            finalList.add(Plan("Nedjelja", listRest))
             val planAdapter = PlanAdapter(finalList)
 
+            temp.text = "Full body"
             recyclerView.adapter = planAdapter
         }
+    }
+
+    private suspend fun getList(bodyPart: String, n: Int): List<Exercises> {
+        when(bodyPart) {
+            "Prsa" -> return reduceList(getList(bodyPart), n)
+            "Leđa" -> return reduceList(getList(bodyPart), n)
+            "Ramena" -> return reduceList(getList(bodyPart), n)
+            "Noge" -> return reduceList(getList(bodyPart), n)
+            "Bicepsi" -> return reduceList(getList(bodyPart), n)
+            "Tricepsi" -> return reduceList(getList(bodyPart), n)
+        }
+        return ArrayList()
+    }
+
+    private suspend fun getList(bodyPart: String): MutableList<Exercises> {
+        return ExercisesDAO.getExercise(bodyPart)
+    }
+
+    private fun reduceList(list: MutableList<Exercises>, n: Int): List<Exercises> {
+        return list.asSequence().shuffled().take(n).toList()
+    }
+
+    private fun combineList(vararg lists: List<Exercises>): List<Exercises> {
+        var result: List<Exercises> = ArrayList()
+        for(list in lists) {
+            result += list
+        }
+        return result
     }
 }
