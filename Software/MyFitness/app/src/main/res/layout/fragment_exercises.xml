@@ -21,8 +21,18 @@
         android:id="@+id/addExerciseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Add Exercise"
+        android:onClick="onAddExerciseButtonClick"/>
+
+    <Button
+        android:id="@+id/addDoneExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
         android:onClick="onAddExerciseButtonClick"
-        android:text="Add Exercise" />
-    <!-- TODO: Pozicionirati gumb kako spada -->
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/add_done_exercise" />
+
 
 </FrameLayout>

@@ -4,6 +4,7 @@ import android.R
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import com.example.myfitness.InputActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import model.Exercise
 
@@ -33,7 +34,6 @@ object ExerciseDAO {
         val exercisesRef = db.collection("exercises")
         exercisesRef
             .whereEqualTo("bodyPart", bodyPart)
-            .limit(5) //TODO dodati stranicenje
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val exercises = querySnapshot.toObjects(Exercise::class.java)
