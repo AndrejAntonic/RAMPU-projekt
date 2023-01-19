@@ -7,5 +7,6 @@ data class DoneExercise(
     val weight : Int,
     val sets : Int,
     val reps : Int,
-    val date : Date
+    val date : Date,
+    val username : String,
 )

@@ -9,8 +9,13 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import com.example.myfitness.DataAccessObjects.DoneExercisesDAO
+import com.example.myfitness.DataAccessObjects.ExerciseDAO
 import com.example.myfitness.R
+import model.DoneExercise
+import model.Exercise
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,8 +23,11 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
 
     val searchExerciseEditText : EditText = dialog.findViewById(R.id.exercisePicker)
     val searchListView : ListView = dialog.findViewById(R.id.listview_exercises)
+    var selectedExercise : String = ""
     val saveButton : Button = dialog.findViewById(R.id.btn_save_doneexercise_dialog)
     val cancelButton : Button = dialog.findViewById(R.id.btn_cancel_doneexercise_dialog)
+
+    var allExerciseNames : MutableList<String> = mutableListOf()
 
     val setsInput : EditText = dialog.findViewById(R.id.setsInput)
     val repsInput : EditText = dialog.findViewById(R.id.repsInput)
@@ -28,18 +36,19 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
     val selectedDateTime : Calendar = Calendar.getInstance()
     val sdfDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
 
-    fun load() {
+    suspend fun load() {
 
-        val arrayAdapter : ArrayAdapter<*>
-        val options : Array<String> = arrayOf("Option 1", "Option 2", "Option 3","Option 1", "Option 2", "Option 3","Option 1", "Option 2", "Option 3","Option 1", "Option 2", "Option 3")
+        var arrayAdapter : ArrayAdapter<*> = ArrayAdapter(context, R.layout.listview_item, allExerciseNames)
 
-        arrayAdapter = ArrayAdapter(context, R.layout.listview_item, options)
+        allExerciseNames = ExerciseDAO.getAllExerciseNames()
+
+        arrayAdapter = ArrayAdapter(context, R.layout.listview_item, allExerciseNames)
         searchListView.adapter = arrayAdapter
+
 
         searchExerciseEditText.addTextChangedListener {
             println()
             if (it.toString().isNotEmpty()) {
-                println("MAKING IT VISIBLE")
                 searchListView.visibility = View.VISIBLE
                 arrayAdapter.filter.filter(it.toString())
 
@@ -50,15 +59,22 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
 
         searchListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             // This is your listview's selected item
-            val item = parent.getItemAtPosition(position) as String
-            println(item)
-            searchExerciseEditText.setText(item)
+            selectedExercise = parent.getItemAtPosition(position) as String
+            println(selectedExercise)
+            searchExerciseEditText.setText(selectedExercise)
             searchListView.visibility = View.GONE
         }
 
 
         saveButton.setOnClickListener {
+            val inputValid = validateInput()
+            if (inputValid) {
+                val exercise : DoneExercise = buildExercise()
+                DoneExercisesDAO.add(exercise)
+            }
+            dialog.dismiss()
 
+            Toast.makeText(context, "Napravljena vježba spremljena", Toast.LENGTH_SHORT).show()
         }
 
         cancelButton.setOnClickListener {
@@ -87,4 +103,42 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
         }
     }
 
+    private fun validateInput() : Boolean {
+        var allValid = true
+        if (selectedExercise.length == 0) {
+            searchExerciseEditText.setError("Potrebno odabrati vježbu!")
+            allValid = false
+        }
+        if (weightInput.text.length == 0) {
+            weightInput.setError("Potrebno unijeti kilažu!")
+            allValid = false
+        }
+        if (setsInput.text.length == 0) {
+            setsInput.setError("Potrebno unijeti broj serija!")
+            allValid = false
+        }
+        if (repsInput.text.length == 0) {
+            repsInput.setError("Potrebno unijeti broj ponavljanja!")
+            allValid = false
+        }
+        if (dateinput.text.length == 0) {
+            dateinput.setError("Potrebno odabrati datum!")
+            allValid = false
+        }
+        return allValid
+    }
+
+    fun buildExercise() : DoneExercise {
+        val prefs = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+        val username = prefs.getString("username", "")!!
+
+        return DoneExercise(
+            selectedExercise,
+            weightInput.text.toString().toInt(),
+            setsInput.text.toString().toInt(),
+            repsInput.text.toString().toInt(),
+            selectedDateTime.time,
+            username
+        )
+    }
 }

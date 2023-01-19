@@ -11,6 +11,9 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.myfitness.AddExerciseFragment
 import com.example.myfitness.R
 import com.example.myfitness.helpers.AddDoneExerciseDialogHelper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class ExercisesFragment : Fragment() {
@@ -38,7 +41,12 @@ class ExercisesFragment : Fragment() {
         btnAddDoneExercise.setOnClickListener {
             val addDoneExerciseDialog = showDialog()
             val addDoneExerciseDialogHelper = AddDoneExerciseDialogHelper(addDoneExerciseDialog, requireContext())
-            addDoneExerciseDialogHelper.load()
+
+            val scope = CoroutineScope(Dispatchers.Main)
+            scope.launch {
+                addDoneExerciseDialogHelper.load()
+            }
+
         }
 
 
