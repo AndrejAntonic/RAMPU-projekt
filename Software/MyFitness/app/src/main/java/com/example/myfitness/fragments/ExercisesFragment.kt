@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import com.example.myfitness.adapters.ExerciseRecyclerViewAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.withContext
 import model.Exercise
 
 
@@ -83,10 +84,19 @@ class ExercisesFragment : Fragment() {
 
 
         private fun loadExercises() {
-            ExerciseDAO.getAllExercises(db) { exercises ->
-                val adapter = ExerciseRecyclerViewAdapter(exercises)
-                recyclerView.adapter = adapter
-                println(exercises)
+            val scope = CoroutineScope(Dispatchers.Main)
+            scope.launch {
+                exercises = ExerciseDAO.getAllExercises()
+                exercises.forEach( {
+                    println("TU JE")
+                    println(it.name)
+                })
+                withContext(Dispatchers.Main) {
+                    val adapter = ExerciseRecyclerViewAdapter(exercises)
+                    recyclerView.adapter = adapter
+                    println(exercises)
+                }
+
             }
         }
 
