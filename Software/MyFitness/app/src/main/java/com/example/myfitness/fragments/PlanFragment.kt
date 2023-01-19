@@ -54,7 +54,7 @@ class PlanFragment : Fragment() {
             .setTitle("Generiranje plana treninga")
             .setPositiveButton("Generiraj plan treninga") {_, _ ->
                 var newPlanPreferences = dialogHelper.buildPlan()
-                generateFullBody(newPlanPreferences)
+                determinePlan(newPlanPreferences)
                 recyclerView.layoutManager = LinearLayoutManager(view?.context)
                 //loadPlan(dialogHelper.determinePlan(newPlanPreferences))
             }.show()
@@ -67,12 +67,33 @@ class PlanFragment : Fragment() {
     private fun determinePlan(newPlanPreferences: PlanPreferences) {
         when(newPlanPreferences.days) {
             1 -> return(generateFullBody(newPlanPreferences))
-            //2 -> return(generateUpperLower(newPlanPreferences))
+            2 -> return(generateUpperLower(newPlanPreferences))
             //3 -> return(generatePPL(newPlanPreferences))
             //4 -> return(generatePPSL(newPlanPreferences))
             //5 -> return(generateBroSplit(newPlanPreferences))
             //6 -> return(generate2xPPL(newPlanPreferences))
             //7 -> return(generatePPSLUpperLower(newPlanPreferences))
+        }
+    }
+
+    private fun generateUpperLower(newPlanPreferences: PlanPreferences) {
+        lifecycleScope.launch {
+            val finalList: MutableList<Plan> = arrayListOf()
+            val selectedExercisesUpper = combineList(getList("Prsa", 2), getList("Leđa", 2), getList("Ramena", 1), getList("Bicepsi", 1), getList("Tricepsi", 1))
+            val selectedExercisesLower = combineList(getList("Noge", 6))
+            val listRest: MutableList<Exercises> = arrayListOf()
+            listRest.add(Exercises("Odmor"))
+            finalList.add(Plan("Ponedjeljak", selectedExercisesUpper))
+            finalList.add(Plan("Utorak", listRest))
+            finalList.add(Plan("Srijeda", listRest))
+            finalList.add(Plan("Četvrtak", selectedExercisesLower))
+            finalList.add(Plan("Petak", listRest))
+            finalList.add(Plan("Subota", listRest))
+            finalList.add(Plan("Nedjelja", listRest))
+            val planAdapter = PlanAdapter(finalList)
+
+            recyclerView.adapter = planAdapter
+            temp.text = "Upper Lower"
         }
     }
 
@@ -91,8 +112,8 @@ class PlanFragment : Fragment() {
             finalList.add(Plan("Nedjelja", listRest))
             val planAdapter = PlanAdapter(finalList)
 
-            temp.text = "Full body"
             recyclerView.adapter = planAdapter
+            temp.text = "Full body"
         }
     }
 
