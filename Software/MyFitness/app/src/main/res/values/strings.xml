@@ -55,8 +55,6 @@
         <item>Smith mašina</item>
         <item>Sprava</item>
     </string-array>
-    <string name="register">Register</string>
-    <string name="login">Login</string>
     <string name="generate">Generiraj trening</string>
     <string name="preference">Vaš cilj:</string>
     <string name="experience">Vaše iskustvo:</string>
