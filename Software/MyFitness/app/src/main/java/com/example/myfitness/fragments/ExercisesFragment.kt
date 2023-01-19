@@ -49,6 +49,7 @@ class ExercisesFragment : Fragment() {
         ExerciseDAO.getAllExercises(db) { exercises ->
             val adapter = ExerciseRecyclerViewAdapter(exercises)
             recyclerView.adapter = adapter
+            println(exercises)
         }
     }
 

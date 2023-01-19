@@ -28,6 +28,8 @@
     <string name="tezina">Težina</string>
     <string name="oprema">Oprema</string>
     <string name="odustani">Odustani</string>
+    <string name="lista_vjezbi">Lista Vježbi</string>
+    <string name="add_exercise">Add Exercise</string>
 
     <string-array name="difficulty_array">
         <item>1</item>
