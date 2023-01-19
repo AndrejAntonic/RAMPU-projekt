@@ -7,10 +7,11 @@
     tools:context=".fragments.PlanFragment">
 
     <TextView
+        android:id="@+id/id_test"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp"
-        android:text="Plan"
+        android:text="@string/plan"
         android:textColor="@color/white"
         android:textSize="25dp" />
 
@@ -22,5 +23,11 @@
         android:layout_margin="20dp"
         android:contentDescription="@string/generate"
         android:src="@drawable/ic_baseline_playlist_add_24" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_plan_main"
+        android:layout_width="match_parent"
+        android:layout_height="621dp"
+        android:layout_gravity="center" />
 
 </FrameLayout>
