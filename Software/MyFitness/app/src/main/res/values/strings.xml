@@ -20,8 +20,9 @@
         <item>Bicepsi</item>
         <item>Tricepsi</item>
     </string-array>
+
     <string name="select_body_part">Select Body Part</string>
-    <string name="addExercise">dodaj_vjezbu</string>
+    <string name="addExercise">Dodaj vježbu</string>
     <string name="add">dodaj</string>
     <string name="add_done_exercise">Napravljena vježba</string>
     <string name="label_reps_input">Broj ponavljanja</string>
@@ -67,5 +68,7 @@
     <string name="password">Lozinka:</string>
     <string name="email">Email:</string>
     <string name="edit_user">Spremi</string>
+    <string name="editProfile">Uređivanje profila</string>
+    <string name="save">Spremi</string>
 
 </resources>
