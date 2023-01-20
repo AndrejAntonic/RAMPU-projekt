@@ -34,12 +34,5 @@ object ExercisesDAO {
 
             return exercisesList
         }
-
-
-        /*
-        = runBlocking kod povratnog tipa
-        val proba = Firebase.firestore.collection("exercises").whereEqualTo("body-part", bodyPart).get().await()
-        proba.toObjects(Plan::class.java)*/
-
     }
 }
