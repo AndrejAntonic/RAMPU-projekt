@@ -80,13 +80,14 @@ class PlanFragment : Fragment() {
     private fun generateBroUpperLower(newPlanPreferences: PlanPreferences) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
-            val selectedExercisesChest = combineList(getList("Prsa", 5))
-            val selectedExercisesBack = combineList(getList("Leđa", 5))
-            val selectedExcersisesShoulder = combineList(getList("Ramena", 5))
-            val selectedExercisesLegs = combineList(getList("Noge", 5))
-            val selectedExercisesArms = combineList(getList("Bicepsi", 3), getList("Tricepsi", 3))
-            val selectedExercisesUpper = combineList(getList("Prsa", 2), getList("Leđa", 2), getList("Ramena", 1), getList("Bicepsi", 1), getList("Tricepsi", 1))
-            val selectedExercisesLower = combineList(getList("Noge", 5))
+            val difficulty = getExperience(newPlanPreferences.experience)
+            val selectedExercisesChest = combineList(getList("Prsa", 5, difficulty))
+            val selectedExercisesBack = combineList(getList("Leđa", 5, difficulty))
+            val selectedExcersisesShoulder = combineList(getList("Ramena", 5, difficulty))
+            val selectedExercisesLegs = combineList(getList("Noge", 5, difficulty))
+            val selectedExercisesArms = combineList(getList("Bicepsi", 3, difficulty), getList("Tricepsi", 3, difficulty))
+            val selectedExercisesUpper = combineList(getList("Prsa", 2, difficulty), getList("Leđa", 2, difficulty), getList("Ramena", 1, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty))
+            val selectedExercisesLower = combineList(getList("Noge", 5, difficulty))
             finalList.add(Plan("Ponedjeljak", selectedExercisesChest))
             finalList.add(Plan("Utorak", selectedExercisesBack))
             finalList.add(Plan("Srijeda", selectedExcersisesShoulder))
@@ -104,12 +105,13 @@ class PlanFragment : Fragment() {
     private fun generate2xPPL(newPlanPreferences: PlanPreferences) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
-            val selectedExercisesPush1 = combineList(getList("Prsa", 3), getList("Ramena", 1), getList("Tricepsi", 1))
-            val selectedExercisesPull1 = combineList(getList("Leđa", 4), getList("Bicepsi", 1))
-            val selectedExercisesLegs1 = combineList(getList("Noge", 5))
-            val selectedExercisesPush2 = combineList(getList("Prsa", 2), getList("Ramena", 2), getList("Tricepsi", 2))
-            val selectedExercisesPull2 = combineList(getList("Leđa", 3), getList("Bicepsi", 4))
-            val selectedExercisesLegs2 = combineList(getList("Noge", 5))
+            val difficulty = getExperience(newPlanPreferences.experience)
+            val selectedExercisesPush1 = combineList(getList("Prsa", 3, difficulty), getList("Ramena", 1, difficulty), getList("Tricepsi", 1, difficulty))
+            val selectedExercisesPull1 = combineList(getList("Leđa", 4, difficulty), getList("Bicepsi", 1, difficulty))
+            val selectedExercisesLegs1 = combineList(getList("Noge", 5, difficulty))
+            val selectedExercisesPush2 = combineList(getList("Prsa", 2, difficulty), getList("Ramena", 2, difficulty), getList("Tricepsi", 2, difficulty))
+            val selectedExercisesPull2 = combineList(getList("Leđa", 3, difficulty), getList("Bicepsi", 4, difficulty))
+            val selectedExercisesLegs2 = combineList(getList("Noge", 5, difficulty))
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
             finalList.add(Plan("Ponedjeljak", selectedExercisesPush1))
@@ -129,11 +131,12 @@ class PlanFragment : Fragment() {
     private fun generateBroSplit(newPlanPreferences: PlanPreferences) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
-            val selectedExercisesChest = combineList(getList("Prsa", 5))
-            val selectedExercisesBack = combineList(getList("Leđa", 5))
-            val selectedExcersisesShoulder = combineList(getList("Ramena", 5))
-            val selectedExercisesLegs = combineList(getList("Noge", 5))
-            val selectedExercisesArms = combineList(getList("Bicepsi", 3), getList("Tricepsi", 3))
+            val difficulty = getExperience(newPlanPreferences.experience)
+            val selectedExercisesChest = combineList(getList("Prsa", 5, difficulty))
+            val selectedExercisesBack = combineList(getList("Leđa", 5, difficulty))
+            val selectedExcersisesShoulder = combineList(getList("Ramena", 5, difficulty))
+            val selectedExercisesLegs = combineList(getList("Noge", 5, difficulty))
+            val selectedExercisesArms = combineList(getList("Bicepsi", 3, difficulty), getList("Tricepsi", 3, difficulty))
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
             finalList.add(Plan("Ponedjeljak", selectedExercisesChest))
@@ -153,10 +156,11 @@ class PlanFragment : Fragment() {
     private fun generatePPSL(newPlanPreferences: PlanPreferences) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
-            val selectedExercisesPush = combineList(getList("Prsa", 4), getList("Tricepsi", 2))
-            val selectedExercisesPull = combineList(getList("Leđa", 4), getList("Bicepsi", 2))
-            val selectedExcersisesShoulder = combineList(getList("Ramena", 4), getList("Bicepsi", 1), getList("Tricepsi", 1))
-            val selectedExercisesLegs = combineList(getList("Noge", 5))
+            val difficulty = getExperience(newPlanPreferences.experience)
+            val selectedExercisesPush = combineList(getList("Prsa", 4, difficulty), getList("Tricepsi", 2, difficulty))
+            val selectedExercisesPull = combineList(getList("Leđa", 4, difficulty), getList("Bicepsi", 2, difficulty))
+            val selectedExcersisesShoulder = combineList(getList("Ramena", 4, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty))
+            val selectedExercisesLegs = combineList(getList("Noge", 5, difficulty))
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
             finalList.add(Plan("Ponedjeljak", selectedExercisesPush))
@@ -176,9 +180,10 @@ class PlanFragment : Fragment() {
     private fun generatePPL(newPlanPreferences: PlanPreferences) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
-            val selectedExercisesPush = combineList(getList("Prsa", 2), getList("Ramena", 2), getList("Tricepsi", 2))
-            val selectedExercisesPull = combineList(getList("Leđa", 4), getList("Bicepsi", 2))
-            val selectedExercisesLegs: List<Exercises> = combineList(getList("Noge", 5))
+            val difficulty = getExperience(newPlanPreferences.experience)
+            val selectedExercisesPush = combineList(getList("Prsa", 2, difficulty), getList("Ramena", 2, difficulty), getList("Tricepsi", 2, difficulty))
+            val selectedExercisesPull = combineList(getList("Leđa", 4, difficulty), getList("Bicepsi", 2, difficulty))
+            val selectedExercisesLegs: List<Exercises> = combineList(getList("Noge", 5, difficulty))
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
             finalList.add(Plan("Ponedjeljak", selectedExercisesPush))
@@ -198,8 +203,9 @@ class PlanFragment : Fragment() {
     private fun generateUpperLower(newPlanPreferences: PlanPreferences) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
-            val selectedExercisesUpper = combineList(getList("Prsa", 2), getList("Leđa", 2), getList("Ramena", 1), getList("Bicepsi", 1), getList("Tricepsi", 1))
-            val selectedExercisesLower = combineList(getList("Noge", 6))
+            val difficulty = getExperience(newPlanPreferences.experience)
+            val selectedExercisesUpper = combineList(getList("Prsa", 2, difficulty), getList("Leđa", 2, difficulty), getList("Ramena", 1, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty))
+            val selectedExercisesLower = combineList(getList("Noge", 6, difficulty))
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
             finalList.add(Plan("Ponedjeljak", selectedExercisesUpper))
@@ -219,7 +225,8 @@ class PlanFragment : Fragment() {
     private fun generateFullBody(newPlanPreferences: PlanPreferences) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
-            val selectedExercisesFinal = combineList(getList("Prsa", 2), getList("Leđa", 2), getList("Ramena", 2), getList("Noge", 2), getList("Bicepsi", 1), getList("Tricepsi", 1))
+            val difficulty = getExperience(newPlanPreferences.experience)
+            val selectedExercisesFinal = combineList(getList("Prsa", 2, difficulty), getList("Leđa", 2, difficulty), getList("Ramena", 2, difficulty), getList("Noge", 2, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty))
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
             finalList.add(Plan("Ponedjeljak", selectedExercisesFinal))
@@ -236,20 +243,29 @@ class PlanFragment : Fragment() {
         }
     }
 
-    private suspend fun getList(bodyPart: String, n: Int): List<Exercises> {
+    private fun getExperience(experience: String): Int {
+        when(experience) {
+            "Beginner" -> return 1
+            "Intermediate" -> return 2
+            "Advanced" -> return 3
+        }
+        return 1
+    }
+
+    private suspend fun getList(bodyPart: String, n: Int, difficulty: Int): List<Exercises> {
         when(bodyPart) {
-            "Prsa" -> return reduceList(getList(bodyPart), n)
-            "Leđa" -> return reduceList(getList(bodyPart), n)
-            "Ramena" -> return reduceList(getList(bodyPart), n)
-            "Noge" -> return reduceList(getList(bodyPart), n)
-            "Bicepsi" -> return reduceList(getList(bodyPart), n)
-            "Tricepsi" -> return reduceList(getList(bodyPart), n)
+            "Prsa" -> return reduceList(getListDAO(bodyPart, difficulty), n)
+            "Leđa" -> return reduceList(getListDAO(bodyPart, difficulty), n)
+            "Ramena" -> return reduceList(getListDAO(bodyPart, difficulty), n)
+            "Noge" -> return reduceList(getListDAO(bodyPart, difficulty), n)
+            "Bicepsi" -> return reduceList(getListDAO(bodyPart, difficulty), n)
+            "Tricepsi" -> return reduceList(getListDAO(bodyPart, difficulty), n)
         }
         return ArrayList()
     }
 
-    private suspend fun getList(bodyPart: String): MutableList<Exercises> {
-        return ExercisesDAO.getExercise(bodyPart)
+    private suspend fun getListDAO(bodyPart: String, difficulty: Int): MutableList<Exercises> {
+        return ExercisesDAO.getExercise(bodyPart, difficulty)
     }
 
     private fun reduceList(list: MutableList<Exercises>, n: Int): List<Exercises> {

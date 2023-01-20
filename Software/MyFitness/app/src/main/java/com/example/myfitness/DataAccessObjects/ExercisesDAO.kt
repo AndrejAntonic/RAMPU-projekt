@@ -14,7 +14,7 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 object ExercisesDAO {
-    suspend fun getExercise(bodyPart: String): MutableList<Exercises> {
+    suspend fun getExercise(bodyPart: String, difficulty: Int): MutableList<Exercises> {
         val db = Firebase.firestore
         val exercisesList = mutableListOf<Exercises>()
 
