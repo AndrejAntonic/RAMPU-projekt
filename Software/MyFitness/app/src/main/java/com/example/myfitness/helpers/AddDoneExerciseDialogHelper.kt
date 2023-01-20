@@ -68,12 +68,13 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
 
         saveButton.setOnClickListener {
             val inputValid = validateInput()
-            if (inputValid) {
-                val exercise : DoneExercise = buildExercise()
-                DoneExercisesDAO.add(exercise)
+            if (!inputValid) {
+                return@setOnClickListener
             }
-            dialog.dismiss()
 
+            val exercise : DoneExercise = buildExercise()
+            DoneExercisesDAO.add(exercise)
+            dialog.dismiss()
             Toast.makeText(context, "Napravljena vježba spremljena", Toast.LENGTH_SHORT).show()
         }
 
@@ -99,6 +100,7 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
                     selectedDateTime.get(Calendar.DAY_OF_MONTH)
                 ).show()
                 view.clearFocus()
+                dateinput.setError(null)
             }
         }
     }
