@@ -1,6 +1,7 @@
 package com.example.myfitness
 
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,7 +11,6 @@ import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.utils.Hash
 import com.example.myfitness.utils.Validator
 import kotlinx.coroutines.*
-import java.security.MessageDigest
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -77,6 +77,12 @@ class RegisterActivity : AppCompatActivity() {
                 }
 
                 UsersDAO.AddUser(providedUsername, providedEmail, Hash.hashPassword(providedPassword)).addOnSuccessListener {
+
+                    val prefs = getSharedPreferences("user", Context.MODE_PRIVATE)
+                    val editor = prefs.edit()
+                    editor.putString("username", providedUsername)
+                    editor.apply()
+
                     val intent = Intent(that, MainActivity::class.java)
                     startActivity(intent)
                 }
