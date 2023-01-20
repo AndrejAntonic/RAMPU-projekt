@@ -21,7 +21,7 @@
         <item>Tricepsi</item>
     </string-array>
     <string name="select_body_part">Select Body Part</string>
-    <string name="addExercise">dodaj_vjezbu</string>
+    <string name="addExercise">Dodaj vježbu</string>
     <string name="add">dodaj</string>
     <string name="add_done_exercise">Napravljena vježba</string>
     <string name="label_reps_input">Broj ponavljanja</string>
@@ -39,7 +39,7 @@
     <string name="oprema">Oprema</string>
     <string name="odustani">Odustani</string>
     <string name="lista_vjezbi">Lista Vježbi</string>
-    <string name="add_exercise">Add Exercise</string>
+    <string name="add_exercise">Dodaj vježbu</string>
 
     <string-array name="difficulty_array">
         <item>1</item>

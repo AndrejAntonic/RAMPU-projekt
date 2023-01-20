@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myfitness.AddExerciseFragment
 import com.example.myfitness.DataAccessObjects.ExerciseDAO
 import com.example.myfitness.R
 import com.example.myfitness.helpers.AddDoneExerciseDialogHelper
@@ -18,8 +16,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.myfitness.adapters.ExerciseRecyclerViewAdapter
+import com.example.myfitness.helpers.AddExerciseDialog
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.withContext
 import model.Exercise
 
@@ -36,21 +34,20 @@ class ExercisesFragment : Fragment() {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_exercises, container, false)
 
-        val button = v.findViewById<Button>(R.id.addExerciseButton)
-        button.setOnClickListener {
-
             val button = v.findViewById<Button>(R.id.addExerciseButton)
             button.setOnClickListener {
-                val frgmntAddExercise = AddExerciseFragment()
-                val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.mainlayout, frgmntAddExercise)
-                transaction.commit()
+                val addExercise = addExercise()
+                val addExerciseHelper =
+                    AddExerciseDialog(addExercise, requireContext())
+
+                val scope = CoroutineScope(Dispatchers.Main)
+                scope.launch {
+                    addExerciseHelper
+                }
+
             }
-        }
 
             val btnAddDoneExercise = v.findViewById<Button>(R.id.addDoneExercise)
-
-
             btnAddDoneExercise.setOnClickListener {
                 val addDoneExerciseDialog = showDialog()
                 val addDoneExerciseDialogHelper =
@@ -81,6 +78,16 @@ class ExercisesFragment : Fragment() {
                 .show()
 
         }
+
+    private fun addExercise(): AlertDialog{
+        val addExercise = LayoutInflater
+            .from(context)
+            .inflate(R.layout.add_exercise_input_dialog, null)
+
+        return AlertDialog.Builder(context)
+            .setView(addExercise)
+            .show()
+    }
 
 
         private fun loadExercises() {
