@@ -22,7 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Exercise"
-        android:onClick="onAddExerciseButtonClick"/>
+        android:onClick="onAddExerciseButtonClick"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"/>
 
     <Button
         android:id="@+id/addDoneExercise"

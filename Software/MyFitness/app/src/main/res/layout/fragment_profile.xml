@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_dark"
-    tools:context=".fragments.ProfileFragment">
+    tools:context=".fragments.ProfileFragment"
+    android:id="@+id/mainlayoutProfile">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -15,5 +16,17 @@
         android:textSize="25dp"
         android:padding="15dp"
         />
+
+    <Button
+        android:id="@+id/button_edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Uređivanje profila"
+        android:onClick="onButtonClick"
+        android:layout_gravity="top|right"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        />
+
 
 </FrameLayout>

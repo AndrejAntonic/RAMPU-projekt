@@ -61,5 +61,11 @@
     <string name="experience">Vaše iskustvo:</string>
     <string name="days">Koliko dana u tjednu želite vježbati:</string>
     <string name="plan">Plan</string>
+    <string name="name">Ime:</string>
+    <string name="lastname">Prezime:</string>
+    <string name="username">Korisničko ime:</string>
+    <string name="password">Lozinka:</string>
+    <string name="email">Email:</string>
+    <string name="edit_user">Spremi</string>
 
 </resources>

@@ -35,9 +35,6 @@ class ExercisesFragment : Fragment() {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_exercises, container, false)
 
-        val button = v.findViewById<Button>(R.id.addExerciseButton)
-        button.setOnClickListener {
-
             val button = v.findViewById<Button>(R.id.addExerciseButton)
             button.setOnClickListener {
                 val frgmntAddExercise = AddExerciseFragment()
@@ -45,7 +42,7 @@ class ExercisesFragment : Fragment() {
                 transaction.replace(R.id.mainlayout, frgmntAddExercise)
                 transaction.commit()
             }
-        }
+
 
             val btnAddDoneExercise = v.findViewById<Button>(R.id.addDoneExercise)
 
