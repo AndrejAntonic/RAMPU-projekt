@@ -1,10 +1,11 @@
 package model
 
 data class Exercise(
-    val bodyType: String,
-    val description: String,
-    val name: String,
-    val imageUrl: String,
-    val difficulty: Int,
-    val equipment: String
+    var name: String = "",
+    var description: String = "",
+    var imageUrl: String = "",
+    var difficulty: Int = 0,
+    var equipment: String = "",
+    var bodyType: String = "",
+    @JvmField var timestamp: Long = 0
 )

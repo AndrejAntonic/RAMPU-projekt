@@ -1,6 +1,7 @@
 package com.example.myfitness.DataAccessObjects
 
 import android.R
+import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -13,9 +14,28 @@ import model.Exercise
 
 object ExerciseDAO {
 
+//    fun addExercise(exercise: Exercise, db: FirebaseFirestore) {
+//        val exercisesRef = db.collection("exercises")
+//        exercisesRef.add(exercise)
+//            .addOnSuccessListener {
+//                Log.d("ExerciseDAO", "Vježba dodana!")
+//            }
+//            .addOnFailureListener {
+//                Log.e("ExerciseDAO", "Greška prilikom dodavanja vježbe!")
+//            }
+//    }
+
     fun addExercise(exercise: Exercise, db: FirebaseFirestore) {
         val exercisesRef = db.collection("exercises")
-        exercisesRef.add(exercise)
+        val data = hashMapOf(
+            "name" to exercise.name,
+            "description" to exercise.description,
+            "imageUrl" to exercise.imageUrl,
+            "difficulty" to exercise.difficulty,
+            "equipment" to exercise.equipment,
+            "body-part" to exercise.bodyType
+        )
+        exercisesRef.document(exercise.name).set(data)
             .addOnSuccessListener {
                 Log.d("ExerciseDAO", "Vježba dodana!")
             }
@@ -23,6 +43,7 @@ object ExerciseDAO {
                 Log.e("ExerciseDAO", "Greška prilikom dodavanja vježbe!")
             }
     }
+
 
     fun fillSpinner(spinner: Spinner) {
         spinner.adapter = ArrayAdapter(
@@ -34,23 +55,25 @@ object ExerciseDAO {
 
     suspend fun getAllExercises() : MutableList<Exercise> {
         val db = Firebase.firestore
-        var exercisesList = mutableListOf<Exercise>()
+        val exercisesList = mutableListOf<Exercise>()
+
         val exercises = db.collection("exercises")
+
         try {
             val result = exercises.get().await()
-            exercisesList = result.toObjects(Exercise::class.java).toMutableList()
-//            for (temp in result) {
-//                exercisesList.add(temp)
-////                Log.d(TAG, "${temp.id} => ${temp.data}")
-//            }
-
+            for (temp in result) {
+                val exercise = temp.toObject(Exercise::class.java)
+                println("VJEZBAAAAAAAA")
+                println(exercise)
+                exercisesList.add(exercise)
+            }
             return exercisesList
         } catch (e: Exception) {
-//            Log.w(TAG, "Error getting documents: ", exception)
-
-            return mutableListOf() // returning an empty list in case the fetch fails
+            throw e
         }
     }
+
+
 
     suspend fun getAllExerciseNames() : MutableList<String> {
         val db = Firebase.firestore
@@ -64,11 +87,9 @@ object ExerciseDAO {
                 exercisesList.add(temp.id)
 //                Log.d(TAG, "${temp.id} => ${temp.data}")
             }
-
             return exercisesList
         } catch (e: Exception) {
 //            Log.w(TAG, "Error getting documents: ", exception)
-
             return mutableListOf() // returning an empty list in case the fetch fails
         }
     }

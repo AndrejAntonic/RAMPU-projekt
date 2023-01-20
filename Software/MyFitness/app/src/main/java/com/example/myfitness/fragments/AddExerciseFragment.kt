@@ -60,10 +60,10 @@ class AddExerciseFragment : Fragment() {
             val exercise = Exercise(
                 exerciseName,
                 exerciseDescription,
-                exerciseBodyPart,
                 imageUrl,
                 difficulty,
-                equipment
+                equipment,
+                exerciseBodyPart
             )
             ExerciseDAO.addExercise(exercise, db)
             Toast.makeText(requireContext(), "Vježba dodana!", Toast.LENGTH_SHORT).show()

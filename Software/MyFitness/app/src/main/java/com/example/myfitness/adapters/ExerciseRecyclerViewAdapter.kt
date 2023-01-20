@@ -14,12 +14,12 @@ class ExerciseRecyclerViewAdapter(private val exercises: List<Exercise>) : Recyc
         return viewHolder
     }
 
-    override fun getItemCount(): Int {
-        return exercises.size
-    }
-
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
         val exercise = exercises[position]
         holder.bind(exercise)
+    }
+
+    override fun getItemCount(): Int {
+        return exercises.size
     }
 }

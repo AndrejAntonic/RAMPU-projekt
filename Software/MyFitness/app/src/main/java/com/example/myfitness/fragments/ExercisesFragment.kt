@@ -2,6 +2,7 @@ package com.example.myfitness.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -90,25 +91,22 @@ class ExercisesFragment : Fragment() {
     }
 
 
-        private fun loadExercises() {
-            val scope = CoroutineScope(Dispatchers.Main)
-            scope.launch {
-                exercises = ExerciseDAO.getAllExercises()
-                exercises.forEach( {
-                    println("TU JE")
-                    println(it.name)
-                })
-                withContext(Dispatchers.Main) {
-                    val adapter = ExerciseRecyclerViewAdapter(exercises)
-                    recyclerView.adapter = adapter
-                    println(exercises)
-                }
-
+    private fun loadExercises() {
+        val scope = CoroutineScope(Dispatchers.Main)
+        scope.launch {
+            val exercisesFun = ExerciseDAO.getAllExercises()
+            exercisesFun.forEach {
+                Log.d("ExerciseFragment", "Exercise name: ${it.name}")
             }
+            val adapter = ExerciseRecyclerViewAdapter(exercisesFun)
+
+            recyclerView.adapter = adapter
         }
+    }
 
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
             val exerciseRecyclerView = view.findViewById<RecyclerView>(R.id.exerciseRecyclerView)
