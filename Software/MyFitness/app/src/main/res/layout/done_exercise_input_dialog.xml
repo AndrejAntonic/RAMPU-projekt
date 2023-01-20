@@ -36,8 +36,8 @@
         android:layout_marginRight="10dp"
         android:inputType="text" />
 
-    <ListView
-        android:id="@+id/listview_exercises"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_exercise_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_dark_2"
