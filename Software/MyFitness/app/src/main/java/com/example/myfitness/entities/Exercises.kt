@@ -1,3 +1,3 @@
 package com.example.myfitness.entities
 
-data class Exercises (val exercise: String)
+data class Exercises (var exercise: String)
