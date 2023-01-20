@@ -14,10 +14,9 @@ object DoneExercisesDAO {
             "sets" to doneExercise.sets,
             "reps" to doneExercise.reps,
             "date" to doneExercise.date,
-            "username" to doneExercise.username
         )
         try {
-            db.collection("doneExercises").add(user)
+            db.collection("doneExercises").document(doneExercise.username).collection("savedExercises").add(user)
             return true
         } catch (e: Exception) {
             return false
