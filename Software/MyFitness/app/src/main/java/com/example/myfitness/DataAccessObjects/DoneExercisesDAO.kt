@@ -8,17 +8,16 @@ import model.DoneExercise
 import model.Exercise
 
 object DoneExercisesDAO {
-    fun add(doneExercise: DoneExercise) : Boolean {
+    fun add(doneExercise: DoneExercise, username: String) : Boolean {
         val db = Firebase.firestore
-        val user = hashMapOf(
-            "exerciseName" to doneExercise.exerciseName,
+        val exerciseMap = hashMapOf(
             "weight" to doneExercise.weight,
             "sets" to doneExercise.sets,
             "reps" to doneExercise.reps,
             "date" to doneExercise.date,
         )
         try {
-            db.collection("doneExercises").document(doneExercise.username).collection("savedExercises").add(user)
+            db.collection("doneExercises").document(username).collection(doneExercise.exerciseName).add(exerciseMap)
             return true
         } catch (e: Exception) {
             return false
@@ -28,19 +27,18 @@ object DoneExercisesDAO {
     suspend fun getAllDoneExercisesForUser(username : String) : MutableList<DoneExercise> {
         val db = Firebase.firestore
         val exercisesList = mutableListOf<DoneExercise>()
-
         val exercises = db.collection("doneExercises").document(username).collection("savedExercises")
 
         try {
             val result = exercises.get().await()
             for (document in result) {
                 val exercise = document.toObject(DoneExercise::class.java)
-                println("Exercise:")
                 println(exercise)
                 exercisesList.add(exercise)
             }
             return exercisesList
         } catch (e: Exception) {
+            println(e)
             return mutableListOf()
         }
     }
