@@ -31,15 +31,15 @@ class InputActivity : AppCompatActivity() {
 
         genderMale.setOnClickListener{
             val firstEdit = editWeight.text.toString().toInt()
-            val secondEdit = editWeight.text.toString().toInt()
-            val thirdEdit = editWeight.text.toString().toInt()
+            val secondEdit = editHeight.text.toString().toInt()
+            val thirdEdit = editAge.text.toString().toInt()
             Male(firstEdit, secondEdit, thirdEdit)
         }
 
         genderFemale.setOnClickListener {
             val firstEdit = editWeight.text.toString().toInt()
-            val secondEdit = editWeight.text.toString().toInt()
-            val thirdEdit = editWeight.text.toString().toInt()
+            val secondEdit = editHeight.text.toString().toInt()
+            val thirdEdit = editAge.text.toString().toInt()
             Female(firstEdit, secondEdit, thirdEdit)
         }
     }
