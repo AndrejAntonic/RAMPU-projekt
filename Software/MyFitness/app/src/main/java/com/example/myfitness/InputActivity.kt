@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.myfitness.DataAccessObjects.InputDAO
 import com.example.myfitness.DataAccessObjects.UsersDAO
+import com.example.myfitness.utils.Validator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -44,6 +45,16 @@ class InputActivity : AppCompatActivity() {
             val providedAge = editAge.text.toString()
             val providedActivity = editActivity.text.toString()
             val providedGender = editGender.text.toString()
+
+
+            var errors = false
+
+            if(!Validator.isActivityValid(providedActivity)){
+                editActivity.setError("Aktivnost mora biti označena sa brojem 1-7 (dana u tjednu)!")
+                errors = true
+            }
+
+            if (errors) return@setOnClickListener
 
             val that = this
 

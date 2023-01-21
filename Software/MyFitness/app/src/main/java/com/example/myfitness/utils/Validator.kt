@@ -29,5 +29,15 @@ class Validator {
             if (password.length < 6) return false
             return true
         }
+
+        fun isActivityValid(activity : String) : Boolean {
+            var isValid = true
+            val expression = "^[0-7]$"
+            val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
+            val matcher = pattern.matcher(activity)
+            if (!matcher.matches()) isValid = false
+            return isValid
+
+        }
     }
 }
