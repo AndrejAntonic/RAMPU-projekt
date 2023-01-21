@@ -19,7 +19,7 @@ object ExercisesDAO {
         val exercisesList = mutableListOf<Exercises>()
 
         val exercise = db.collection("exercises")
-        val query = exercise.whereEqualTo("body-part", bodyPart)
+        val query = exercise.whereEqualTo("bodyType", bodyPart)
 
         try {
             val result = query.get().await()
