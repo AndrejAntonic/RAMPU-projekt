@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 import com.example.myfitness.adapters.ExerciseRecyclerViewAdapter
 import com.example.myfitness.helpers.AddExerciseDialog
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.withContext
 import model.Exercise
 
 
@@ -98,8 +97,8 @@ class ExercisesFragment : Fragment() {
             exercisesFun.forEach {
                 Log.d("ExerciseFragment", "Exercise name: ${it.name}")
             }
+            recyclerView.layoutManager = LinearLayoutManager(context)
             val adapter = ExerciseRecyclerViewAdapter(exercisesFun)
-
             recyclerView.adapter = adapter
         }
     }
