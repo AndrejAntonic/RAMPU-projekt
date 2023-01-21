@@ -39,5 +39,15 @@ class Validator {
             return isValid
 
         }
+
+        fun isGenderValid(activity : String) : Boolean {
+            var isValid = true
+            val expression = "^(Male)|(male)|(Female)|(female)$"
+            val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
+            val matcher = pattern.matcher(activity)
+            if (!matcher.matches()) isValid = false
+            return isValid
+
+        }
     }
 }

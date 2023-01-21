@@ -54,6 +54,11 @@ class InputActivity : AppCompatActivity() {
                 errors = true
             }
 
+            if(!Validator.isGenderValid(providedGender)){
+                editGender.setError("Prihvatljivi unosi: 'Male', 'male', 'Female', 'female'")
+                errors = true
+            }
+
             if (errors) return@setOnClickListener
 
             val that = this
