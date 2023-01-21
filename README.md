@@ -19,7 +19,7 @@ Oznaka | Naziv | Kratki opis | Odgovorni član tima
 ------ | ----- | ----------- | -------------------
 F01 | Registracija | Sustav će omogućiti registraciju korisnika što čime će aplikacija moći personalizirati njegov doživljaj i korisničko iskustvo | Tim Juić
 F02 | Prijava u aplikaciju | Sustav će omogućiti da samo prijavljeni korisnici imaju pristup podacima. Korisnik će se prijavljivati podacima koje je unio tijekom registracije u aplikaciju | Andrej Antonić
-F03 | Unos tjelesnih podataka i fitness planova | Nakon registracije, sustav će tražiti unos podataka kao što su tjelesna težina, visina, tjelesna aktivnost, godine i spol. | Juraj Gaši
+F03 | Unos tjelesnih podataka | Nakon registracije, sustav će tražiti unos podataka kao što su tjelesna težina, visina, tjelesna aktivnost, godine i spol. | Juraj Gaši
 F04 | Pregled postojećih fitness vježbi | Sustav će omogućiti pregled velikog broja fitness vježbi koje postoje, za svaku od kojih će se prikazivati naslov, slika ili poveznica na video te opis vježbe | Matija Kljaić
 F05 | Dodavanje novih fitness vježbi  | Sustav će omogućiti kreiranje dodanih fitness vježbi koje ne postoje u bazi. Novododane vježbe biti će vidljive samo korisniku koji ih je kreirao | Matija Kljaić
 F06 | Ručno kreiranje vlastitog plana treninga | Korisnik će moći ručno izraditi vlastiti tjedni plan treninga dodavajući postojeće fitness vježbe u aplikaciji ili kreiranjem vlastite/nove vježbe | Juraj Gaši
