@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_dark"
-    tools:context=".AddExerciseFragment"
     android:id="@+id/mainlayout">
 
     <TextView
@@ -63,8 +61,8 @@
         app:layout_constraintTop_toBottomOf="@+id/exerciseDescriptionEditText" />
 
 
-    <EditText
-        android:id="@+id/imageUrlEditText"
+    <ImageView
+        android:id="@+id/addExerciseImageView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -73,15 +71,33 @@
         android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
         android:fontFamily="@font/montserratbold"
-        android:hint="@string/url"
-        android:autofillHints="@string/url"
         android:padding="14dp"
-        android:inputType="textUri"
+        android:inputType="text"
         android:textColor="@color/white"
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exerciseNameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/exerciseNameEditText"/>
+
+    <Button
+        android:id="@+id/addImageBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:fontFamily="@font/montserratbold"
+        android:text="@string/add_image"
+        android:padding="14dp"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/hint_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addExerciseImageView" />
+
 
     <Spinner
         android:id="@+id/bodyPartSpinner"
@@ -101,7 +117,7 @@
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageUrlEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/addImageBtn" />
 
 
 
