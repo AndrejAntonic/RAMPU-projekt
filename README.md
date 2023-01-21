@@ -12,7 +12,7 @@ Matija Kljaić | mkljaic20@student.foi.hr | 0016147637 | mkljaic20 | G01
 
 ## Opis domene
 
-Aplikacija će korisnicima omogućiti unos tjelesnih podataka i fitnes cilj. Aplikacija će generirati plan treninga i omogućiti korisniku unošenje vlastitih vježbi. Korisnik će moći pratit svoj napredak kroz razne grafove koji će prikazivati promjene u tjelesnoj težini i kilažu koju korisnici dižu prilikom odlaska na trening.
+Aplikacija će korisnicima omogućiti unos tjelesnih podataka. Aplikacija će generirati plan treninga i omogućiti korisniku unošenje vlastitih vježbi. Korisnik će moći pratit svoj napredak kroz razne grafove koji će prikazivati promjene u tjelesnoj težini i kilažu koju korisnici dižu prilikom odlaska na trening.
 ## Specifikacija projekta
 
 Oznaka | Naziv | Kratki opis | Odgovorni član tima
