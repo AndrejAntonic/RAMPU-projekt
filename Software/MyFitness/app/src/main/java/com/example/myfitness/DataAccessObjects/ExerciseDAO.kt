@@ -1,7 +1,6 @@
 package com.example.myfitness.DataAccessObjects
 
 import android.R
-import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -33,7 +32,7 @@ object ExerciseDAO {
             "imageUrl" to exercise.imageUrl,
             "difficulty" to exercise.difficulty,
             "equipment" to exercise.equipment,
-            "body-part" to exercise.bodyType
+            "bodyType" to exercise.bodyType
         )
         exercisesRef.document(exercise.name).set(data)
             .addOnSuccessListener {
@@ -61,9 +60,9 @@ object ExerciseDAO {
 
         try {
             val result = exercises.get().await()
-            for (temp in result) {
-                val exercise = temp.toObject(Exercise::class.java)
-                println("VJEZBAAAAAAAA")
+            for (document in result) {
+                val exercise = document.toObject(Exercise::class.java)
+                println("Exercise:")
                 println(exercise)
                 exercisesList.add(exercise)
             }
@@ -72,6 +71,7 @@ object ExerciseDAO {
             throw e
         }
     }
+
 
 
 
