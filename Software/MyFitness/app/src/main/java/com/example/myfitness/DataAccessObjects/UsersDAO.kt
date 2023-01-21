@@ -1,6 +1,7 @@
 package com.example.myfitness.DataAccessObjects
 
 
+import android.content.Context
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
@@ -50,5 +51,10 @@ object UsersDAO {
             .get().await()
 
         return user.size() > 0
+    }
+
+    fun getCurrentUser(context : Context) : String {
+        val prefs = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+        return prefs.getString("username", "")!!
     }
 }
