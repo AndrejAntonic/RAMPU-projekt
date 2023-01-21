@@ -12,7 +12,6 @@ class ExerciseListRecyclerViewAdapter(private val mList: List<String>) : Recycle
     private var listener: OnItemClickListener? = null
     private var filteredItems: List<String> = mList.toList()
 
-    // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.card_done_exercise_dialog, parent, false)
@@ -20,24 +19,21 @@ class ExerciseListRecyclerViewAdapter(private val mList: List<String>) : Recycle
         return ViewHolder(view)
     }
 
-    // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val item = filteredItems[position]
         holder.textView.text = item
-//        holder.imageView.setImageResource(ItemsViewModel.image)
+//        holder.imageView.setImageResource(item.image)
 
         holder.itemView.setOnClickListener {
             listener?.onItemClick(position, item)
         }
     }
 
-    // return the number of the items in the list
     override fun getItemCount(): Int {
         return filteredItems.size
     }
 
-    // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val imageView: ImageView = itemView.findViewById(R.id.card_imageview)
         val textView: TextView = itemView.findViewById(R.id.card_done_exercise_dialog_textview)

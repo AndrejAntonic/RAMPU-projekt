@@ -37,25 +37,14 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
 
     suspend fun load() {
 
-//        var arrayAdapter : ArrayAdapter<*> = ArrayAdapter(context, R.layout.card_done_exercise_dialog, allExerciseNames)
 
         allExerciseNames = ExerciseDAO.getAllExerciseNames()
-
         recycleView.layoutManager = LinearLayoutManager(context)
-
         val adapter = ExerciseListRecyclerViewAdapter(allExerciseNames)
         recycleView.adapter = adapter
 
-//        arrayAdapter = ArrayAdapter(context, R.layout.card_done_exercise_dialog, allExerciseNames)
-//        searchListView.adapter = arrayAdapter
-
-
         adapter.setOnItemClickListener(object : ExerciseListRecyclerViewAdapter.OnItemClickListener {
             override fun onItemClick(position: Int, item: String) {
-                // handle click event
-                println(item)
-                println(position)
-
                 selectedExercise = item
                 searchExerciseEditText.setText(selectedExercise)
                 recycleView.visibility = View.GONE
@@ -78,14 +67,6 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
                 recycleView.visibility = View.GONE
             }
         }
-
-//        recycleView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-//            // This is your listview's selected item
-//            selectedExercise = parent.getItemAtPosition(position) as String
-//            println(selectedExercise)
-//            searchExerciseEditText.setText(selectedExercise)
-//            recycleView.visibility = View.GONE
-//        }
 
 
         saveButton.setOnClickListener {
