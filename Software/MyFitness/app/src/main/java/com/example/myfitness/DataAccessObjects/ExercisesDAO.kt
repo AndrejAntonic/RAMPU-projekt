@@ -14,12 +14,12 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 object ExercisesDAO {
-    suspend fun getExercise(bodyPart: String): MutableList<Exercises> {
+    suspend fun getExercise(bodyPart: String, difficulty: Int): MutableList<Exercises> {
         val db = Firebase.firestore
         val exercisesList = mutableListOf<Exercises>()
 
         val exercise = db.collection("exercises")
-        val query = exercise.whereEqualTo("body-part", bodyPart)
+        val query = exercise.whereEqualTo("bodyType", bodyPart)
 
         try {
             val result = query.get().await()
@@ -34,12 +34,5 @@ object ExercisesDAO {
 
             return exercisesList
         }
-
-
-        /*
-        = runBlocking kod povratnog tipa
-        val proba = Firebase.firestore.collection("exercises").whereEqualTo("body-part", bodyPart).get().await()
-        proba.toObjects(Plan::class.java)*/
-
     }
 }
