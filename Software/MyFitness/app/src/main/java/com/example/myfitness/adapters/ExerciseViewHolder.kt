@@ -7,16 +7,19 @@ import com.example.myfitness.R
 import model.Exercise
 
 class ExerciseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val exerciseName: TextView
-    private val exerciseDescription: TextView
+    private val name: TextView
+    private val description: TextView
+    private val difficulty : TextView
     init {
-        exerciseName = view.findViewById(R.id.naziv_vjezbe_rv)
-        exerciseDescription = view.findViewById(R.id.opis_vjezbe_rv)
+        name = view.findViewById(R.id.naziv_vjezbe_rv)
+        description = view.findViewById(R.id.opis_vjezbe_rv)
+        difficulty = view.findViewById((R.id.difficulty_rv))
     }
 
     fun bind(exercise: Exercise) {
-        exerciseName.text = exercise.name
-        exerciseDescription.text = exercise.description
+        name.text = exercise.name
+        description.text = "Opis: " + exercise.description
+        difficulty.text = "Težina:" + exercise.difficulty.toString()
     }
 }
 

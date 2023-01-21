@@ -24,7 +24,7 @@ class AddExerciseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_add_exercise, container, false)
+        val view = inflater.inflate(R.layout.add_exercise_input_dialog, container, false)
 
         val spinnerDiff = view.findViewById<Spinner>(R.id.difficultySpinner)
         val difficultyAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, difficulties)
@@ -60,10 +60,10 @@ class AddExerciseFragment : Fragment() {
             val exercise = Exercise(
                 exerciseName,
                 exerciseDescription,
-                exerciseBodyPart,
                 imageUrl,
                 difficulty,
-                equipment
+                equipment,
+                exerciseBodyPart
             )
             ExerciseDAO.addExercise(exercise, db)
             Toast.makeText(requireContext(), "Vježba dodana!", Toast.LENGTH_SHORT).show()
