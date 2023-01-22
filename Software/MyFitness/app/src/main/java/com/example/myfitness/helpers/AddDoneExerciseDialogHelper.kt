@@ -46,20 +46,17 @@ class AddDoneExerciseDialogHelper(private val context: Context) {
 
         searchExerciseEditText = dialog.findViewById(R.id.exercisePicker)
         recycleView = dialog.findViewById(R.id.rv_exercise_picker)
-         selectedExercise = ""
-         saveButton = dialog.findViewById(R.id.btn_save_doneexercise_dialog)
-         cancelButton = dialog.findViewById(R.id.btn_cancel_doneexercise_dialog)
-
-         allExerciseNames = mutableListOf()
-
-         setsInput = dialog.findViewById(R.id.setsInput)
-         repsInput = dialog.findViewById(R.id.repsInput)
-         weightInput = dialog.findViewById(R.id.weightInput)
-         dateinput = dialog.findViewById(R.id.dateInput_dialog)
-         selectedDateTime = Calendar.getInstance()
-         sdfDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+        selectedExercise = ""
+        saveButton = dialog.findViewById(R.id.btn_save_doneexercise_dialog)
+        cancelButton = dialog.findViewById(R.id.btn_cancel_doneexercise_dialog)
+        allExerciseNames = mutableListOf()
+        setsInput = dialog.findViewById(R.id.setsInput)
+        repsInput = dialog.findViewById(R.id.repsInput)
+        weightInput = dialog.findViewById(R.id.weightInput)
+        dateinput = dialog.findViewById(R.id.dateInput_dialog)
+        selectedDateTime = Calendar.getInstance()
+        sdfDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
     }
-
 
     suspend fun load() {
 
@@ -73,6 +70,7 @@ class AddDoneExerciseDialogHelper(private val context: Context) {
                 selectedExercise = item
                 searchExerciseEditText.setText(selectedExercise)
                 recycleView.visibility = View.GONE
+                searchExerciseEditText.error = null
             }
         })
 
@@ -114,7 +112,6 @@ class AddDoneExerciseDialogHelper(private val context: Context) {
         activateDateTimeListeners()
     }
 
-
     fun activateDateTimeListeners() {
         dateinput.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
@@ -129,7 +126,7 @@ class AddDoneExerciseDialogHelper(private val context: Context) {
                     selectedDateTime.get(Calendar.DAY_OF_MONTH)
                 ).show()
                 view.clearFocus()
-                dateinput.setError(null)
+                dateinput.error = null
             }
         }
     }
@@ -137,23 +134,23 @@ class AddDoneExerciseDialogHelper(private val context: Context) {
     private fun validateInput() : Boolean {
         var allValid = true
         if (selectedExercise.length == 0) {
-            searchExerciseEditText.setError("Potrebno odabrati vježbu!")
+            searchExerciseEditText.error = "Potrebno odabrati vježbu!"
             allValid = false
         }
         if (weightInput.text.length == 0) {
-            weightInput.setError("Potrebno unijeti kilažu!")
+            weightInput.error = "Potrebno unijeti kilažu!"
             allValid = false
         }
         if (setsInput.text.length == 0) {
-            setsInput.setError("Potrebno unijeti broj serija!")
+            setsInput.error = "Potrebno unijeti broj serija!"
             allValid = false
         }
         if (repsInput.text.length == 0) {
-            repsInput.setError("Potrebno unijeti broj ponavljanja!")
+            repsInput.error = "Potrebno unijeti broj ponavljanja!"
             allValid = false
         }
         if (dateinput.text.length == 0) {
-            dateinput.setError("Potrebno odabrati datum!")
+            dateinput.error = "Potrebno odabrati datum!"
             allValid = false
         }
         return allValid
