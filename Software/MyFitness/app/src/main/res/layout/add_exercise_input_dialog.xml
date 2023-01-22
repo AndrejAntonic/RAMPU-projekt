@@ -61,43 +61,43 @@
         app:layout_constraintTop_toBottomOf="@+id/exerciseDescriptionEditText" />
 
 
-    <ImageView
-        android:id="@+id/addExerciseImageView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/rounded_style"
-        android:backgroundTint="@color/bg_dark_2"
-        android:fontFamily="@font/montserratbold"
-        android:padding="14dp"
-        android:inputType="text"
-        android:textColor="@color/white"
-        android:textColorHint="@color/hint_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+<!--    <ImageView-->
+<!--        android:id="@+id/addExerciseImageView"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        android:background="@drawable/rounded_style"-->
+<!--        android:backgroundTint="@color/bg_dark_2"-->
+<!--        android:fontFamily="@font/montserratbold"-->
+<!--        android:padding="14dp"-->
+<!--        android:inputType="text"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textColorHint="@color/hint_color"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
 
-        app:layout_constraintTop_toBottomOf="@+id/exerciseNameEditText"/>
+<!--        app:layout_constraintTop_toBottomOf="@+id/exerciseNameEditText"/>-->
 
-    <Button
-        android:id="@+id/addImageBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/rounded_style"
-        android:backgroundTint="@color/bg_dark_2"
-        android:fontFamily="@font/montserratbold"
-        android:text="@string/add_image"
-        android:padding="14dp"
-        android:inputType="text"
-        android:textColor="@color/white"
-        android:textColorHint="@color/hint_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addExerciseImageView" />
+<!--    <Button-->
+<!--        android:id="@+id/addImageBtn"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        android:background="@drawable/rounded_style"-->
+<!--        android:backgroundTint="@color/bg_dark_2"-->
+<!--        android:fontFamily="@font/montserratbold"-->
+<!--        android:text="@string/add_image"-->
+<!--        android:padding="14dp"-->
+<!--        android:inputType="text"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textColorHint="@color/hint_color"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/addExerciseImageView" />-->
 
 
     <Spinner
@@ -118,7 +118,7 @@
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addImageBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/exerciseNameEditText" />
 
 
 

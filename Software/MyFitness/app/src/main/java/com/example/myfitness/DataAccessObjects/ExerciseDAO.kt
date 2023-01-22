@@ -27,19 +27,37 @@ object ExerciseDAO {
 //            }
 //    }
 
-    fun addExercise(exercise: Exercise, db: FirebaseFirestore, image: Bitmap) {
+//    fun addExercise(exercise: Exercise, db: FirebaseFirestore, image: Bitmap) {
+//        val exercisesRef = db.collection("exercises")
+//        val baos = ByteArrayOutputStream()
+//        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+//        val imageBytes = baos.toByteArray()
+//        val imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT)
+//        val data = hashMapOf(
+//            "name" to exercise.name,
+//            "description" to exercise.description,
+//            "difficulty" to exercise.difficulty,
+//            "equipment" to exercise.equipment,
+//            "bodyType" to exercise.bodyType,
+//            "image" to imageString
+//        )
+//        exercisesRef.document(exercise.name).set(data)
+//            .addOnSuccessListener {
+//                Log.d("ExerciseDAO", "Vježba dodana!")
+//            }
+//            .addOnFailureListener {
+//                Log.e("ExerciseDAO", "Greška prilikom dodavanja vježbe!")
+//            }
+//    }
+
+    fun addExercise(exercise: Exercise, db: FirebaseFirestore) {
         val exercisesRef = db.collection("exercises")
-        val baos = ByteArrayOutputStream()
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val imageBytes = baos.toByteArray()
-        val imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT)
         val data = hashMapOf(
             "name" to exercise.name,
             "description" to exercise.description,
             "difficulty" to exercise.difficulty,
             "equipment" to exercise.equipment,
             "bodyType" to exercise.bodyType,
-            "image" to imageString
         )
         exercisesRef.document(exercise.name).set(data)
             .addOnSuccessListener {

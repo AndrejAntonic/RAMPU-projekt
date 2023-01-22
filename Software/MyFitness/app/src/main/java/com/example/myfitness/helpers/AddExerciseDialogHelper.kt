@@ -30,23 +30,26 @@ class AddExerciseDialog(private val activity: Activity, val dialog: AlertDialog,
     private val PICK_IMAGE = 100
     private var pickedPhoto: Uri? = null
     private var pickedBitMap: Bitmap? = null
-    lateinit var imageView: ImageView
+    //lateinit var imageView: ImageView
 
 
     init {
-        val addExerciseView = LayoutInflater.from(context).inflate(R.layout.add_exercise_input_dialog, null)
+        val addExerciseView =
+            LayoutInflater.from(context).inflate(R.layout.add_exercise_input_dialog, null)
         dialog.setContentView(addExerciseView)
 
-        imageView = addExerciseView.findViewById(R.id.addExerciseImageView)
+        //imageView = addExerciseView.findViewById(R.id.addExerciseImageView)
 
         val spinnerDiff = addExerciseView.findViewById<Spinner>(R.id.difficultySpinner)
 
-        val difficultyAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, difficulties)
+        val difficultyAdapter =
+            ArrayAdapter(context, android.R.layout.simple_spinner_item, difficulties)
         difficultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerDiff.adapter = difficultyAdapter
 
         val spinnerEquip = addExerciseView.findViewById<Spinner>(R.id.equipmentSpinner)
-        val equipmentAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, equipments)
+        val equipmentAdapter =
+            ArrayAdapter(context, android.R.layout.simple_spinner_item, equipments)
         equipmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerEquip.adapter = equipmentAdapter
 
@@ -62,16 +65,24 @@ class AddExerciseDialog(private val activity: Activity, val dialog: AlertDialog,
         val addExerciseBtn = addExerciseView.findViewById<Button>(R.id.addExerciseBtn)
         addExerciseBtn.setOnClickListener {
 
-            val exerciseName = addExerciseView.findViewById<EditText>(R.id.exerciseNameEditText).text.toString()
-            val exerciseDescription = addExerciseView.findViewById<EditText>(R.id.exerciseDescriptionEditText).text.toString()
+            val exerciseName =
+                addExerciseView.findViewById<EditText>(R.id.exerciseNameEditText).text.toString()
+            val exerciseDescription =
+                addExerciseView.findViewById<EditText>(R.id.exerciseDescriptionEditText).text.toString()
             val exerciseBodyPart = spinnerBodyPart.selectedItem.toString()
             val difficulty = spinnerDiff.selectedItem.toString().toInt()
             val equipment = spinnerEquip.selectedItem.toString()
+//          imageView.setImageResource()
+//            if (imageView.drawable != null) {
+//                val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+//                val exercise = Exercise(
+//                    exerciseName,
+//                    exerciseDescription,
+//                    difficulty,
+//                    equipment,
+//                    exerciseBodyPart
+//                )
 
-
-//            imageView.setImageResource()
-            if(imageView.drawable != null) {
-                val bitmap = (imageView.drawable as BitmapDrawable).bitmap
                 val exercise = Exercise(
                     exerciseName,
                     exerciseDescription,
@@ -80,18 +91,19 @@ class AddExerciseDialog(private val activity: Activity, val dialog: AlertDialog,
                     exerciseBodyPart
                 )
 
-                ExerciseDAO.addExercise(exercise, db, bitmap)
+                ExerciseDAO.addExercise(exercise, db)
                 Toast.makeText(context, "Vježba dodana!", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
-            } else {
-                Toast.makeText(context, "Odaberite sliku!", Toast.LENGTH_SHORT).show()
-            }
+//            } else {
+//                Toast.makeText(context, "Odaberite sliku!", Toast.LENGTH_SHORT).show()
+//            }
         }
 
         val closeButton = addExerciseView.findViewById<Button>(R.id.closeBtn)
         closeButton.setOnClickListener {
             dialog.dismiss()
         }
+    }
 //        val selectImageBtn = addExerciseView.findViewById<Button>(R.id.addImageBtn)
 //        selectImageBtn.setOnClickListener {
 //            imageView= addExerciseView.findViewById(R.id.addExerciseImageView)
@@ -99,25 +111,25 @@ class AddExerciseDialog(private val activity: Activity, val dialog: AlertDialog,
 //            activity.startActivityForResult(intent, PICK_IMAGE)
 //        }
 
-        //val selectImageView = addExerciseView.findViewById<ImageView>(R.id.addExerciseImageView)
-        imageView.setOnClickListener{
-            openGallery()
-            println("NAKON PALJENAJ")
-        }
-
-    }
-
-    fun openGallery () {
-//        val intent = Intent(Intent.ACTION_GET_CONTENT)
-//        intent.type = "image/jpg"
-//        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
-//        println("INTENT " + intent)
+//        //val selectImageView = addExerciseView.findViewById<ImageView>(R.id.addExerciseImageView)
+//        imageView.setOnClickListener{
+//            openGallery()
+//            println("NAKON PALJENAJ")
+//        }
 //
-//        startForResult.launch(intent)
-
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        activity.startActivityForResult(intent, PICK_IMAGE)
-    }
+//    }
+//
+//    fun openGallery () {
+////        val intent = Intent(Intent.ACTION_GET_CONTENT)
+////        intent.type = "image/jpg"
+////        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+////        println("INTENT " + intent)
+////
+////        startForResult.launch(intent)
+//
+//        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//        activity.startActivityForResult(intent, PICK_IMAGE)
+//    }
 
 //    val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 //            result: ActivityResult ->
@@ -181,20 +193,20 @@ class AddExerciseDialog(private val activity: Activity, val dialog: AlertDialog,
 //        }
 //    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        println("USAO U ONACTIVITYRESULT")
-        super.onActivityResult(requestCode, resultCode, data)
-        println("PROSAO SUPER")
-        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
-            println("USAO U IF")
-            if (data != null) {
-                println("DATA NIJE NULL DATA JE " + data)
-                val uri = data.data
-                println("URI JE" + uri)
-                imageView.setImageURI(uri)
-            }
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        println("USAO U ONACTIVITYRESULT")
+//        super.onActivityResult(requestCode, resultCode, data)
+//        println("PROSAO SUPER")
+//        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+//            println("USAO U IF")
+//            if (data != null) {
+//                println("DATA NIJE NULL DATA JE " + data)
+//                val uri = data.data
+//                println("URI JE" + uri)
+//                imageView.setImageURI(uri)
+//            }
+//        }
+//    }
 
 }
 
