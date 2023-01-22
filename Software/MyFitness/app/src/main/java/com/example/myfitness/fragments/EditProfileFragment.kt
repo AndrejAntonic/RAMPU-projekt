@@ -39,8 +39,19 @@ class EditProfileFragment : Fragment() {
         etUsername = v.findViewById(R.id.usernameEdit)
         etPassword = v.findViewById(R.id.passwordEdit)
         etEmail = v.findViewById(R.id.emailEdit)
+
         btnEditUser = v.findViewById(R.id.saveChangesBtn)
         btnCancel = v.findViewById(R.id.cancelBtn)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val currentUser = UsersDAO.getUserInfo(requireContext())
+            if(currentUser.isNotEmpty()){
+                etWeight.setText(currentUser[0].weight.toString())
+                etUsername.setText(currentUser[0].username)
+                etEmail.setText(currentUser[0].email)
+                etPassword.setText(currentUser[0].password)
+            }
+        }
 
         btnEditUser.setOnClickListener {
             val weight = etWeight.text.toString().toDouble()
@@ -50,7 +61,7 @@ class EditProfileFragment : Fragment() {
 
             val scope = CoroutineScope(Dispatchers.IO)
             scope.launch{
-                UsersDAO.EditUser(requireContext(), email, password, weight)
+                UsersDAO.EditUser(requireContext(), username, email, password, weight)
             }
 
             onCloseCallback?.invoke()

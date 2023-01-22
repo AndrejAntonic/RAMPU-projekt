@@ -39,7 +39,6 @@ class ProfileFragment : Fragment() {
                 etEmail.setText(currentUser[0].email)
             }
         }
-
         btnEditProfile.setOnClickListener {
             val frgmntEditProfile = EditProfileFragment()
             frgmntEditProfile.setOnCloseCallback {
@@ -50,8 +49,6 @@ class ProfileFragment : Fragment() {
             transaction.commit()
             btnEditProfile.visibility = View.GONE
         }
-
         return v
     }
-
 }

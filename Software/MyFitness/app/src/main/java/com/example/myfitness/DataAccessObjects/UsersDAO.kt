@@ -52,7 +52,7 @@ object UsersDAO {
         return user.size() > 0
     }
 
-    suspend fun EditUser(context: Context, email: String, password: String, weight: Double) {
+    suspend fun EditUser(context: Context, username: String, email: String, password: String, weight: Double) {
         val db = Firebase.firestore
         val currentUser = getCurrentUser(context)
         val userRef = db.collection("users").whereEqualTo("username", currentUser)
@@ -60,6 +60,7 @@ object UsersDAO {
         if (document.size() > 0) {
             val user = document.documents[0].reference
             val updates = HashMap<String, Any>()
+                updates["username"] = username
                 updates["email"] = email
                 updates["password"] = password
                 updates["weight"] = weight
