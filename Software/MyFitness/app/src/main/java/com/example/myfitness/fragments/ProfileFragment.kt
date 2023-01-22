@@ -8,16 +8,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.lifecycleScope
 import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment() {
-
-    private lateinit var etName: EditText
-    private lateinit var etLastName: EditText
+    private lateinit var etWeight: EditText
     private lateinit var etUsername: EditText
     private lateinit var etEmail: EditText
     private lateinit var btnEditProfile: Button
@@ -28,7 +27,13 @@ class ProfileFragment : Fragment() {
     ): View? {
         val v = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        val btnEditProfile = v.findViewById<Button>(R.id.button_edit_profile)
+        etWeight = v.findViewById(R.id.userWeight)
+        etUsername = v.findViewById(R.id.username)
+        etEmail = v.findViewById(R.id.email)
+        btnEditProfile = v.findViewById(R.id.button_edit_profile)
+
+        loadUserData()
+
         btnEditProfile.setOnClickListener {
             val frgmntEditProfile = EditProfileFragment()
             frgmntEditProfile.setOnCloseCallback {
@@ -39,9 +44,24 @@ class ProfileFragment : Fragment() {
             transaction.commit()
             btnEditProfile.visibility = View.GONE
         }
-
-            val user = UsersDAO.getCurrentUser(requireContext())
-
         return v
+    }
+
+     fun loadUserData(){
+        val scope = CoroutineScope(Dispatchers.IO)
+        scope.launch {
+            val currentUser = UsersDAO.getUserInfo(requireContext())
+            if (currentUser.isNotEmpty()) {
+                etWeight.setText(currentUser[0].weight.toString())
+                etUsername.setText(currentUser[0].username)
+                etEmail.setText(currentUser[0].email)
+            }
+        }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        loadUserData()
     }
 }

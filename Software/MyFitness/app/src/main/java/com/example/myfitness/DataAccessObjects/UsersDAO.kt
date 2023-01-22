@@ -2,11 +2,14 @@ package com.example.myfitness.DataAccessObjects
 
 import android.content.Context
 import android.util.Log
+import com.example.myfitness.utils.Hash
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import model.User
+
 
 object UsersDAO {
 
@@ -50,23 +53,49 @@ object UsersDAO {
         return user.size() > 0
     }
 
-    suspend fun EditUser(username: String, email: String, password: String, weight: Double) {
+    suspend fun EditUser(context: Context, username: String, email: String, password: String, weight: Double) {
         val db = Firebase.firestore
-        val userRef = db.collection("users").whereEqualTo("username", username)
+        val currentUser = getCurrentUser(context)
+
+        val userRef = db.collection("users").whereEqualTo("username", currentUser)
         val document = userRef.get().await()
         if (document.size() > 0) {
             val user = document.documents[0].reference
-            user.update("username", username).await()
-            user.update("email", email).await()
-            user.update("password", password).await()
-            user.update("weight", weight).await()
+            val updates = HashMap<String, Any>()
+            updates["username"] = username
+            updates["email"] = email
+            updates["weight"] = weight
+
+            if (!password.isEmpty()) {
+                updates["password"] = Hash.hashPassword(password)
+            }
+            user.update(updates).await()
         } else {
             Log.d("EditUser", "Nije moguce promijeniti podatke")
         }
     }
 
+
     fun getCurrentUser(context : Context) : String {
         val prefs = context.getSharedPreferences("user", Context.MODE_PRIVATE)
         return prefs.getString("username", "")!!
     }
+
+    suspend fun getUserInfo(context: Context) : MutableList<User> {
+        val db = Firebase.firestore
+        val userList = mutableListOf<User>()
+        val currentUser = getCurrentUser(context)
+        val users = db.collection("users").whereEqualTo("username", currentUser)
+        try {
+            val result = users.get().await()
+            for (document in result) {
+                val user = document.toObject(User::class.java)
+                userList.add(user)
+            }
+            return userList
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
 }
