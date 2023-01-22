@@ -4,12 +4,11 @@ package com.example.myfitness.DataAccessObjects
 import android.content.Context
 import android.util.Log
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import com.google.firebase.auth.ktx.auth
+import model.User
 
 
 object UsersDAO {
@@ -71,6 +70,26 @@ object UsersDAO {
     fun getCurrentUser(context : Context) : String {
         val prefs = context.getSharedPreferences("user", Context.MODE_PRIVATE)
         return prefs.getString("username", "")!!
+    }
+
+    suspend fun getUserInfo(context: Context) : MutableList<User> {
+        val db = Firebase.firestore
+        val userList = mutableListOf<User>()
+        val currentUser = getCurrentUser(context)
+
+        val users = db.collection("users")
+            .whereEqualTo("username", currentUser)
+
+        try {
+            val result = users.get().await()
+            for (document in result) {
+                val user = document.toObject(User::class.java)
+                userList.add(user)
+            }
+            return userList
+        } catch (e: Exception) {
+            throw e
+        }
     }
 
 }

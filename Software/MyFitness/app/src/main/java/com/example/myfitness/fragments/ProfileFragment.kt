@@ -15,9 +15,7 @@ import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment() {
-
-    private lateinit var etName: EditText
-    private lateinit var etLastName: EditText
+    private lateinit var etWeight: EditText
     private lateinit var etUsername: EditText
     private lateinit var etEmail: EditText
     private lateinit var btnEditProfile: Button
@@ -28,7 +26,20 @@ class ProfileFragment : Fragment() {
     ): View? {
         val v = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        val btnEditProfile = v.findViewById<Button>(R.id.button_edit_profile)
+        etWeight = v.findViewById(R.id.userWeight)
+        etUsername = v.findViewById(R.id.username)
+        etEmail = v.findViewById(R.id.email)
+        btnEditProfile = v.findViewById(R.id.button_edit_profile)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val currentUser = UsersDAO.getUserInfo(requireContext())
+            if(currentUser.isNotEmpty()){
+                etWeight.setText(currentUser[0].weight.toString())
+                etUsername.setText(currentUser[0].username)
+                etEmail.setText(currentUser[0].email)
+            }
+        }
+
         btnEditProfile.setOnClickListener {
             val frgmntEditProfile = EditProfileFragment()
             frgmntEditProfile.setOnCloseCallback {
@@ -40,8 +51,7 @@ class ProfileFragment : Fragment() {
             btnEditProfile.visibility = View.GONE
         }
 
-            val user = UsersDAO.getCurrentUser(requireContext())
-
         return v
     }
+
 }
