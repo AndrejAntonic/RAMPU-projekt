@@ -53,14 +53,13 @@ class AddExerciseFragment : Fragment() {
             val exerciseName = view.findViewById<EditText>(R.id.exerciseNameEditText).text.toString()
             val exerciseDescription = view.findViewById<EditText>(R.id.exerciseDescriptionEditText).text.toString()
             val exerciseBodyPart = spinnerBodyPart.selectedItem.toString()
-            val imageUrl = view.findViewById<EditText>(R.id.imageUrlEditText).text.toString()
+            //val imageUrl = view.findViewById<EditText>(R.id.imageUrlEditText).text.toString()
             val difficulty = spinnerDiff.selectedItem.toString().toInt()
             val equipment = spinnerEquip.selectedItem.toString()
 
             val exercise = Exercise(
                 exerciseName,
                 exerciseDescription,
-                imageUrl,
                 difficulty,
                 equipment,
                 exerciseBodyPart
