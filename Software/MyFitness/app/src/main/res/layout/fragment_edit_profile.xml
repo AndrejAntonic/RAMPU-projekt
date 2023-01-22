@@ -23,27 +23,7 @@
         app:layout_constraintVertical_bias="0.05" />
 
     <EditText
-        android:id="@+id/userNameEdit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/rounded_style"
-        android:backgroundTint="@color/bg_dark_2"
-        android:fontFamily="@font/montserratbold"
-        android:hint="@string/name"
-        android:autofillHints="@string/name"
-        android:padding="14dp"
-        android:inputType="text"
-        android:textColor="@color/white"
-        android:textColorHint="@color/hint_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleEditProfile" />
-
-    <EditText
-        android:id="@+id/userLastNameEdit"
+        android:id="@+id/userWeight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -52,15 +32,15 @@
         android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
         android:fontFamily="@font/montserratbold"
-        android:hint="@string/lastname"
-        android:autofillHints="string/lastname"
+        android:hint="@string/weight"
+        android:autofillHints="string/weight"
         android:padding="14dp"
         android:inputType="text"
         android:textColor="@color/white"
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userNameEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/titleEditProfile" />
 
 
     <EditText
@@ -81,7 +61,7 @@
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userLastNameEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/userWeight" />
 
     <EditText
         android:id="@+id/passwordEdit"

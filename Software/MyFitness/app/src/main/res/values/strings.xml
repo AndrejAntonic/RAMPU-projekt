@@ -72,5 +72,6 @@
     <string name="save">Spremi</string>
     <string name="profileInfo">Profil</string>
     <string name="editProfileBtn">Uređivanje profila</string>
+    <string name="weight">Težina</string>
 
 </resources>

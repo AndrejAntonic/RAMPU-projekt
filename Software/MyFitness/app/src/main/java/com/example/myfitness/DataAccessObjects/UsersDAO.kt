@@ -3,10 +3,13 @@ package com.example.myfitness.DataAccessObjects
 
 import android.util.Log
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import com.google.firebase.auth.ktx.auth
+
 
 object UsersDAO {
 
@@ -20,10 +23,6 @@ object UsersDAO {
          var result = false
          return db.collection("users").add(user)
     }
-
-//    fun Edituser(username: String, email: String, password: String, Height: Double, Weight: Double, Age: Int, Activity: Int, gender: String, metabolicRate: Double) {
-//
-//    }
 
     suspend fun GetUserByUsername(username: String) : Boolean {
         val db = Firebase.firestore
@@ -53,7 +52,7 @@ object UsersDAO {
         return user.size() > 0
     }
 
-    suspend fun EditUser(username: String, email: String, password: String, name: String, lastName: String) {
+    suspend fun EditUser(username: String, email: String, password: String, weight: Double) {
         val db = Firebase.firestore
         val userRef = db.collection("users").whereEqualTo("username", username)
         val document = userRef.get().await()
@@ -62,10 +61,10 @@ object UsersDAO {
             user.update("username", username).await()
             user.update("email", email).await()
             user.update("password", password).await()
-            user.update("name", name).await()
-            user.update("lastName", lastName).await()
+            user.update("weight", weight).await()
         } else {
             Log.d("EditUser", "Nije moguce promijeniti podatke")
         }
     }
+
 }

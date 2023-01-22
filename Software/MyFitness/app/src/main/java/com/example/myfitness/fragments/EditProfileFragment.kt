@@ -20,10 +20,9 @@ class EditProfileFragment : Fragment() {
         onCloseCallback = callback
     }
 
-    private lateinit var etName: EditText
-    private lateinit var etLastName: EditText
     private lateinit var etUsername: EditText
     private lateinit var etPassword: EditText
+    private lateinit var etWeight: EditText
     private lateinit var etEmail: EditText
     private lateinit var btnEditUser: Button
     private lateinit var btnCancel: Button
@@ -34,8 +33,7 @@ class EditProfileFragment : Fragment() {
     ): View? {
         val v = inflater.inflate(R.layout.fragment_edit_profile, container, false)
 
-        etName = v.findViewById(R.id.userNameEdit)
-        etLastName = v.findViewById(R.id.userLastNameEdit)
+        etWeight = v.findViewById(R.id.userWeight)
         etUsername = v.findViewById(R.id.usernameEdit)
         etPassword = v.findViewById(R.id.passwordEdit)
         etEmail = v.findViewById(R.id.emailEdit)
@@ -43,14 +41,13 @@ class EditProfileFragment : Fragment() {
         btnCancel = v.findViewById(R.id.cancelBtn)
 
         btnEditUser.setOnClickListener {
-            val name = etName.text.toString()
-            val lastName = etLastName.text.toString()
+            val weight = etWeight.text.toString().toDouble()
             val username = etUsername.text.toString()
             val password = etPassword.text.toString()
             val email = etEmail.text.toString()
 
             viewLifecycleOwner.lifecycleScope.launch {
-                UsersDAO.EditUser(username, email, password, name, lastName)
+                UsersDAO.EditUser(username, email, password, weight)
             }
             onCloseCallback?.invoke()
             val fragmentManager = parentFragmentManager

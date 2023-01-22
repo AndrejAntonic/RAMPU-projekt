@@ -6,11 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.lifecycleScope
+import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
+import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment() {
+
+    private lateinit var etName: EditText
+    private lateinit var etLastName: EditText
+    private lateinit var etUsername: EditText
+    private lateinit var etEmail: EditText
+    private lateinit var btnEditProfile: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,20 +28,25 @@ class ProfileFragment : Fragment() {
     ): View? {
         val v = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        val button = v.findViewById<Button>(R.id.button_edit_profile)
-        button.setOnClickListener {
+        val btnEditProfile = v.findViewById<Button>(R.id.button_edit_profile)
+        btnEditProfile.setOnClickListener {
             val frgmntEditProfile = EditProfileFragment()
             frgmntEditProfile.setOnCloseCallback {
-                button.visibility = View.VISIBLE
+                btnEditProfile.visibility = View.VISIBLE
             }
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.mainlayoutProfile, frgmntEditProfile)
             transaction.commit()
-            button.visibility = View.GONE
+            btnEditProfile.visibility = View.GONE
         }
 
-
+        viewLifecycleOwner.lifecycleScope.launch {
+            val user = UsersDAO.getCurrentUser()
+            if (user != null) {
+                etName.setText(user.first)
+                etEmail.setText(user.second)
+            }
+        }
         return v
     }
-
 }
