@@ -27,8 +27,8 @@ class ProgressFragment : Fragment() {
     lateinit var exerciseSpinner : Spinner
     lateinit var periodSpinner : Spinner
     lateinit var chartContainer : FrameLayout
-//    lateinit var selectedPeriod : String
-//    lateinit var selectedExercise : String
+    lateinit var chartFilterContainer : LinearLayout
+    lateinit var noticeProgressUnavailable : LinearLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,27 +39,26 @@ class ProgressFragment : Fragment() {
         exerciseSpinner = v.findViewById<Spinner>(R.id.spinner_exercise_progress)
         periodSpinner = v.findViewById<Spinner>(R.id.spinner_exercise_period)
         chartContainer = v.findViewById<FrameLayout>(R.id.chart_container)
+        chartFilterContainer = v.findViewById<LinearLayout>(R.id.chart_filter_container)
+        noticeProgressUnavailable = v.findViewById<LinearLayout>(R.id.notice_progress_unavailable)
 
-        fillPeriodSpinner(v)
+
+        fillPeriodSpinner()
 
         exerciseSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedExercise = parent?.getItemAtPosition(position) as String
                 val selectedPeriod = periodSpinner.selectedItem.toString()
-                var chart : TestChart
+                val chart : TestChart
                 if (selectedPeriod == "Last Month") {
                     chart = TestChart(requireContext(), getExercisesForLastMonth(selectedExercise), selectedPeriod)
                 } else {
                     chart = TestChart(requireContext(), getExercisesForLastYear(selectedExercise), selectedPeriod)
                 }
                 chartContainer.addView(chart)
-
-                Toast.makeText(requireContext(), "Selected: $selectedExercise", Toast.LENGTH_SHORT).show()
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
-
-
 
 
         val scope = CoroutineScope(Dispatchers.IO)
@@ -69,13 +68,22 @@ class ProgressFragment : Fragment() {
 
             exerciseGroups = allUserExercises.groupBy { it.exerciseName }
 
-
+            val currentTimestamp = Timestamp.now()
             exerciseGroupsFiltered = exerciseGroups.mapValues { (_, exercises) ->
-                filterByMonthAndYear(exercises, "2023", "01").sortedBy { it.date.toDate() }
+                filterByMonthAndYear(exercises, DateHelper.getYear(currentTimestamp), DateHelper.getMonth(currentTimestamp)).sortedBy { it.date.toDate() }
             }
 
             withContext(Dispatchers.Main) {
                 val exerciseNames : List<String> = getExerciseNamesWithEnoughData(exerciseGroupsFiltered)
+
+                if (exerciseNames.isEmpty()) {
+                    noticeProgressUnavailable.visibility = View.VISIBLE
+                    return@withContext
+                } else {
+                    chartFilterContainer.visibility = View.VISIBLE
+                    chartContainer.visibility = View.VISIBLE
+                }
+
                 fillExerciseSpinner(v, exerciseNames)
                 val randomExercise : String = getRandomExerciseFrom(exerciseNames)
                 setSpinnerSelection(exerciseSpinner, randomExercise)
@@ -90,10 +98,7 @@ class ProgressFragment : Fragment() {
                         } else {
                             chart = TestChart(requireContext(), getExercisesForLastYear(selectedExercise), selectedPeriod)
                         }
-
                         chartContainer.addView(chart)
-
-                        Toast.makeText(requireContext(), "Selected: $selectedPeriod", Toast.LENGTH_SHORT).show()
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
@@ -101,12 +106,7 @@ class ProgressFragment : Fragment() {
                 val chart = TestChart(requireContext(), exerciseGroupsFiltered.get(randomExercise)!!, periodSpinner.selectedItem.toString())
                 chartContainer.addView(chart)
             }
-
-
         }
-        // Napravit da chart prima exercise kao tip dataseta, a kao treci parametar prima po cemu ce prikazivati Y vrijednost
-
-
         return v
     }
 
@@ -123,9 +123,7 @@ class ProgressFragment : Fragment() {
     }
 
 
-    fun fillPeriodSpinner(view : View) {
-
-
+    fun fillPeriodSpinner() {
         val spinnerItems = arrayOf("Last Month", "Last Year")
         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item_basic, spinnerItems)
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_basic)
@@ -155,10 +153,8 @@ class ProgressFragment : Fragment() {
 
     fun getExercisesForLastMonth(exerciseName : String) : List<DoneExercise> {
         val exerciseData = exerciseGroups.get(exerciseName)!!
-
         val currentYear = Calendar.getInstance().get(Calendar.YEAR).toString()
         val currentMonth = DateHelper.getMonth(Timestamp.now())
-
         val resultData = filterByMonthAndYear(exerciseData, currentYear, currentMonth).sortedBy { it.date.toDate() }
         return resultData
     }

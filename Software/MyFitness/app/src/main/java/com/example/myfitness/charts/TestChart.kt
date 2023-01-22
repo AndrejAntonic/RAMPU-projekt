@@ -16,17 +16,16 @@ class TestChart(context: Context, exerciseDataSet : List<DoneExercise>, period: 
 
     private val chart: Chart<DoneExercise> = chart(exerciseDataSet) {
         size = Size(vizSize, vizSize)
-        title = "Example"
+        title = "Napredak snage"
         background = ColorDrawable(ContextCompat.getColor(context, R.color.bg_dark_2))
 
         // Create a discrete dimension for the year of the census
-        var date : Discrete<DoneExercise, String>
+        val date : Discrete<DoneExercise, String>
         if (period == "Last Month") {
             date = discrete({ DateHelper.getDate(domain.date) })
         } else {
             date = discrete({ DateHelper.getMonth(domain.date) })
         }
-//        val date = discrete({ DateHelper.getDate(domain.date) })
 
         // Create a continuous numeric dimension for the population
         val weight = quantitative({ domain.weight.toDouble() }) {
@@ -37,7 +36,7 @@ class TestChart(context: Context, exerciseDataSet : List<DoneExercise>, period: 
         line(date, weight) {
             joinMissingValues = true
             showMarkers = true
-            strokeWidth = constant(8.0)
+            strokeWidth = constant(10.0)
         }
     }
 
@@ -47,26 +46,4 @@ class TestChart(context: Context, exerciseDataSet : List<DoneExercise>, period: 
     }
 }
 
-
-const val vizSize = 500.0
-
-//data class PopCount(val year: Int, val population: Double)
-
-//val canPop = listOf(
-//    PopCount(1851, 2.436),
-//    PopCount(1861, 3.23),
-//    PopCount(1871, 3.689),
-//    PopCount(1881, 4.325),
-//    PopCount(1891, 4.833),
-//    PopCount(1901, 5.371),
-//    PopCount(1902, 7.207),
-//    PopCount(1921, 8.788),
-//    PopCount(1931, 10.377),
-//    PopCount(1941, 11.507),
-//    PopCount(1951, 13.648),
-//    PopCount(1961, 17.78),
-//    PopCount(1971, 21.046),
-//    PopCount(1981, 23.774),
-//    PopCount(1991, 26.429),
-//    PopCount(2001, 30.007)
-//)
+const val vizSize = 400.0

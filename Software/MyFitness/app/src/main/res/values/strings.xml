@@ -23,7 +23,7 @@
     <string name="select_body_part">Select Body Part</string>
     <string name="addExercise">Dodaj vježbu</string>
     <string name="add">dodaj</string>
-    <string name="add_done_exercise">Napravljena vježba</string>
+    <string name="btn_add_done_exercise">Napravljena vježba</string>
     <string name="label_reps_input">Broj ponavljanja</string>
     <string name="label_broj_serija">Broj serija</string>
     <string name="label_unos_tezine">Kilaža (kg)</string>
@@ -65,5 +65,6 @@
     <string name="hint_email">Email</string>
     <string name="hint_username">Username</string>
     <string name="title_progress_fragment">Vaš napredak</string>
+    <string name="notice_message_progress_unavailable">Još nemate spremljenih podataka o treningu</string>
 
 </resources>
