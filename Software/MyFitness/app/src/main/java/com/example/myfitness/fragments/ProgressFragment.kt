@@ -21,6 +21,7 @@ import model.DoneExercise
 
 
 class ProgressFragment : Fragment() {
+    lateinit var exerciseGroups : Map<String, List<DoneExercise>>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,21 +34,6 @@ class ProgressFragment : Fragment() {
 
         val chartContainer = v.findViewById<FrameLayout>(R.id.chart_container)
 
-
-//        val weightDataSet = listOf<WeightData>(
-//            WeightData(10, 10.2),
-//            WeightData(11, 20.2),
-//            WeightData(12, 23.2),
-//            WeightData(14, 10.2),
-//            WeightData(15, 10.2),
-//            WeightData(16, 50.2),
-//            WeightData(17, 10.2),
-//            WeightData(18, 60.2),
-//            WeightData(19, 70.2),
-//            WeightData(20, 80.2),
-//            WeightData(21, 200.2),
-//        )
-
         val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {
             val currentUser = UsersDAO.getCurrentUser(requireContext())
@@ -55,12 +41,19 @@ class ProgressFragment : Fragment() {
             val allUserExercises = DoneExercisesDAO.getAllDoneExercisesForUser(currentUser)
 
 
-            var exerciseGroups = allUserExercises.groupBy { it.exerciseName }
+            exerciseGroups = allUserExercises.groupBy { it.exerciseName }
             println("BEFORE")
             exerciseGroups.values.forEach{ println(it[0].exerciseName + " " + it.size) }
+
             val exerciseGroupsFiltered = exerciseGroups.mapValues { (_, exercises) ->
                 filterByMonthAndYear(exercises, "01", "2023").sortedBy { it.date.toDate() }
             }
+
+            withContext(Dispatchers.Main) {
+                val exerciseNames : List<String> = getExerciseNamesWithEnoughData(exerciseGroupsFiltered)
+                fillExerciseSpinner(v, exerciseNames)
+            }
+
             println("AFTER")
             exerciseGroupsFiltered.values.forEach{ println(it[0].exerciseName + " " + it.size) }
 
@@ -102,7 +95,18 @@ class ProgressFragment : Fragment() {
         val spinner = view.findViewById<Spinner>(R.id.spinner_exercise_period)
         val spinnerItems = arrayOf("Last Month", "Last Year")
         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item_basic, spinnerItems)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_basic)
         spinner.adapter = adapter
+    }
+
+    fun fillExerciseSpinner(view : View, spinnerItems: List<String>) {
+        val spinner = view.findViewById<Spinner>(R.id.spinner_exercise_progress)
+        val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item_basic, spinnerItems)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_basic)
+        spinner.adapter = adapter
+    }
+
+    fun getExerciseNamesWithEnoughData(exerciseGroups: Map<String, List<DoneExercise>>): List<String> {
+        return exerciseGroups.filter { (_, exercises) -> exercises.size >= 4 }.keys.toList()
     }
 }
