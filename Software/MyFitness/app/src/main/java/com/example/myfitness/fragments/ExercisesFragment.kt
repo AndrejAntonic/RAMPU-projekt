@@ -37,8 +37,8 @@ class ExercisesFragment : Fragment() {
             val button = v.findViewById<Button>(R.id.addExerciseButton)
             button.setOnClickListener {
                 val addExercise = addExercise()
-                val addExerciseHelper =
-                    AddExerciseDialog(addExercise, requireContext())
+                addExercise.show()
+                val addExerciseHelper = AddExerciseDialog(requireActivity(), addExercise, requireContext())
 
                 val scope = CoroutineScope(Dispatchers.Main)
                 scope.launch {

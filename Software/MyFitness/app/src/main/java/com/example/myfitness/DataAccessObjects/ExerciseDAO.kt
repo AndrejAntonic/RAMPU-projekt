@@ -50,8 +50,6 @@ object ExerciseDAO {
             }
     }
 
-
-
     fun fillSpinner(spinner: Spinner) {
         spinner.adapter = ArrayAdapter(
             spinner.context,
