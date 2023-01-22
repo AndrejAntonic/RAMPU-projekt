@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -46,9 +48,11 @@ class EditProfileFragment : Fragment() {
             val password = etPassword.text.toString()
             val email = etEmail.text.toString()
 
-            viewLifecycleOwner.lifecycleScope.launch {
-                UsersDAO.EditUser(username, email, password, weight)
+            val scope = CoroutineScope(Dispatchers.IO)
+            scope.launch{
+                UsersDAO.EditUser(requireContext(), email, password, weight)
             }
+
             onCloseCallback?.invoke()
             val fragmentManager = parentFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()

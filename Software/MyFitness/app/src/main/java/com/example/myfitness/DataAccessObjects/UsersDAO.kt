@@ -52,20 +52,23 @@ object UsersDAO {
         return user.size() > 0
     }
 
-    suspend fun EditUser(username: String, email: String, password: String, weight: Double) {
+    suspend fun EditUser(context: Context, email: String, password: String, weight: Double) {
         val db = Firebase.firestore
-        val userRef = db.collection("users").whereEqualTo("username", username)
+        val currentUser = getCurrentUser(context)
+        val userRef = db.collection("users").whereEqualTo("username", currentUser)
         val document = userRef.get().await()
         if (document.size() > 0) {
             val user = document.documents[0].reference
-            user.update("username", username).await()
-            user.update("email", email).await()
-            user.update("password", password).await()
-            user.update("weight", weight).await()
+            val updates = HashMap<String, Any>()
+                updates["email"] = email
+                updates["password"] = password
+                updates["weight"] = weight
+            user.update(updates).await()
         } else {
             Log.d("EditUser", "Nije moguce promijeniti podatke")
         }
     }
+
 
     fun getCurrentUser(context : Context) : String {
         val prefs = context.getSharedPreferences("user", Context.MODE_PRIVATE)
