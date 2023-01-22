@@ -36,16 +36,12 @@ class ExercisesFragment : Fragment() {
 
             val button = v.findViewById<Button>(R.id.addExerciseButton)
             button.setOnClickListener {
-                val addExercise = addExercise()
-                val addExerciseHelper =
-                    AddExerciseDialog(addExercise, requireContext())
-
-                val scope = CoroutineScope(Dispatchers.Main)
-                scope.launch {
-                    addExerciseHelper
-                }
-
+                val frgmntAddExercise = AddExerciseFragment()
+                val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.mainlayout, frgmntAddExercise)
+                transaction.commit()
             }
+
 
             val btnAddDoneExercise = v.findViewById<Button>(R.id.addDoneExercise)
             btnAddDoneExercise.setOnClickListener {
@@ -105,7 +101,7 @@ class ExercisesFragment : Fragment() {
 
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
             val exerciseRecyclerView = view.findViewById<RecyclerView>(R.id.exerciseRecyclerView)
