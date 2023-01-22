@@ -1,6 +1,7 @@
 package com.example.myfitness.DataAccessObjects
 
 
+import android.content.Context
 import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -65,6 +66,11 @@ object UsersDAO {
         } else {
             Log.d("EditUser", "Nije moguce promijeniti podatke")
         }
+    }
+
+    fun getCurrentUser(context : Context) : String {
+        val prefs = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+        return prefs.getString("username", "")!!
     }
 
 }

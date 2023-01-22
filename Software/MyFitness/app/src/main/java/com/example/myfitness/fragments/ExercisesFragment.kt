@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myfitness.AddExerciseFragment
 import com.example.myfitness.DataAccessObjects.ExerciseDAO
 import com.example.myfitness.R
 import com.example.myfitness.helpers.AddDoneExerciseDialogHelper
@@ -17,7 +19,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.myfitness.adapters.ExerciseRecyclerViewAdapter
-import com.example.myfitness.helpers.AddExerciseDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import model.Exercise
 

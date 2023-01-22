@@ -40,13 +40,8 @@ class ProfileFragment : Fragment() {
             btnEditProfile.visibility = View.GONE
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            val user = UsersDAO.getCurrentUser()
-            if (user != null) {
-                etName.setText(user.first)
-                etEmail.setText(user.second)
-            }
-        }
+            val user = UsersDAO.getCurrentUser(requireContext())
+
         return v
     }
 }
