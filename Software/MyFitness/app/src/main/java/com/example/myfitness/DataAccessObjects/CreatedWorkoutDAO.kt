@@ -7,25 +7,22 @@ import kotlinx.coroutines.tasks.await
 import model.CreatedWorkout
 import model.DoneExercise
 
-object DoneExercisesDAO {
-    fun add(doneExercise: DoneExercise, username: String) : Boolean {
+object CreatedWorkoutDAO {
+    fun add(CreatedWorkout: CreatedWorkout, username: String) : Boolean {
         val db = Firebase.firestore
         val exercise = hashMapOf(
-            "exerciseName" to doneExercise.exerciseName,
-            "weight" to doneExercise.weight,
-            "sets" to doneExercise.sets,
-            "reps" to doneExercise.reps,
-            "date" to doneExercise.date,
+            "exerciseName" to CreatedWorkout.exerciseName,
+            "date" to CreatedWorkout.date,
         )
         try {
-            db.collection("doneExercises").document(username).collection("savedExercises").add(exercise)
+            db.collection("CreatedWorkout").document(username).collection("CreatedWorkouts").add(exercise)
             return true
         } catch (e: Exception) {
             return false
         }
     }
 
-    suspend fun getAllDoneExercisesForUser(username : String) : MutableList<DoneExercise> {
+    /*suspend fun getAllDoneExercisesForUser(username : String) : MutableList<DoneExercise> {
         val db = Firebase.firestore
         val exercisesList = mutableListOf<DoneExercise>()
 
@@ -41,5 +38,5 @@ object DoneExercisesDAO {
         } catch (e: Exception) {
             return mutableListOf()
         }
-    }
+    }*/
 }
