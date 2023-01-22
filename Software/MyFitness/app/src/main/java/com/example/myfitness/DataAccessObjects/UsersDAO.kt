@@ -3,6 +3,7 @@ package com.example.myfitness.DataAccessObjects
 
 import android.content.Context
 import android.util.Log
+import com.example.myfitness.utils.Hash
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
@@ -55,15 +56,19 @@ object UsersDAO {
     suspend fun EditUser(context: Context, username: String, email: String, password: String, weight: Double) {
         val db = Firebase.firestore
         val currentUser = getCurrentUser(context)
+
         val userRef = db.collection("users").whereEqualTo("username", currentUser)
         val document = userRef.get().await()
         if (document.size() > 0) {
             val user = document.documents[0].reference
             val updates = HashMap<String, Any>()
-                updates["username"] = username
-                updates["email"] = email
-                updates["password"] = password
-                updates["weight"] = weight
+            updates["username"] = username
+            updates["email"] = email
+            updates["weight"] = weight
+
+            if (!password.isEmpty()) {
+                updates["password"] = Hash.hashPassword(password)
+            }
             user.update(updates).await()
         } else {
             Log.d("EditUser", "Nije moguce promijeniti podatke")
@@ -80,10 +85,7 @@ object UsersDAO {
         val db = Firebase.firestore
         val userList = mutableListOf<User>()
         val currentUser = getCurrentUser(context)
-
-        val users = db.collection("users")
-            .whereEqualTo("username", currentUser)
-
+        val users = db.collection("users").whereEqualTo("username", currentUser)
         try {
             val result = users.get().await()
             for (document in result) {

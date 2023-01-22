@@ -18,9 +18,13 @@ import kotlinx.coroutines.launch
 class EditProfileFragment : Fragment() {
 
     private var onCloseCallback: (() -> Unit)? = null
+
+
     fun setOnCloseCallback(callback: () -> Unit) {
         onCloseCallback = callback
     }
+
+
 
     private lateinit var etUsername: EditText
     private lateinit var etPassword: EditText
@@ -49,7 +53,6 @@ class EditProfileFragment : Fragment() {
                 etWeight.setText(currentUser[0].weight.toString())
                 etUsername.setText(currentUser[0].username)
                 etEmail.setText(currentUser[0].email)
-                etPassword.setText(currentUser[0].password)
             }
         }
 
@@ -58,6 +61,11 @@ class EditProfileFragment : Fragment() {
             val username = etUsername.text.toString()
             val password = etPassword.text.toString()
             val email = etEmail.text.toString()
+
+            if (!password.isEmpty() && password.length < 8) {
+                etPassword.error = "Lozinka mora imati barem 8 znakova"
+                return@setOnClickListener
+            }
 
             val scope = CoroutineScope(Dispatchers.IO)
             scope.launch{
