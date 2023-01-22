@@ -16,6 +16,7 @@ class CalculatorActivity : AppCompatActivity() {
     lateinit var editAge : EditText
     lateinit var genderMale : Button
     lateinit var genderFemale : Button
+    lateinit var btnGoToProfile : Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +29,7 @@ class CalculatorActivity : AppCompatActivity() {
         editAge = findViewById(R.id.edit_age)
         genderMale = findViewById(R.id.male)
         genderFemale = findViewById(R.id.female)
+        btnGoToProfile = findViewById(R.id.btn_go_to_profile_from_basal)
 
         genderMale.setOnClickListener{
             val firstEdit = editWeight.text.toString().toInt()
@@ -41,6 +43,10 @@ class CalculatorActivity : AppCompatActivity() {
             val secondEdit = editHeight.text.toString().toInt()
             val thirdEdit = editAge.text.toString().toInt()
             Female(firstEdit, secondEdit, thirdEdit)
+        }
+
+        btnGoToProfile.setOnClickListener {
+            // TODO: Napravit da ode natrag na profil fragment
         }
     }
 

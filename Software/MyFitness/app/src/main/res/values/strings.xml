@@ -85,5 +85,7 @@
     <string name="btn_male_select">Muško</string>
     <string name="btn_female_select">Žensko</string>
     <string name="hint_basal_calculator_result">Rezultat</string>
+    <string name="btn_go_to_basal_calculator">bazalni kalkulator</string>
+    <string name="btn_back_basal_calculator">Natrag</string>
 
 </resources>
