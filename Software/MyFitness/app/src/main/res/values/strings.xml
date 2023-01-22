@@ -61,7 +61,7 @@
     <string name="preference">Vaš cilj:</string>
     <string name="experience">Vaše iskustvo:</string>
     <string name="days">Koliko dana u tjednu želite vježbati:</string>
-    <string name="plan">Plan</string>
+    <string name="plan">Generirajte plan treninga</string>
     <string name="name">Ime:</string>
     <string name="lastname">Prezime:</string>
     <string name="username">Korisničko ime:</string>

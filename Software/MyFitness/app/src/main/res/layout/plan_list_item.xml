@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ime dana"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <TextView
@@ -24,6 +25,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
             android:text="Ime vjezbe"
+            android:textColor="@color/white"
             android:textSize="15sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
