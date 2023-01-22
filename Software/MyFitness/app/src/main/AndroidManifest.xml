@@ -20,6 +20,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".CalculatorActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
             android:name=".MainActivity"
             android:exported="false">
             <meta-data
@@ -35,19 +43,19 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".CalculatorActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".InputActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="false">-->
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+<!--        </activity>-->
         <activity
             android:name=".StartActivity"
             android:exported="true">
