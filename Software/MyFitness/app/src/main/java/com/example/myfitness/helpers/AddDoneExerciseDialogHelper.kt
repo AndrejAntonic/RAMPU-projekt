@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitness.DataAccessObjects.DoneExercisesDAO
 import com.example.myfitness.DataAccessObjects.ExerciseDAO
+import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
 import com.example.myfitness.adapters.ExerciseListRecyclerViewAdapter
+import com.google.firebase.Timestamp
 import model.DoneExercise
 import java.text.SimpleDateFormat
 import java.util.*
@@ -75,8 +77,9 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
                 return@setOnClickListener
             }
 
+            val currentUser = UsersDAO.getCurrentUser(context)
             val exercise : DoneExercise = buildExercise()
-            DoneExercisesDAO.add(exercise)
+            DoneExercisesDAO.add(exercise, currentUser)
             dialog.dismiss()
             Toast.makeText(context, "Napravljena vježba spremljena", Toast.LENGTH_SHORT).show()
         }
@@ -134,16 +137,12 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
     }
 
     fun buildExercise() : DoneExercise {
-        val prefs = context.getSharedPreferences("user", Context.MODE_PRIVATE)
-        val username = prefs.getString("username", "")!!
-
         return DoneExercise(
             selectedExercise,
             weightInput.text.toString().toInt(),
             setsInput.text.toString().toInt(),
             repsInput.text.toString().toInt(),
-            selectedDateTime.time,
-            username
+            Timestamp(selectedDateTime.time)
         )
     }
 }

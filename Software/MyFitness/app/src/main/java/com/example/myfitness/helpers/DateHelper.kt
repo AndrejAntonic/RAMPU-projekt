@@ -2,6 +2,7 @@ package com.example.myfitness.helpers
 
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
+import java.util.*
 
 object DateHelper {
     fun getMonth(timestamp : Timestamp) : String {
@@ -20,5 +21,11 @@ object DateHelper {
         val format = "yyyy"
         val sdf = SimpleDateFormat(format)
         return sdf.format(timestamp.toDate())
+    }
+
+    fun getFirstDayOfMonth(month: String): Timestamp {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = dateFormat.parse("$month-01")
+        return Timestamp(date)
     }
  }

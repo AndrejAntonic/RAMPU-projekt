@@ -2,7 +2,6 @@ package com.example.myfitness.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import model.Exercise
 
 class ExercisesFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
-    private val db = FirebaseFirestore.getInstance()
     private var exercises = mutableListOf<Exercise>()
 
     override fun onCreateView(
@@ -95,7 +93,7 @@ class ExercisesFragment : Fragment() {
         scope.launch {
             val exercisesFun = ExerciseDAO.getAllExercises()
             exercisesFun.forEach {
-                Log.d("ExerciseFragment", "Exercise name: ${it.name}")
+//                Log.d("ExerciseFragment", "Exercise name: ${it.name}")
             }
             recyclerView.layoutManager = LinearLayoutManager(context)
             val adapter = ExerciseRecyclerViewAdapter(exercisesFun)
