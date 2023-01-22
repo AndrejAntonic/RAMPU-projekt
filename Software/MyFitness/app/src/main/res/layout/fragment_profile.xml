@@ -1,32 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_dark"
     tools:context=".fragments.ProfileFragment"
     android:id="@+id/mainlayoutProfile">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profil"
+        android:id="@+id/titleProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserratbold"
+        android:text="@string/profileInfo"
         android:textColor="@color/white"
-        android:textSize="25dp"
-        android:padding="15dp"
-        />
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.053" />
+
+    <EditText
+        android:id="@+id/userName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:fontFamily="@font/montserratbold"
+        android:hint="@string/name"
+        android:autofillHints="@string/name"
+        android:padding="14dp"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/hint_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleProfile" />
+
+    <EditText
+        android:id="@+id/userLastName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:fontFamily="@font/montserratbold"
+        android:hint="@string/lastname"
+        android:autofillHints="string/lastname"
+        android:padding="14dp"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/hint_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userName" />
+
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:fontFamily="@font/montserratbold"
+        android:hint="@string/username"
+        android:autofillHints="@string/username"
+        android:padding="14dp"
+        android:inputType="textUri"
+        android:textColor="@color/white"
+        android:textColorHint="@color/hint_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userLastName" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:fontFamily="@font/montserratbold"
+        android:hint="@string/email"
+        android:autofillHints="@string/email"
+        android:padding="14dp"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/white"
+        android:textColorHint="@color/hint_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <Button
         android:id="@+id/button_edit_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Uređivanje profila"
-        android:onClick="onButtonClick"
         android:layout_gravity="top|right"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="176dp"
         android:layout_marginRight="10dp"
-        />
+        android:onClick="onButtonClick"
+        android:text="@string/editProfileBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.863"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

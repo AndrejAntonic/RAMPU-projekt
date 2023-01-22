@@ -12,7 +12,13 @@ import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
 import kotlinx.coroutines.launch
 
+
 class EditProfileFragment : Fragment() {
+
+    private var onCloseCallback: (() -> Unit)? = null
+    fun setOnCloseCallback(callback: () -> Unit) {
+        onCloseCallback = callback
+    }
 
     private lateinit var etName: EditText
     private lateinit var etLastName: EditText
@@ -20,6 +26,7 @@ class EditProfileFragment : Fragment() {
     private lateinit var etPassword: EditText
     private lateinit var etEmail: EditText
     private lateinit var btnEditUser: Button
+    private lateinit var btnCancel: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +40,7 @@ class EditProfileFragment : Fragment() {
         etPassword = v.findViewById(R.id.passwordEdit)
         etEmail = v.findViewById(R.id.emailEdit)
         btnEditUser = v.findViewById(R.id.saveChangesBtn)
+        btnCancel = v.findViewById(R.id.cancelBtn)
 
         btnEditUser.setOnClickListener {
             val name = etName.text.toString()
@@ -44,6 +52,19 @@ class EditProfileFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launch {
                 UsersDAO.EditUser(username, email, password, name, lastName)
             }
+            onCloseCallback?.invoke()
+            val fragmentManager = parentFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.remove(this)
+            fragmentTransaction.commit()
+        }
+
+        btnCancel.setOnClickListener{
+            onCloseCallback?.invoke()
+            val fragmentManager = parentFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.remove(this)
+            fragmentTransaction.commit()
         }
 
         return v

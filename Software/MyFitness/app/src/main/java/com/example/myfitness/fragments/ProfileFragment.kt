@@ -21,10 +21,16 @@ class ProfileFragment : Fragment() {
         val button = v.findViewById<Button>(R.id.button_edit_profile)
         button.setOnClickListener {
             val frgmntEditProfile = EditProfileFragment()
+            frgmntEditProfile.setOnCloseCallback {
+                button.visibility = View.VISIBLE
+            }
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.mainlayoutProfile, frgmntEditProfile)
             transaction.commit()
+            button.visibility = View.GONE
         }
+
+
         return v
     }
 
