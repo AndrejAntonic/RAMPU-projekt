@@ -1,60 +1,78 @@
 package com.example.myfitness
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import com.example.myfitness.DataAccessObjects.InputDAO
+import com.example.myfitness.DataAccessObjects.UsersDAO
+import com.example.myfitness.utils.Validator
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 class InputActivity : AppCompatActivity() {
 
-    lateinit var display : TextView
-    lateinit var editWeight : EditText
-    lateinit var editHeight : EditText
-    lateinit var editAge : EditText
-    lateinit var genderMale : Button
-    lateinit var genderFemale : Button
+
+    private var db = Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_input)
 
-        display = findViewById(R.id.display_result)
-        editWeight = findViewById(R.id.edit_weight)
-        editHeight = findViewById(R.id.edit_height)
-        editAge = findViewById(R.id.edit_age)
-        genderMale = findViewById(R.id.male)
-        genderFemale = findViewById(R.id.female)
+        val btnSubmit = findViewById<Button>(R.id.btn_Submit)
 
-        genderMale.setOnClickListener{
-            val firstEdit = editWeight.text.toString().toInt()
-            val secondEdit = editHeight.text.toString().toInt()
-            val thirdEdit = editAge.text.toString().toInt()
-            Male(firstEdit, secondEdit, thirdEdit)
+        btnSubmit.setOnClickListener{
+
+            val editWeight = findViewById<EditText>(R.id.edit_weight)
+            val editHeight = findViewById<EditText>(R.id.edit_height)
+            val editAge = findViewById<EditText>(R.id.edit_age)
+            val editActivity = findViewById<EditText>(R.id.edit_activity)
+            val editGender = findViewById<EditText>(R.id.edit_gender)
+
+            val providedWeight = editWeight.text.toString()
+            val providedHeight = editHeight.text.toString()
+            val providedAge = editAge.text.toString()
+            val providedActivity = editActivity.text.toString()
+            val providedGender = editGender.text.toString()
+
+
+            var errors = false
+
+            if(!Validator.isActivityValid(providedActivity)){
+                editActivity.setError("Aktivnost mora biti označena sa brojem 1-7 (dana u tjednu)!")
+                errors = true
+            }
+
+            if(!Validator.isGenderValid(providedGender)){
+                editGender.setError("Prihvatljivi unosi: 'Male', 'male', 'Female', 'female'")
+                errors = true
+            }
+
+            if (errors) return@setOnClickListener
+
+            val that = this
+
+            InputDAO.AddInput(providedWeight, providedHeight, providedAge, providedActivity, providedGender).addOnSuccessListener {
+                val prefs = getSharedPreferences("userInput", Context.MODE_PRIVATE)
+                val editor = prefs.edit()
+                editor.putString("weight", editWeight.toString())
+                editor.apply()
+
+                val intent = Intent(that, MainActivity::class.java)
+                startActivity(intent)
+            }
+
         }
-
-        genderFemale.setOnClickListener {
-            val firstEdit = editWeight.text.toString().toInt()
-            val secondEdit = editHeight.text.toString().toInt()
-            val thirdEdit = editAge.text.toString().toInt()
-            Female(firstEdit, secondEdit, thirdEdit)
-        }
-    }
-
-    private fun Male(firstEdit: Int, secondEdit: Int, thirdEdit: Int)
-    {
-        val result = 88.362 + (13.397 * firstEdit) + (4.799 * secondEdit) - (5.677 * thirdEdit)
-        val decimal = BigDecimal(result).setScale(3, RoundingMode.HALF_EVEN)
-        display.text = decimal.toString()
-    }
-
-    private fun Female(firstEdit: Int, secondEdit: Int, thirdEdit: Int)
-    {
-        val result = 447.593 + (9.247 * firstEdit) + (3.098 * secondEdit) - (4.330 * thirdEdit)
-        val decimal = BigDecimal(result).setScale(3, RoundingMode.HALF_EVEN)
-        display.text = decimal.toString()
     }
 }
