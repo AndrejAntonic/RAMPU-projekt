@@ -60,7 +60,7 @@ class PlanFragment : Fragment() {
                 var newPlanPreferences = dialogHelper.buildPlan()
                 determinePlan(newPlanPreferences)
                 recyclerView.layoutManager = LinearLayoutManager(view?.context)
-                service.showNotification()
+                service.showNotification(newPlanPreferences.days)
                 //loadPlan(dialogHelper.determinePlan(newPlanPreferences))
             }.show()
 
