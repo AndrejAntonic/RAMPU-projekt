@@ -45,7 +45,13 @@ class ProgressFragment : Fragment() {
         exerciseSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedExercise = parent?.getItemAtPosition(position) as String
-                val chart = TestChart(requireContext(), getExercisesForLastMonth(selectedExercise), periodSpinner.selectedItem.toString())
+                val selectedPeriod = periodSpinner.selectedItem.toString()
+                var chart : TestChart
+                if (selectedPeriod == "Last Month") {
+                    chart = TestChart(requireContext(), getExercisesForLastMonth(selectedExercise), selectedPeriod)
+                } else {
+                    chart = TestChart(requireContext(), getExercisesForLastYear(selectedExercise), selectedPeriod)
+                }
                 chartContainer.addView(chart)
 
                 Toast.makeText(requireContext(), "Selected: $selectedExercise", Toast.LENGTH_SHORT).show()
@@ -154,7 +160,6 @@ class ProgressFragment : Fragment() {
         val currentMonth = DateHelper.getMonth(Timestamp.now())
 
         val resultData = filterByMonthAndYear(exerciseData, currentYear, currentMonth).sortedBy { it.date.toDate() }
-        resultData.forEach{ println("ZAPIS " + it.exerciseName)}
         return resultData
     }
 
@@ -162,7 +167,7 @@ class ProgressFragment : Fragment() {
         val exerciseData = exerciseGroups.get(exerciseName)!!
         val currentYear = Calendar.getInstance().get(Calendar.YEAR).toString()
         val exercisesInCurrentYear = filterByMonthAndYear(exerciseData, currentYear)
-        val resultData = getAverageWeightByMonth(exercisesInCurrentYear)
+        val resultData = getAverageWeightByMonth(exercisesInCurrentYear).sortedBy { it.date.toDate().month }
         return resultData
     }
 
