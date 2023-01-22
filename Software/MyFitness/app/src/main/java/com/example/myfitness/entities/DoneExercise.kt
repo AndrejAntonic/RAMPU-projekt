@@ -1,4 +1,4 @@
-package model
+package com.example.myfitness.entities
 
 import com.google.firebase.Timestamp
 import java.util.*

@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import com.example.myfitness.adapters.ExerciseRecyclerViewAdapter
 import com.example.myfitness.helpers.AddExerciseDialog
 import com.google.firebase.firestore.FirebaseFirestore
-import model.Exercise
+import com.example.myfitness.entities.Exercise
 
 
 class ExercisesFragment : Fragment() {

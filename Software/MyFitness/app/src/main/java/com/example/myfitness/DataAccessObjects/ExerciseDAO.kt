@@ -1,8 +1,6 @@
 package com.example.myfitness.DataAccessObjects
 
 import android.R
-import android.graphics.Bitmap
-import android.util.Base64
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -10,8 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import model.Exercise
-import java.io.ByteArrayOutputStream
+import com.example.myfitness.entities.Exercise
 
 
 object ExerciseDAO {

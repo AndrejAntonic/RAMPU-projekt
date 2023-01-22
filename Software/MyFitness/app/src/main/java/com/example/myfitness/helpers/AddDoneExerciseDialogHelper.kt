@@ -17,7 +17,7 @@ import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
 import com.example.myfitness.adapters.ExerciseListRecyclerViewAdapter
 import com.google.firebase.Timestamp
-import model.DoneExercise
+import com.example.myfitness.entities.DoneExercise
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.myfitness.DataAccessObjects.ExerciseDAO
 import com.example.myfitness.fragments.ExercisesFragment
 import com.google.firebase.firestore.FirebaseFirestore
-import model.Exercise
+import com.example.myfitness.entities.Exercise
 
 class AddExerciseFragment : Fragment() {
     private val db = FirebaseFirestore.getInstance()

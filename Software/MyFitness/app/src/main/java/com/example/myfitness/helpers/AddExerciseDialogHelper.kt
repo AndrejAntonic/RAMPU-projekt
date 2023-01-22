@@ -3,22 +3,15 @@ package com.example.myfitness.helpers
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.widget.*
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myfitness.DataAccessObjects.ExerciseDAO
 import com.example.myfitness.R
 import com.google.firebase.firestore.FirebaseFirestore
-import model.Exercise
+import com.example.myfitness.entities.Exercise
 
 
 class AddExerciseDialog(private val activity: Activity, val dialog: AlertDialog, private val context: Context):AppCompatActivity() {

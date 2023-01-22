@@ -10,7 +10,7 @@ import io.data2viz.charts.chart.mark.line
 import io.data2viz.charts.dimension.Discrete
 import io.data2viz.geom.Size
 import io.data2viz.viz.VizContainerView
-import model.DoneExercise
+import com.example.myfitness.entities.DoneExercise
 
 class LineChart(context: Context, exerciseDataSet : List<DoneExercise>, period: String) : VizContainerView(context) {
 

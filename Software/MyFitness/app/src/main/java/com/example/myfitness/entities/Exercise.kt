@@ -1,4 +1,4 @@
-package model
+package com.example.myfitness.entities
 
 data class Exercise(
     var name: String = "",

@@ -40,14 +40,6 @@ class MainActivity : AppCompatActivity() {
 
         mainPagerAdapter.addFragment(
             MainPagerAdapter.FragmentItem(
-                R.string.calendar_fragment_title,
-                R.drawable.ic_baseline_calendar_month_24,
-                CalendarFragment::class
-            )
-        )
-
-        mainPagerAdapter.addFragment(
-            MainPagerAdapter.FragmentItem(
                 R.string.progress_fragment_title,
                 R.drawable.ic_baseline_show_chart_24,
                 ProgressFragment::class

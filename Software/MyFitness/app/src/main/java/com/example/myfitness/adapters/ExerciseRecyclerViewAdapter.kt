@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitness.R
-import model.Exercise
+import com.example.myfitness.entities.Exercise
 
 class ExerciseRecyclerViewAdapter(private val exercises: List<Exercise>) : RecyclerView.Adapter<ExerciseViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {

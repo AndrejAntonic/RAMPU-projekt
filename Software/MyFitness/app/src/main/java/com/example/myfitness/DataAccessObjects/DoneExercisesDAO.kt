@@ -4,7 +4,7 @@ package com.example.myfitness.DataAccessObjects
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import model.DoneExercise
+import com.example.myfitness.entities.DoneExercise
 
 object DoneExercisesDAO {
     fun add(doneExercise: DoneExercise, username: String) : Boolean {
