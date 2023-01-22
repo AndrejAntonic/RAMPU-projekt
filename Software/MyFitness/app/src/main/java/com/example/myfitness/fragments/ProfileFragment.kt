@@ -1,5 +1,6 @@
 package com.example.myfitness.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.FragmentTransaction
+import com.example.myfitness.CalculatorActivity
 import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
 import kotlinx.coroutines.CoroutineScope
@@ -20,6 +22,7 @@ class ProfileFragment : Fragment() {
     private lateinit var etUsername: EditText
     private lateinit var etEmail: EditText
     private lateinit var btnEditProfile: Button
+    private lateinit var btnOpenBazalCalculator : Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +34,7 @@ class ProfileFragment : Fragment() {
         etUsername = v.findViewById(R.id.username)
         etEmail = v.findViewById(R.id.email)
         btnEditProfile = v.findViewById(R.id.button_edit_profile)
+        btnOpenBazalCalculator = v.findViewById(R.id.btn_open_basal_calculator)
 
         loadUserData()
 
@@ -44,6 +48,12 @@ class ProfileFragment : Fragment() {
             transaction.commit()
             btnEditProfile.visibility = View.GONE
         }
+
+        btnOpenBazalCalculator.setOnClickListener {
+            val intent = Intent (requireContext(), CalculatorActivity::class.java)
+            startActivity(intent)
+        }
+
         return v
     }
 

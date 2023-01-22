@@ -22,12 +22,12 @@ class CalculatorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calculator)
 
-        display = findViewById(R.id.display_result1)
-        editWeight = findViewById(R.id.edit_weight1)
-        editHeight = findViewById(R.id.edit_height1)
-        editAge = findViewById(R.id.edit_age1)
-        genderMale = findViewById(R.id.male1)
-        genderFemale = findViewById(R.id.female1)
+        display = findViewById(R.id.display_result)
+        editWeight = findViewById(R.id.edit_weight)
+        editHeight = findViewById(R.id.edit_height)
+        editAge = findViewById(R.id.edit_age)
+        genderMale = findViewById(R.id.male)
+        genderFemale = findViewById(R.id.female)
 
         genderMale.setOnClickListener{
             val firstEdit = editWeight.text.toString().toInt()
