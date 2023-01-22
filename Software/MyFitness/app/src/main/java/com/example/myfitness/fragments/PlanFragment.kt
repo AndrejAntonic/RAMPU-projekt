@@ -1,6 +1,7 @@
 package com.example.myfitness.fragments
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.myfitness.entities.Exercises
 import com.example.myfitness.entities.Plan
 import com.example.myfitness.entities.PlanPreferences
 import com.example.myfitness.helpers.NewGenerateProgramHelper
+import com.example.myfitness.utils.Notification
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -49,6 +51,7 @@ class PlanFragment : Fragment() {
     private fun showDialog() {
         val newGenerateProgramView = LayoutInflater.from(context).inflate(R.layout.generate_program, null)
         val dialogHelper = NewGenerateProgramHelper(newGenerateProgramView)
+        val service = Notification(requireContext().applicationContext)
 
         AlertDialog.Builder(context)
             .setView(newGenerateProgramView)
@@ -57,6 +60,7 @@ class PlanFragment : Fragment() {
                 var newPlanPreferences = dialogHelper.buildPlan()
                 determinePlan(newPlanPreferences)
                 recyclerView.layoutManager = LinearLayoutManager(view?.context)
+                service.showNotification(newPlanPreferences.days)
                 //loadPlan(dialogHelper.determinePlan(newPlanPreferences))
             }.show()
 
