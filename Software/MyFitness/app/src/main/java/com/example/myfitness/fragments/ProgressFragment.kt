@@ -52,7 +52,7 @@ class ProgressFragment : Fragment() {
 
             val currentTimestamp = Timestamp.now()
             exerciseGroupsFiltered = exerciseGroups.mapValues { (_, exercises) ->
-                filterByMonthAndYear(exercises, DateHelper.getYear(currentTimestamp), DateHelper.getMonth(currentTimestamp)).sortedBy { it.date.toDate() }
+                filterByMonthAndYear(exercises, DateHelper.getYear(currentTimestamp)).sortedBy { it.date.toDate() }
             }
 
             withContext(Dispatchers.Main) {
