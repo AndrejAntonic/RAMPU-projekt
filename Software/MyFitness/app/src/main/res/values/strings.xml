@@ -78,5 +78,12 @@
     <string name="hint_password">Lozinka</string>
     <string name="title_progress_fragment">Vaš napredak</string>
     <string name="notice_message_progress_unavailable">Još nemate spremljenih podataka o treningu</string>
+    <string name="title_calculator_activity">Kalkulator bazalne stope metabolizma</string>
+    <string name="hint_tezina">Težina (kg)</string>
+    <string name="hint_visina">Visina (cm)</string>
+    <string name="hint_age">Vaša dob</string>
+    <string name="btn_male_select">Muško</string>
+    <string name="btn_female_select">Žensko</string>
+    <string name="hint_basal_calculator_result">Rezultat</string>
 
 </resources>

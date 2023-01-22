@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,12 +9,12 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="220dp"
-        android:layout_height="100dp"
+        android:layout_width="224dp"
+        android:layout_height="116dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:gravity="center"
-        android:text="Data Input"
+        android:text="@string/title_calculator_activity"
         android:textColor="#FFFFFF"
         android:textSize="30sp" />
 
@@ -27,7 +26,7 @@
         android:layout_below="@id/male"
         android:layout_marginTop="-20dp"
         android:gravity="center"
-        android:text="Basal metabolic rate:"
+        android:text="Bazalni metabolizam: "
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
@@ -44,9 +43,10 @@
         android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
         android:textColor="#FFFFFF"
-        android:hint="Result"
+        android:hint="@string/hint_basal_calculator_result"
         android:textColorHint="#808080"
         android:textSize="20sp" />
+
 
     <EditText
         android:id="@+id/edit_weight"
@@ -59,11 +59,11 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
-        android:gravity="center"
-        android:hint="kg"
+        android:hint="@string/hint_tezina"
         android:textColor="#FFFFFF"
+        android:paddingLeft="15dp"
         android:textColorHint="#808080"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/edit_height"
@@ -76,11 +76,11 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
-        android:gravity="center"
-        android:hint="cm"
+        android:hint="@string/hint_visina"
         android:textColor="#FFFFFF"
+        android:paddingLeft="15dp"
         android:textColorHint="#808080"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/edit_age"
@@ -89,15 +89,15 @@
         android:layout_below="@id/edit_height"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
+        android:paddingLeft="15dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
-        android:gravity="center"
-        android:hint="age"
+        android:hint="@string/hint_age"
         android:textColor="#FFFFFF"
         android:textColorHint="#808080"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/male"
@@ -109,7 +109,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="#2196F3"
-        android:text="Male"
+        android:text="@string/btn_male_select"
         android:textAllCaps="false" />
 
     <Button
@@ -123,7 +123,7 @@
         android:layout_marginRight="20dp"
         android:layout_toRightOf="@+id/male"
         android:backgroundTint="#2196F3"
-        android:text="Female"
+        android:text="@string/btn_female_select"
         android:textAllCaps="false" />
 
 </RelativeLayout>
