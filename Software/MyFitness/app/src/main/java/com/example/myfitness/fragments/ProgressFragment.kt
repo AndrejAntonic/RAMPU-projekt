@@ -10,6 +10,7 @@ import com.example.myfitness.DataAccessObjects.DoneExercisesDAO
 import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
 import com.example.myfitness.charts.LineChart
+import com.example.myfitness.helpers.AddDoneExerciseDialogHelper
 import com.example.myfitness.helpers.DateHelper
 import com.google.firebase.Timestamp
 import kotlinx.coroutines.CoroutineScope
@@ -59,6 +60,16 @@ class ProgressFragment : Fragment() {
 
                 if (exerciseNames.isEmpty()) {
                     noticeProgressUnavailable.visibility = View.VISIBLE
+                    val addDoneExerciseButton = v.findViewById<Button>(R.id.btn_add_done_exercise_progress)
+                    addDoneExerciseButton.setOnClickListener {
+                        val addDoneExerciseDialogHelper =
+                            AddDoneExerciseDialogHelper(requireContext())
+
+                        val scope = CoroutineScope(Dispatchers.Main)
+                        scope.launch {
+                            addDoneExerciseDialogHelper.load()
+                        }
+                    }
                     return@withContext
                 } else {
                     chartFilterContainer.visibility = View.VISIBLE

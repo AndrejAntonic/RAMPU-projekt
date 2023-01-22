@@ -17,7 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.myfitness.adapters.ExerciseRecyclerViewAdapter
 import com.example.myfitness.helpers.AddExerciseDialog
-import com.google.firebase.firestore.FirebaseFirestore
 import model.Exercise
 
 
@@ -47,15 +46,14 @@ class ExercisesFragment : Fragment() {
 
             val btnAddDoneExercise = v.findViewById<Button>(R.id.addDoneExercise)
             btnAddDoneExercise.setOnClickListener {
-                val addDoneExerciseDialog = showDialog()
+//                val addDoneExerciseDialog = showDialog()
                 val addDoneExerciseDialogHelper =
-                    AddDoneExerciseDialogHelper(addDoneExerciseDialog, requireContext())
+                    AddDoneExerciseDialogHelper(requireContext())
 
                 val scope = CoroutineScope(Dispatchers.Main)
                 scope.launch {
                     addDoneExerciseDialogHelper.load()
                 }
-
             }
 
             recyclerView = v.findViewById(R.id.exerciseRecyclerView)
@@ -66,16 +64,6 @@ class ExercisesFragment : Fragment() {
 
 
 
-        private fun showDialog(): AlertDialog {
-            val addDoneExerciseDialog = LayoutInflater
-                .from(context)
-                .inflate(R.layout.done_exercise_input_dialog, null)
-
-            return AlertDialog.Builder(context)
-                .setView(addDoneExerciseDialog)
-                .show()
-
-        }
 
     private fun addExercise(): AlertDialog{
         val addExercise = LayoutInflater

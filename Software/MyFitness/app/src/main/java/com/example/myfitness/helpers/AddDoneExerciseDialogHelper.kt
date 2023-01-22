@@ -3,6 +3,7 @@ package com.example.myfitness.helpers
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -20,25 +21,47 @@ import model.DoneExercise
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val context: Context) {
+class AddDoneExerciseDialogHelper(private val context: Context) {
+    private val dialog : AlertDialog
+    private val dialogView : View
+    private val searchExerciseEditText : EditText
+    private val recycleView : RecyclerView
+    private var selectedExercise : String = ""
+    private val saveButton : Button
+    private val cancelButton : Button
+    private var allExerciseNames : MutableList<String> = mutableListOf()
+    private val setsInput : EditText
+    private val repsInput : EditText
+    private val weightInput : EditText
+    private val dateinput : EditText
+    private val selectedDateTime : Calendar
+    private val sdfDate : SimpleDateFormat
 
-    val searchExerciseEditText : EditText = dialog.findViewById(R.id.exercisePicker)
-    val recycleView : RecyclerView = dialog.findViewById(R.id.rv_exercise_picker)
-    var selectedExercise : String = ""
-    val saveButton : Button = dialog.findViewById(R.id.btn_save_doneexercise_dialog)
-    val cancelButton : Button = dialog.findViewById(R.id.btn_cancel_doneexercise_dialog)
+    init {
+        dialogView = LayoutInflater
+            .from(context)
+            .inflate(R.layout.done_exercise_input_dialog, null)
+        dialog = AlertDialog.Builder(context)
+            .setView(dialogView).show()
 
-    var allExerciseNames : MutableList<String> = mutableListOf()
+        searchExerciseEditText = dialog.findViewById(R.id.exercisePicker)
+        recycleView = dialog.findViewById(R.id.rv_exercise_picker)
+         selectedExercise = ""
+         saveButton = dialog.findViewById(R.id.btn_save_doneexercise_dialog)
+         cancelButton = dialog.findViewById(R.id.btn_cancel_doneexercise_dialog)
 
-    val setsInput : EditText = dialog.findViewById(R.id.setsInput)
-    val repsInput : EditText = dialog.findViewById(R.id.repsInput)
-    val weightInput : EditText = dialog.findViewById(R.id.weightInput)
-    val dateinput : EditText = dialog.findViewById(R.id.dateInput_dialog)
-    val selectedDateTime : Calendar = Calendar.getInstance()
-    val sdfDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+         allExerciseNames = mutableListOf()
+
+         setsInput = dialog.findViewById(R.id.setsInput)
+         repsInput = dialog.findViewById(R.id.repsInput)
+         weightInput = dialog.findViewById(R.id.weightInput)
+         dateinput = dialog.findViewById(R.id.dateInput_dialog)
+         selectedDateTime = Calendar.getInstance()
+         sdfDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+    }
+
 
     suspend fun load() {
-
 
         allExerciseNames = ExerciseDAO.getAllExerciseNames()
         recycleView.layoutManager = LinearLayoutManager(context)
