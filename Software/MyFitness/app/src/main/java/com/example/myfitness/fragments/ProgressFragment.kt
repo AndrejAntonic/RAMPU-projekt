@@ -9,7 +9,7 @@ import android.widget.*
 import com.example.myfitness.DataAccessObjects.DoneExercisesDAO
 import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
-import com.example.myfitness.charts.TestChart
+import com.example.myfitness.charts.LineChart
 import com.example.myfitness.helpers.DateHelper
 import com.google.firebase.Timestamp
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +23,6 @@ import java.util.*
 class ProgressFragment : Fragment() {
     lateinit var exerciseGroups : Map<String, List<DoneExercise>>
     lateinit var exerciseGroupsFiltered : Map<String, List<DoneExercise>>
-    lateinit var displayExerciseData : List<DoneExercise>
     lateinit var exerciseSpinner : Spinner
     lateinit var periodSpinner : Spinner
     lateinit var chartContainer : FrameLayout
@@ -41,24 +40,6 @@ class ProgressFragment : Fragment() {
         chartContainer = v.findViewById<FrameLayout>(R.id.chart_container)
         chartFilterContainer = v.findViewById<LinearLayout>(R.id.chart_filter_container)
         noticeProgressUnavailable = v.findViewById<LinearLayout>(R.id.notice_progress_unavailable)
-
-
-        fillPeriodSpinner()
-
-        exerciseSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedExercise = parent?.getItemAtPosition(position) as String
-                val selectedPeriod = periodSpinner.selectedItem.toString()
-                val chart : TestChart
-                if (selectedPeriod == "Last Month") {
-                    chart = TestChart(requireContext(), getExercisesForLastMonth(selectedExercise), selectedPeriod)
-                } else {
-                    chart = TestChart(requireContext(), getExercisesForLastYear(selectedExercise), selectedPeriod)
-                }
-                chartContainer.addView(chart)
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
 
 
         val scope = CoroutineScope(Dispatchers.IO)
@@ -84,32 +65,51 @@ class ProgressFragment : Fragment() {
                     chartContainer.visibility = View.VISIBLE
                 }
 
-                fillExerciseSpinner(v, exerciseNames)
+                fillPeriodSpinner()
+                fillExerciseSpinner(exerciseNames)
                 val randomExercise : String = getRandomExerciseFrom(exerciseNames)
                 setSpinnerSelection(exerciseSpinner, randomExercise)
 
-                periodSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        val selectedPeriod = parent?.getItemAtPosition(position) as String
-                        val selectedExercise = exerciseSpinner.selectedItem.toString()
-                        var chart : TestChart
-                        if (selectedPeriod == "Last Month") {
-                            chart = TestChart(requireContext(), getExercisesForLastMonth(selectedExercise), selectedPeriod)
-                        } else {
-                            chart = TestChart(requireContext(), getExercisesForLastYear(selectedExercise), selectedPeriod)
-                        }
-                        chartContainer.addView(chart)
-                    }
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-                }
+                activateSpinnerSelectListeners()
 
-                val chart = TestChart(requireContext(), exerciseGroupsFiltered.get(randomExercise)!!, periodSpinner.selectedItem.toString())
+                val chart = LineChart(requireContext(), exerciseGroupsFiltered.get(randomExercise)!!, periodSpinner.selectedItem.toString())
                 chartContainer.addView(chart)
             }
         }
         return v
     }
 
+    private fun activateSpinnerSelectListeners() {
+        exerciseSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedExercise = parent?.getItemAtPosition(position) as String
+                val selectedPeriod = periodSpinner.selectedItem.toString()
+                val chart : LineChart
+                if (selectedPeriod == "Last Month") {
+                    chart = LineChart(requireContext(), getExercisesForLastMonth(selectedExercise), selectedPeriod)
+                } else {
+                    chart = LineChart(requireContext(), getExercisesForLastYear(selectedExercise), selectedPeriod)
+                }
+                chartContainer.addView(chart)
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+        periodSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedPeriod = parent?.getItemAtPosition(position) as String
+                val selectedExercise = exerciseSpinner.selectedItem.toString()
+                val chart : LineChart
+                if (selectedPeriod == "Last Month") {
+                    chart = LineChart(requireContext(), getExercisesForLastMonth(selectedExercise), selectedPeriod)
+                } else {
+                    chart = LineChart(requireContext(), getExercisesForLastYear(selectedExercise), selectedPeriod)
+                }
+                chartContainer.addView(chart)
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
 
     fun filterByMonthAndYear(doneExercises: List<DoneExercise>, year: String, month: String? = null) : List<DoneExercise> {
         val filteredExercises = doneExercises.filter {
@@ -122,7 +122,6 @@ class ProgressFragment : Fragment() {
         return filteredExercises
     }
 
-
     fun fillPeriodSpinner() {
         val spinnerItems = arrayOf("Last Month", "Last Year")
         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item_basic, spinnerItems)
@@ -130,7 +129,7 @@ class ProgressFragment : Fragment() {
         periodSpinner.adapter = adapter
     }
 
-    fun fillExerciseSpinner(view : View, spinnerItems: List<String>) {
+    fun fillExerciseSpinner(spinnerItems: List<String>) {
         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item_basic, spinnerItems)
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_basic)
         exerciseSpinner.adapter = adapter
