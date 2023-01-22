@@ -2,7 +2,6 @@ package com.example.myfitness.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.myfitness.adapters.ExerciseRecyclerViewAdapter
 import com.google.firebase.firestore.FirebaseFirestore
+import com.example.myfitness.helpers.AddExerciseDialog
 import model.Exercise
 
 
@@ -46,15 +46,14 @@ class ExercisesFragment : Fragment() {
 
             val btnAddDoneExercise = v.findViewById<Button>(R.id.addDoneExercise)
             btnAddDoneExercise.setOnClickListener {
-                val addDoneExerciseDialog = showDialog()
+//                val addDoneExerciseDialog = showDialog()
                 val addDoneExerciseDialogHelper =
-                    AddDoneExerciseDialogHelper(addDoneExerciseDialog, requireContext())
+                    AddDoneExerciseDialogHelper(requireContext())
 
                 val scope = CoroutineScope(Dispatchers.Main)
                 scope.launch {
                     addDoneExerciseDialogHelper.load()
                 }
-
             }
 
             recyclerView = v.findViewById(R.id.exerciseRecyclerView)
@@ -65,16 +64,6 @@ class ExercisesFragment : Fragment() {
 
 
 
-        private fun showDialog(): AlertDialog {
-            val addDoneExerciseDialog = LayoutInflater
-                .from(context)
-                .inflate(R.layout.done_exercise_input_dialog, null)
-
-            return AlertDialog.Builder(context)
-                .setView(addDoneExerciseDialog)
-                .show()
-
-        }
 
     private fun addExercise(): AlertDialog{
         val addExercise = LayoutInflater
@@ -92,7 +81,7 @@ class ExercisesFragment : Fragment() {
         scope.launch {
             val exercisesFun = ExerciseDAO.getAllExercises()
             exercisesFun.forEach {
-                Log.d("ExerciseFragment", "Exercise name: ${it.name}")
+//                Log.d("ExerciseFragment", "Exercise name: ${it.name}")
             }
             recyclerView.layoutManager = LinearLayoutManager(context)
             val adapter = ExerciseRecyclerViewAdapter(exercisesFun)
@@ -102,7 +91,7 @@ class ExercisesFragment : Fragment() {
 
 
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
             val exerciseRecyclerView = view.findViewById<RecyclerView>(R.id.exerciseRecyclerView)

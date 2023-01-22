@@ -1,12 +1,12 @@
 package model
 
+import com.google.firebase.Timestamp
 import java.util.*
 
 data class DoneExercise(
-    val exerciseName : String,
-    val weight : Int,
-    val sets : Int,
-    val reps : Int,
-    val date : Date,
-    val username : String,
+    var exerciseName : String = "",
+    var weight : Int = 0,
+    var sets : Int = 0,
+    var reps : Int = 0,
+    var date : Timestamp = Timestamp.now()
 )

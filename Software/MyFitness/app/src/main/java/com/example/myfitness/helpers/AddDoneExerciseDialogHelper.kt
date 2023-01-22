@@ -3,6 +3,7 @@ package com.example.myfitness.helpers
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -12,31 +13,52 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitness.DataAccessObjects.DoneExercisesDAO
 import com.example.myfitness.DataAccessObjects.ExerciseDAO
+import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
 import com.example.myfitness.adapters.ExerciseListRecyclerViewAdapter
+import com.google.firebase.Timestamp
 import model.DoneExercise
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val context: Context) {
+class AddDoneExerciseDialogHelper(private val context: Context) {
+    private val dialog : AlertDialog
+    private val dialogView : View
+    private val searchExerciseEditText : EditText
+    private val recycleView : RecyclerView
+    private var selectedExercise : String = ""
+    private val saveButton : Button
+    private val cancelButton : Button
+    private var allExerciseNames : MutableList<String> = mutableListOf()
+    private val setsInput : EditText
+    private val repsInput : EditText
+    private val weightInput : EditText
+    private val dateinput : EditText
+    private val selectedDateTime : Calendar
+    private val sdfDate : SimpleDateFormat
 
-    val searchExerciseEditText : EditText = dialog.findViewById(R.id.exercisePicker)
-    val recycleView : RecyclerView = dialog.findViewById(R.id.rv_exercise_picker)
-    var selectedExercise : String = ""
-    val saveButton : Button = dialog.findViewById(R.id.btn_save_doneexercise_dialog)
-    val cancelButton : Button = dialog.findViewById(R.id.btn_cancel_doneexercise_dialog)
+    init {
+        dialogView = LayoutInflater
+            .from(context)
+            .inflate(R.layout.done_exercise_input_dialog, null)
+        dialog = AlertDialog.Builder(context)
+            .setView(dialogView).show()
 
-    var allExerciseNames : MutableList<String> = mutableListOf()
-
-    val setsInput : EditText = dialog.findViewById(R.id.setsInput)
-    val repsInput : EditText = dialog.findViewById(R.id.repsInput)
-    val weightInput : EditText = dialog.findViewById(R.id.weightInput)
-    val dateinput : EditText = dialog.findViewById(R.id.dateInput_dialog)
-    val selectedDateTime : Calendar = Calendar.getInstance()
-    val sdfDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+        searchExerciseEditText = dialog.findViewById(R.id.exercisePicker)
+        recycleView = dialog.findViewById(R.id.rv_exercise_picker)
+        selectedExercise = ""
+        saveButton = dialog.findViewById(R.id.btn_save_doneexercise_dialog)
+        cancelButton = dialog.findViewById(R.id.btn_cancel_doneexercise_dialog)
+        allExerciseNames = mutableListOf()
+        setsInput = dialog.findViewById(R.id.setsInput)
+        repsInput = dialog.findViewById(R.id.repsInput)
+        weightInput = dialog.findViewById(R.id.weightInput)
+        dateinput = dialog.findViewById(R.id.dateInput_dialog)
+        selectedDateTime = Calendar.getInstance()
+        sdfDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+    }
 
     suspend fun load() {
-
 
         allExerciseNames = ExerciseDAO.getAllExerciseNames()
         recycleView.layoutManager = LinearLayoutManager(context)
@@ -48,6 +70,7 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
                 selectedExercise = item
                 searchExerciseEditText.setText(selectedExercise)
                 recycleView.visibility = View.GONE
+                searchExerciseEditText.error = null
             }
         })
 
@@ -75,8 +98,9 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
                 return@setOnClickListener
             }
 
+            val currentUser = UsersDAO.getCurrentUser(context)
             val exercise : DoneExercise = buildExercise()
-            DoneExercisesDAO.add(exercise)
+            DoneExercisesDAO.add(exercise, currentUser)
             dialog.dismiss()
             Toast.makeText(context, "Napravljena vježba spremljena", Toast.LENGTH_SHORT).show()
         }
@@ -87,7 +111,6 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
 
         activateDateTimeListeners()
     }
-
 
     fun activateDateTimeListeners() {
         dateinput.setOnFocusChangeListener { view, hasFocus ->
@@ -103,7 +126,7 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
                     selectedDateTime.get(Calendar.DAY_OF_MONTH)
                 ).show()
                 view.clearFocus()
-                dateinput.setError(null)
+                dateinput.error = null
             }
         }
     }
@@ -111,39 +134,35 @@ class AddDoneExerciseDialogHelper(private val dialog: AlertDialog, private val c
     private fun validateInput() : Boolean {
         var allValid = true
         if (selectedExercise.length == 0) {
-            searchExerciseEditText.setError("Potrebno odabrati vježbu!")
+            searchExerciseEditText.error = "Potrebno odabrati vježbu!"
             allValid = false
         }
         if (weightInput.text.length == 0) {
-            weightInput.setError("Potrebno unijeti kilažu!")
+            weightInput.error = "Potrebno unijeti kilažu!"
             allValid = false
         }
         if (setsInput.text.length == 0) {
-            setsInput.setError("Potrebno unijeti broj serija!")
+            setsInput.error = "Potrebno unijeti broj serija!"
             allValid = false
         }
         if (repsInput.text.length == 0) {
-            repsInput.setError("Potrebno unijeti broj ponavljanja!")
+            repsInput.error = "Potrebno unijeti broj ponavljanja!"
             allValid = false
         }
         if (dateinput.text.length == 0) {
-            dateinput.setError("Potrebno odabrati datum!")
+            dateinput.error = "Potrebno odabrati datum!"
             allValid = false
         }
         return allValid
     }
 
     fun buildExercise() : DoneExercise {
-        val prefs = context.getSharedPreferences("user", Context.MODE_PRIVATE)
-        val username = prefs.getString("username", "")!!
-
         return DoneExercise(
             selectedExercise,
             weightInput.text.toString().toInt(),
             setsInput.text.toString().toInt(),
             repsInput.text.toString().toInt(),
-            selectedDateTime.time,
-            username
+            Timestamp(selectedDateTime.time)
         )
     }
 }

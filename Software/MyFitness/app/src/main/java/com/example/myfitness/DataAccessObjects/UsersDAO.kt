@@ -1,16 +1,12 @@
 package com.example.myfitness.DataAccessObjects
 
-
 import android.content.Context
 import android.util.Log
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import com.google.firebase.auth.ktx.auth
-
 
 object UsersDAO {
 
@@ -24,6 +20,7 @@ object UsersDAO {
          var result = false
          return db.collection("users").add(user)
     }
+
 
     suspend fun GetUserByUsername(username: String) : Boolean {
         val db = Firebase.firestore
@@ -72,5 +69,4 @@ object UsersDAO {
         val prefs = context.getSharedPreferences("user", Context.MODE_PRIVATE)
         return prefs.getString("username", "")!!
     }
-
 }
