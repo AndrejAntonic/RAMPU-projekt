@@ -43,6 +43,7 @@
     <string name="add_exercise">Dodaj vježbu</string>
 
     <string-array name="difficulty_array">
+        <item>Odaberi težinu</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>

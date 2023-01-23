@@ -37,13 +37,13 @@ class AddExerciseDialog(private val activity: Activity, val dialog: AlertDialog,
 
         val difficultyAdapter =
             ArrayAdapter(context, android.R.layout.simple_spinner_item, difficulties)
-        difficultyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        difficultyAdapter.setDropDownViewResource(R.layout.spinner_item_basic)
         spinnerDiff.adapter = difficultyAdapter
 
         val spinnerEquip = addExerciseView.findViewById<Spinner>(R.id.equipmentSpinner)
         val equipmentAdapter =
             ArrayAdapter(context, android.R.layout.simple_spinner_item, equipments)
-        equipmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        equipmentAdapter.setDropDownViewResource(R.layout.spinner_item_basic)
         spinnerEquip.adapter = equipmentAdapter
 
         val spinnerBodyPart = addExerciseView.findViewById<Spinner>(R.id.bodyPartSpinner)
