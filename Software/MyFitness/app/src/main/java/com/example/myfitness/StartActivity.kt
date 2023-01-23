@@ -4,6 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.myfitness.DataAccessObjects.UsersDAO
+import com.example.myfitness.helpers.DateHelper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,5 +31,22 @@ class StartActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val that = this
+        val lastUsername = UsersDAO.getCurrentUser(this)
+        val scope = CoroutineScope(Dispatchers.IO)
+
+        scope.launch {
+            val sessionTimestamp = UsersDAO.getSession(lastUsername)
+            println("TIMESTAMP " + sessionTimestamp)
+            val sessionExpired = DateHelper.hasTimePassed(sessionTimestamp)
+            println("EXPIRED " + sessionExpired)
+
+            if (!sessionExpired) {
+                withContext(Dispatchers.Main) {
+                    val intent = Intent(that, MainActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        }
     }
 }

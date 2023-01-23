@@ -83,8 +83,7 @@ object ExerciseDAO {
             val result = exercises.get().await()
             for (document in result) {
                 val exercise = document.toObject(Exercise::class.java)
-                println("Exercise:")
-                println(exercise)
+
                 exercisesList.add(exercise)
             }
             return exercisesList

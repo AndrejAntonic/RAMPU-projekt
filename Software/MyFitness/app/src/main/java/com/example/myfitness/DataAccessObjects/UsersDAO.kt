@@ -10,18 +10,21 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import com.example.myfitness.entities.User
 import com.google.firebase.Timestamp
+import java.util.*
+import kotlin.collections.HashMap
 
 
 object UsersDAO {
 
-     fun AddUser(username: String, email: String, password: String) : Task<DocumentReference> {
+    fun AddUser(username: String, email: String, password: String) : Task<DocumentReference> {
          val db = Firebase.firestore
          val user = hashMapOf(
              "username" to username,
              "email" to email,
-             "password" to password
+             "password" to password,
+             "session" to Timestamp(Timestamp.now().seconds + 86400, 0)
          )
-         var result = false
+
          return db.collection("users").add(user)
     }
 
@@ -46,12 +49,22 @@ object UsersDAO {
 
     suspend fun LoginUser(username: String, password: String) : Boolean {
         val db = Firebase.firestore
-        val user = db.collection("users")
+
+        val userQuery = db.collection("users")
             .whereEqualTo("username", username)
             .whereEqualTo("password", password)
-            .get().await()
+        val user = userQuery.get().await()
 
-        return user.size() > 0
+        val credentialsValid = user.size() > 0
+
+        if (credentialsValid) {
+            val userRef = user.documents[0].reference
+            val updates = HashMap<String, Any>()
+            updates["session"] = Timestamp(Timestamp.now().seconds + 86400, 0)
+            userRef.update(updates).await()
+        }
+
+        return credentialsValid
     }
 
     suspend fun EditUser(context: Context, username: String, email: String, password: String, weight: Double) {
@@ -100,17 +113,18 @@ object UsersDAO {
     }
 
 
-    suspend fun getSession(username : String) : Timestamp {
+    suspend fun getSession(username : String) : Date {
         val db = Firebase.firestore
-        val sessionRef = db.collection("session").document(username)
+        val userQuery = db.collection("users")
+            .whereEqualTo("username", username)
         try {
-            val result = sessionRef.get().await()
-            val timestamp = result.getTimestamp("lastSession")
-            if (timestamp != null) {
-                return timestamp
-            } else return Timestamp.now()
+            val user = userQuery.get().await()
+            val session = user.first().getTimestamp("session")
+            if (session != null) {
+                return session.toDate()
+            } else return Timestamp(1,0).toDate()
         } catch (e: Exception) {
-            return Timestamp.now()
+            return Timestamp(1,0).toDate()
         }
     }
 }

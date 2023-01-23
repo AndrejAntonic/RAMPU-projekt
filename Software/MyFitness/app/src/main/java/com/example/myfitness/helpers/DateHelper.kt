@@ -28,4 +28,9 @@ object DateHelper {
         val date = dateFormat.parse("$month-01")
         return Timestamp(date)
     }
+
+    fun hasTimePassed(date: Date): Boolean {
+        val now = Date()
+        return date.before(now)
+    }
  }
