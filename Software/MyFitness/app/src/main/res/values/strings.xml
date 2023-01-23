@@ -78,5 +78,6 @@
     <string name="hint_password">Lozinka</string>
     <string name="title_progress_fragment">Vaš napredak</string>
     <string name="notice_message_progress_unavailable">Još nemate spremljenih podataka o treningu</string>
+    <string name="notif_logged_out">Odjavljeni ste</string>
 
 </resources>

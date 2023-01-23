@@ -95,6 +95,13 @@ object UsersDAO {
         return prefs.getString("username", "")!!
     }
 
+    fun removeFromSharedPreferences(context : Context) {
+        val preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+        val editor = preferences.edit()
+        editor.remove("username")
+        editor.apply()
+    }
+
     suspend fun getUserInfo(context: Context) : MutableList<User> {
         val db = Firebase.firestore
         val userList = mutableListOf<User>()
@@ -126,5 +133,22 @@ object UsersDAO {
         } catch (e: Exception) {
             return Timestamp(1,0).toDate()
         }
+    }
+
+    suspend fun invalidateSession(username : String) : Boolean {
+        val db = Firebase.firestore
+        val userQuery = db.collection("users")
+            .whereEqualTo("username", username)
+
+        try {
+            val document = userQuery.get().await()
+            val user = document.first().reference
+            val updates = HashMap<String, Any>()
+            updates["session"] = Timestamp(1,1)
+            user.update(updates).await()
+        } catch (e: Exception) {
+            return false
+        }
+        return true
     }
 }
