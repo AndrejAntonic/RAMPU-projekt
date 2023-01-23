@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Button
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,12 +29,24 @@ class ExercisesFragment : Fragment() {
     private val db = FirebaseFirestore.getInstance()
     private var exercises = mutableListOf<Exercise>()
 
+    lateinit var bodyPartSpinner: Spinner
+    lateinit var difficultySpinner: Spinner
+
+    lateinit var selectedBodyType: String
+    lateinit var selectedDifficulty: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_exercises, container, false)
+
+        bodyPartSpinner = v.findViewById(R.id.bodyPartSpinner)
+        difficultySpinner = v.findViewById(R.id.difficultySpinner)
+
+        selectedBodyType = bodyPartSpinner.selectedItem.toString()
+        selectedDifficulty = difficultySpinner.selectedItem.toString()
 
             val button = v.findViewById<Button>(R.id.addExerciseButton)
             button.setOnClickListener {
@@ -61,9 +75,33 @@ class ExercisesFragment : Fragment() {
 
             recyclerView = v.findViewById(R.id.exerciseRecyclerView)
             recyclerView.layoutManager = LinearLayoutManager(context)
-            loadExercises()
-            return v
+//            loadExercises()
+//            return v
+//        }
+
+        bodyPartSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                loadExercises("", "")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedBodyType = parent?.getItemAtPosition(position).toString()
+                loadExercises(selectedBodyType, selectedDifficulty)
+            }
         }
+
+        difficultySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                loadExercises("", "")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedDifficulty = parent?.getItemAtPosition(position).toString()
+                loadExercises(selectedBodyType, selectedDifficulty)
+            }
+        }
+        return v
+    }
 
 
 
@@ -79,15 +117,30 @@ class ExercisesFragment : Fragment() {
     }
 
 
-    private fun loadExercises() {
+//    private fun loadExercises() {
+//        val scope = CoroutineScope(Dispatchers.Main)
+//        scope.launch {
+//            val exercisesFun = ExerciseDAO.getAllExercises()
+//            exercisesFun.forEach {
+//                Log.d("ExerciseFragment", "Exercise name: ${it.name}")
+//            }
+//            recyclerView.layoutManager = LinearLayoutManager(context)
+//            val adapter = ExerciseRecyclerViewAdapter(exercisesFun)
+//            recyclerView.adapter = adapter
+//        }
+//    }
+
+    private fun loadExercises(selectedBodyType: String?, selectedDifficulty: String?) {
         val scope = CoroutineScope(Dispatchers.Main)
+        val helpDifficulty = if (selectedDifficulty != "Odaberi težinu") selectedDifficulty?.toInt() else null
         scope.launch {
             val exercisesFun = ExerciseDAO.getAllExercises()
-            exercisesFun.forEach {
-                Log.d("ExerciseFragment", "Exercise name: ${it.name}")
+            val filteredExercises = exercisesFun.filter {
+                (selectedBodyType == "Odaberi dio tijela" || it.bodyType == selectedBodyType)
+                        && (selectedDifficulty == "Odaberi težinu" || (it.difficulty == helpDifficulty))
             }
             recyclerView.layoutManager = LinearLayoutManager(context)
-            val adapter = ExerciseRecyclerViewAdapter(exercisesFun)
+            val adapter = ExerciseRecyclerViewAdapter(filteredExercises)
             recyclerView.adapter = adapter
         }
     }
