@@ -9,6 +9,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import com.example.myfitness.entities.User
+import com.google.firebase.Timestamp
 
 
 object UsersDAO {
@@ -98,4 +99,18 @@ object UsersDAO {
         }
     }
 
+
+    suspend fun getSession(username : String) : Timestamp {
+        val db = Firebase.firestore
+        val sessionRef = db.collection("session").document(username)
+        try {
+            val result = sessionRef.get().await()
+            val timestamp = result.getTimestamp("lastSession")
+            if (timestamp != null) {
+                return timestamp
+            } else return Timestamp.now()
+        } catch (e: Exception) {
+            return Timestamp.now()
+        }
+    }
 }
