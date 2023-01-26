@@ -12,11 +12,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitness.DataAccessObjects.ExercisesDAO
+import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
 import com.example.myfitness.adapters.PlanAdapter
 import com.example.myfitness.entities.Exercises
 import com.example.myfitness.entities.Plan
 import com.example.myfitness.entities.PlanPreferences
+import com.example.myfitness.entities.User
 import com.example.myfitness.helpers.NewGenerateProgramHelper
 import com.example.myfitness.utils.Notification
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -99,6 +101,8 @@ class PlanFragment : Fragment() {
             finalList.add(Plan("Petak", selectedExercisesArms))
             finalList.add(Plan("Subota", selectedExercisesUpper))
             finalList.add(Plan("Nedjelja", selectedExercisesLower))
+            var currentUser = UsersDAO.getCurrentUser(requireContext())
+            ExercisesDAO.addPlan(finalList, currentUser)
             val planAdapter = PlanAdapter(finalList)
 
             recyclerView.adapter = planAdapter
@@ -125,6 +129,8 @@ class PlanFragment : Fragment() {
             finalList.add(Plan("Petak", selectedExercisesPush2))
             finalList.add(Plan("Subota", selectedExercisesPull2))
             finalList.add(Plan("Nedjelja", selectedExercisesLegs2))
+            var currentUser = UsersDAO.getCurrentUser(requireContext())
+            ExercisesDAO.addPlan(finalList, currentUser)
             val planAdapter = PlanAdapter(finalList)
 
             recyclerView.adapter = planAdapter
@@ -150,6 +156,8 @@ class PlanFragment : Fragment() {
             finalList.add(Plan("Petak", selectedExercisesLegs))
             finalList.add(Plan("Subota", selectedExercisesArms))
             finalList.add(Plan("Nedjelja", listRest))
+            var currentUser = UsersDAO.getCurrentUser(requireContext())
+            ExercisesDAO.addPlan(finalList, currentUser)
             val planAdapter = PlanAdapter(finalList)
 
             recyclerView.adapter = planAdapter
@@ -174,6 +182,8 @@ class PlanFragment : Fragment() {
             finalList.add(Plan("Petak", selectedExcersisesShoulder))
             finalList.add(Plan("Subota", listRest))
             finalList.add(Plan("Nedjelja", listRest))
+            var currentUser = UsersDAO.getCurrentUser(requireContext())
+            ExercisesDAO.addPlan(finalList, currentUser)
             val planAdapter = PlanAdapter(finalList)
 
             recyclerView.adapter = planAdapter
@@ -197,6 +207,8 @@ class PlanFragment : Fragment() {
             finalList.add(Plan("Petak", selectedExercisesLegs))
             finalList.add(Plan("Subota", listRest))
             finalList.add(Plan("Nedjelja", listRest))
+            var currentUser = UsersDAO.getCurrentUser(requireContext())
+            ExercisesDAO.addPlan(finalList, currentUser)
             val planAdapter = PlanAdapter(finalList)
 
             recyclerView.adapter = planAdapter
@@ -219,6 +231,8 @@ class PlanFragment : Fragment() {
             finalList.add(Plan("Petak", listRest))
             finalList.add(Plan("Subota", listRest))
             finalList.add(Plan("Nedjelja", listRest))
+            var currentUser = UsersDAO.getCurrentUser(requireContext())
+            ExercisesDAO.addPlan(finalList, currentUser)
             val planAdapter = PlanAdapter(finalList)
 
             recyclerView.adapter = planAdapter
@@ -240,6 +254,8 @@ class PlanFragment : Fragment() {
             finalList.add(Plan("Petak", listRest))
             finalList.add(Plan("Subota", listRest))
             finalList.add(Plan("Nedjelja", listRest))
+            var currentUser = UsersDAO.getCurrentUser(requireContext())
+            ExercisesDAO.addPlan(finalList, currentUser)
             val planAdapter = PlanAdapter(finalList)
 
             recyclerView.adapter = planAdapter
