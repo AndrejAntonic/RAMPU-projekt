@@ -43,11 +43,22 @@ class PlanFragment : Fragment() {
         btnGenerate = view.findViewById(R.id.id_fragment_profile_add_program)
         recyclerView = view.findViewById(R.id.rv_plan_main)
         temp = view.findViewById(R.id.id_test)
+        loadPlan()
         btnGenerate.setOnClickListener { showDialog() }
     }
 
-    private fun loadPlan(plan: String) {
-        temp.text = plan
+    private fun loadPlan() {
+        lifecycleScope.launch {
+            val currentUser = UsersDAO.getCurrentUser(requireContext())
+            val planList: MutableList<Plan> = ExercisesDAO.getPlan(currentUser)
+            if(!planList.isNullOrEmpty()) {
+                val planAdapter = PlanAdapter(planList)
+
+                recyclerView.adapter = planAdapter
+                recyclerView.layoutManager = LinearLayoutManager(view?.context)
+                temp.text = "Prethodno generirani trening"
+            }
+        }
     }
 
     private fun showDialog() {
@@ -63,7 +74,6 @@ class PlanFragment : Fragment() {
                 determinePlan(newPlanPreferences)
                 recyclerView.layoutManager = LinearLayoutManager(view?.context)
                 service.showNotification(newPlanPreferences.days)
-                //loadPlan(dialogHelper.determinePlan(newPlanPreferences))
             }.show()
 
         dialogHelper.populateSpinnerPreference()

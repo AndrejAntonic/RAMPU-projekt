@@ -2,22 +2,15 @@ package com.example.myfitness.DataAccessObjects
 
 import android.content.ContentValues.TAG
 import android.util.Log
-import com.example.myfitness.entities.DoneExercise
 import com.example.myfitness.entities.Exercises
 import com.example.myfitness.entities.Plan
-import com.example.myfitness.utils.Hash
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import kotlinx.datetime.LocalDateTime
-import java.util.Calendar
-import java.util.logging.SimpleFormatter
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 object ExercisesDAO {
     suspend fun getExercise(bodyPart: String, difficulty: Int): MutableList<Exercises> {
@@ -56,5 +49,43 @@ object ExercisesDAO {
         }
 
         return true
+    }
+
+    suspend fun getPlan(username: String) : MutableList<Plan> {
+        val plan = mutableListOf<Plan>()
+        val days = arrayOf("Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota", "Nedjelja")
+
+        return try {
+            days.forEach {
+                var lista = getListFromDB(it, username).get().await()
+                for(document in lista) {
+                    plan.add(Plan(it, getElements(document)))
+                }
+            }
+
+            plan
+        } catch (e: Exception) {
+            mutableListOf()
+        }
+    }
+
+    fun getListFromDB(day: String, username: String): Query {
+        val db = Firebase.firestore
+        return db.collection("workoutPlan").document(username).collection(day).orderBy("timeStamp", Query.Direction.DESCENDING).limit(1)
+    }
+
+    fun getElements(document: QueryDocumentSnapshot): MutableList<Exercises> {
+        val tempList = mutableListOf<Exercises>()
+        var proba = false
+        var inkrement = 0
+        do {
+            inkrement++
+            if(document.getString("vjezba$inkrement").toString() != "null")
+                tempList.add(Exercises(document.getString("vjezba$inkrement").toString()))
+            else
+                proba = true
+        }while (!proba)
+
+        return tempList
     }
 }
