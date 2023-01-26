@@ -63,22 +63,32 @@ class PlanFragment : Fragment() {
 
     private fun showDialog() {
         val newGenerateProgramView = LayoutInflater.from(context).inflate(R.layout.generate_program, null)
-        val dialogHelper = NewGenerateProgramHelper(newGenerateProgramView)
+        val dialogHelperPlan = NewGenerateProgramHelper(newGenerateProgramView)
+
+        val newSelectDaysView = LayoutInflater.from(context).inflate(R.layout.generate_program_pick_days, null)
+        val dialogHelperDays = NewGenerateProgramHelper(newSelectDaysView)
+
         val service = Notification(requireContext().applicationContext)
 
         AlertDialog.Builder(context)
             .setView(newGenerateProgramView)
             .setTitle("Generiranje plana treninga")
-            .setPositiveButton("Generiraj plan treninga") {_, _ ->
-                var newPlanPreferences = dialogHelper.buildPlan()
+            .setPositiveButton("Odaberi dane") {_, _ ->
+                var newPlanPreferences = dialogHelperPlan.buildPlan()
+                AlertDialog.Builder(context)
+                    .setView(newSelectDaysView)
+                    .setPositiveButton("Generiraj plan treninga") {_, _ ->
+
+                    }.show()
+
                 determinePlan(newPlanPreferences)
                 recyclerView.layoutManager = LinearLayoutManager(view?.context)
                 service.showNotification(newPlanPreferences.days)
             }.show()
 
-        dialogHelper.populateSpinnerPreference()
-        dialogHelper.populateSpinnerExperience()
-        dialogHelper.populateSpinnerDays()
+        dialogHelperPlan.populateSpinnerPreference()
+        dialogHelperPlan.populateSpinnerExperience()
+        dialogHelperPlan.populateSpinnerDays()
     }
 
     private fun determinePlan(newPlanPreferences: PlanPreferences) {

@@ -50,46 +50,4 @@ class NewGenerateProgramHelper(private val view: View) {
 
         return PlanPreferences(selectedPreference.toString(), selectedExperience.toString(), selectedDays as Int)
     }
-
-    fun determinePlan(newPlanPreferences: PlanPreferences): String {
-        when(newPlanPreferences.days) {
-            1 -> return(generateFullBody(newPlanPreferences))
-            //2 -> return(generateUpperLower(newPlanPreferences))
-            //3 -> return(generatePPL(newPlanPreferences))
-            //4 -> return(generatePPSL(newPlanPreferences))
-            //5 -> return(generateBroSplit(newPlanPreferences))
-            //6 -> return(generate2xPPL(newPlanPreferences))
-            //7 -> return(generatePPSLUpperLower(newPlanPreferences))
-        }
-        return "a"
-    }
-
-    private fun generatePPSLUpperLower(newPlanPreferences: PlanPreferences): String {
-        return "Push Pull Shoulders Legs Upper Lower"
-    }
-
-    private fun generate2xPPL(newPlanPreferences: PlanPreferences): String {
-        return "Push Pull Legs x2"
-    }
-
-    private fun generateBroSplit(newPlanPreferences: PlanPreferences): String {
-        return "Bro split"
-    }
-
-    private fun generatePPSL(newPlanPreferences: PlanPreferences): String {
-        return "Push Pull Shoulders Legs"
-    }
-
-    private fun generatePPL(newPlanPreferences: PlanPreferences): String {
-        return "Push Pull Legs"
-    }
-
-    private fun generateUpperLower(newPlanPreferences: PlanPreferences): String {
-        return "Upper lower"
-    }
-
-    fun generateFullBody(newPlanPreferences: PlanPreferences): String {
-        //val exerciseList = ExercisesDAO.getExercise("Ruke")
-        return "a"
-    }
 }
