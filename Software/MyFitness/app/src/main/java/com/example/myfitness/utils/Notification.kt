@@ -19,7 +19,7 @@ class Notification(
 ) {
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    fun showNotification(days: Int) {
+    fun showNotification(days: List<String>) {
         var selectedDays = getSelectedDays(days)
         GlobalScope.launch {
             while(isActive) {
@@ -42,18 +42,20 @@ class Notification(
         }
     }
 
-    private fun getSelectedDays(days: Int): Array<Int> {
-        when(days) {
-            1 -> return(arrayOf(Calendar.MONDAY))
-            2 -> return(arrayOf(Calendar.MONDAY, Calendar.THURSDAY))
-            3 -> return(arrayOf(Calendar.MONDAY, Calendar.WEDNESDAY, Calendar.FRIDAY))
-            4 -> return(arrayOf(Calendar.MONDAY, Calendar.TUESDAY, Calendar.THURSDAY, Calendar.FRIDAY))
-            5 -> return(arrayOf(Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.FRIDAY, Calendar.SATURDAY))
-            6 -> return(arrayOf(Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY))
-            7 -> return(arrayOf(Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY))
+    private fun getSelectedDays(days: List<String>): Array<Int> {
+        var selectedDays = arrayOf<Int>()
+        days.forEach {
+            when(it) {
+                "Ponedjeljak" -> selectedDays += Calendar.MONDAY
+                "Utorak" -> selectedDays += Calendar.TUESDAY
+                "Srijeda" -> selectedDays += Calendar.WEDNESDAY
+                "Četvrtak" -> selectedDays += Calendar.THURSDAY
+                "Petak" -> selectedDays += Calendar.FRIDAY
+                "Subota" -> selectedDays += Calendar.SATURDAY
+                "Nedjelja" -> selectedDays += Calendar.SUNDAY
+            }
         }
-
-        return arrayOf(Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY)
+        return selectedDays
     }
 
 }

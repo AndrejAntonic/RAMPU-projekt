@@ -59,7 +59,7 @@ object ExercisesDAO {
             days.forEach {
                 var lista = getListFromDB(it, username).get().await()
                 for(document in lista) {
-                    plan.add(Plan(it, getElements(document)))
+                    plan.add(Plan(it, getExerciseElements(document)))
                 }
             }
 
@@ -69,12 +69,35 @@ object ExercisesDAO {
         }
     }
 
-    fun getListFromDB(day: String, username: String): Query {
+    suspend fun getDays(username: String) : MutableList<String> {
+        val planDays = mutableListOf<String>()
+        val days = arrayOf("Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota", "Nedjelja")
+
+        return try {
+            days.forEach {
+                var lista = getListFromDB(it, username).get().await()
+                for(document in lista) {
+                    if(getPlanDays(document))
+                        planDays.add(it)
+                }
+            }
+
+            planDays
+        } catch (e: Exception) {
+            mutableListOf()
+        }
+    }
+
+    private fun getPlanDays(document: QueryDocumentSnapshot): Boolean {
+        return document.getString("vjezba1").toString() != "Odmor"
+    }
+
+    private fun getListFromDB(day: String, username: String): Query {
         val db = Firebase.firestore
         return db.collection("workoutPlan").document(username).collection(day).orderBy("timeStamp", Query.Direction.DESCENDING).limit(1)
     }
 
-    fun getElements(document: QueryDocumentSnapshot): MutableList<Exercises> {
+    private fun getExerciseElements(document: QueryDocumentSnapshot): MutableList<Exercises> {
         val tempList = mutableListOf<Exercises>()
         var proba = false
         var inkrement = 0

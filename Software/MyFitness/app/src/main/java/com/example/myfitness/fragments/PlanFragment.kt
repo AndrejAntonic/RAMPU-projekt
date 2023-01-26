@@ -50,6 +50,7 @@ class PlanFragment : Fragment() {
     private fun loadPlan() {
         lifecycleScope.launch {
             val currentUser = UsersDAO.getCurrentUser(requireContext())
+            val service = Notification(requireContext().applicationContext)
             val planList: MutableList<Plan> = ExercisesDAO.getPlan(currentUser)
             if(!planList.isNullOrEmpty()) {
                 val planAdapter = PlanAdapter(planList)
@@ -57,6 +58,9 @@ class PlanFragment : Fragment() {
                 recyclerView.adapter = planAdapter
                 recyclerView.layoutManager = LinearLayoutManager(view?.context)
                 temp.text = "Prethodno generirani trening"
+
+                val daysList: List<String> = ExercisesDAO.getDays(currentUser)
+                service.showNotification(daysList)
             }
         }
     }
@@ -73,7 +77,7 @@ class PlanFragment : Fragment() {
                 var newPlanPreferences = dialogHelper.buildPlan()
                 determinePlan(newPlanPreferences)
                 recyclerView.layoutManager = LinearLayoutManager(view?.context)
-                service.showNotification(newPlanPreferences.days)
+                //service.showNotification(newPlanPreferences.days)
             }.show()
 
         dialogHelper.populateSpinnerPreference()
