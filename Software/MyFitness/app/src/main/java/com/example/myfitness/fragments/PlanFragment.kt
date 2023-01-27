@@ -77,33 +77,40 @@ class PlanFragment : Fragment() {
             .setTitle("Generiranje plana treninga")
             .setPositiveButton("Odaberi dane") {_, _ ->
                 var newPlanPreferences = dialogHelperPlan.buildPlan()
-                AlertDialog.Builder(context)
-                    .setView(newSelectDaysView)
-                    .setMultiChoiceItems(days, bul) { _, item: Int, checked: Boolean ->
-                        if(checked) {
-                            if(increment < newPlanPreferences.days) {
-                                increment++
-                                if(!listSelectedDays.contains(days[item]))
-                                    listSelectedDays.add(days[item])
+                if(newPlanPreferences.days != 7) {
+                    AlertDialog.Builder(context)
+                        .setView(newSelectDaysView)
+                        .setMultiChoiceItems(days, bul) { _, item: Int, checked: Boolean ->
+                            if(checked) {
+                                if(increment < newPlanPreferences.days) {
+                                    increment++
+                                    if(!listSelectedDays.contains(days[item]))
+                                        listSelectedDays.add(days[item])
+                                }
+                                else {
+                                    increment++
+                                    bul[item] = false
+                                    Toast.makeText(context, "Ne možete odabrati više dana!", Toast.LENGTH_SHORT).show()
+                                }
                             }
                             else {
-                                increment++
-                                bul[item] = false
-                                Toast.makeText(context, "Ne možete odabrati više dana!", Toast.LENGTH_SHORT).show()
+                                increment--
+                                if(listSelectedDays.contains(days[item]))
+                                    listSelectedDays.remove(days[item])
                             }
                         }
-                        else {
-                            increment--
-                            if(listSelectedDays.contains(days[item]))
-                                listSelectedDays.remove(days[item])
-                        }
-                    }
-                    .setPositiveButton("Generiraj plan treninga") {_, _ ->
-                        val sortedListDays = listSelectedDays.sortedWith(compareBy {days.indexOf(it)})
-                        determinePlan(newPlanPreferences, sortedListDays as MutableList<String>)
-                        recyclerView.layoutManager = LinearLayoutManager(view?.context)
-                        service.showNotification(newPlanPreferences.days)
-                    }.show()
+                        .setPositiveButton("Generiraj plan treninga") {_, _ ->
+                            val sortedListDays = listSelectedDays.sortedWith(compareBy {days.indexOf(it)})
+                            determinePlan(newPlanPreferences, sortedListDays as MutableList<String>)
+                            recyclerView.layoutManager = LinearLayoutManager(view?.context)
+                            service.showNotification(newPlanPreferences.days)
+                        }.show()
+                }
+                else {
+                    determinePlan(newPlanPreferences)
+                    recyclerView.layoutManager = LinearLayoutManager(view?.context)
+                    service.showNotification(newPlanPreferences.days)
+                }
             }.show()
 
         dialogHelperPlan.populateSpinnerPreference()
@@ -111,7 +118,7 @@ class PlanFragment : Fragment() {
         dialogHelperPlan.populateSpinnerDays()
     }
 
-    private fun determinePlan(newPlanPreferences: PlanPreferences, listSelectedDays: MutableList<String>) {
+    private fun determinePlan(newPlanPreferences: PlanPreferences, listSelectedDays: MutableList<String> = mutableListOf()) {
         when(newPlanPreferences.days) {
             1 -> generateFullBody(newPlanPreferences, listSelectedDays)
             2 -> generateUpperLower(newPlanPreferences, listSelectedDays)
@@ -119,14 +126,11 @@ class PlanFragment : Fragment() {
             4 -> generatePPSL(newPlanPreferences, listSelectedDays)
             5 -> generateBroSplit(newPlanPreferences, listSelectedDays)
             6 -> generate2xPPL(newPlanPreferences, listSelectedDays)
-            7 -> generateBroUpperLower(newPlanPreferences, listSelectedDays)
+            7 -> generateBroUpperLower(newPlanPreferences)
         }
     }
 
-    private fun generateBroUpperLower(
-        newPlanPreferences: PlanPreferences,
-        listSelectedDays: MutableList<String>
-    ) {
+    private fun generateBroUpperLower(newPlanPreferences: PlanPreferences) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
             val difficulty = getExperience(newPlanPreferences.experience)
