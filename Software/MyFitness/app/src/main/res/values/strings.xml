@@ -7,6 +7,7 @@
     <string name="progress_fragment_title">Napredak</string>
     <string name="profile_fragment_title">Profil</string>
     <string name="calculator_fragment_title">BMR Kalkulator</string>
+    <string name="day_workout_plan_title">Dnevni plan vjezbi</string>
     <string name="myfitness">MyFitness</string>
     <string name="register">Registracija</string>
     <string name="login">Prijava</string>
