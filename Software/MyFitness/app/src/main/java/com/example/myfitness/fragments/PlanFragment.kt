@@ -271,27 +271,32 @@ class PlanFragment : Fragment() {
         }
     }
 
-    private fun generateUpperLower(
-        newPlanPreferences: PlanPreferences,
-        listSelectedDays: MutableList<String>
-    ) {
+    private fun generateUpperLower(newPlanPreferences: PlanPreferences, listSelectedDays: MutableList<String>) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
+            val tempDays = mutableListOf<String>()
+            tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience)
             val selectedExercisesUpper = combineList(getList("Prsa", 2, difficulty), getList("Leđa", 2, difficulty), getList("Ramena", 1, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty), preference = newPlanPreferences.preference)
             val selectedExercisesLower = combineList(getList("Noge", 6, difficulty), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
-            listRest.add(Exercises("Odmor"))
-            finalList.add(Plan("Ponedjeljak", selectedExercisesUpper))
-            finalList.add(Plan("Utorak", listRest))
-            finalList.add(Plan("Srijeda", listRest))
-            finalList.add(Plan("Četvrtak", selectedExercisesLower))
-            finalList.add(Plan("Petak", listRest))
-            finalList.add(Plan("Subota", listRest))
-            finalList.add(Plan("Nedjelja", listRest))
+
+            var increment = 1
+            for(day in listSelectedDays) {
+                when(increment) {
+                    1 -> finalList.add(Plan(day, selectedExercisesUpper))
+                    2 -> finalList.add(Plan(day, selectedExercisesLower))
+                }
+                increment++
+                tempDays.remove(day)
+            }
+            for(day in tempDays) {
+                finalList.add(Plan(day, listRest))
+            }
+            val sortedFinalList = finalList.sortedWith(compareBy {listAllDays.indexOf(it.day)}) as MutableList
             var currentUser = UsersDAO.getCurrentUser(requireContext())
-            ExercisesDAO.addPlan(finalList, currentUser)
-            val planAdapter = PlanAdapter(finalList)
+            ExercisesDAO.addPlan(sortedFinalList, currentUser)
+            val planAdapter = PlanAdapter(sortedFinalList)
 
             recyclerView.adapter = planAdapter
             temp.text = "Upper Lower"
@@ -318,7 +323,7 @@ class PlanFragment : Fragment() {
             val sortedFinalList = finalList.sortedWith(compareBy {listAllDays.indexOf(it.day)}) as MutableList
 
             var currentUser = UsersDAO.getCurrentUser(requireContext())
-            ExercisesDAO.addPlan(finalList, currentUser)
+            ExercisesDAO.addPlan(sortedFinalList, currentUser)
             val planAdapter = PlanAdapter(sortedFinalList)
 
             recyclerView.adapter = planAdapter
