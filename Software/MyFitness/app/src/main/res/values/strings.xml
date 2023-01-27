@@ -58,10 +58,19 @@
         <item>Smith mašina</item>
         <item>Sprava</item>
     </string-array>
+
+    <string name="monday">Ponedjeljak</string>
+    <string name="tuesday">Utorak</string>
+    <string name="wednesday">Srijeda</string>
+    <string name="thursday">Četvrtak</string>
+    <string name="friday">Petak</string>
+    <string name="saturday">Subota</string>
+    <string name="sunday">Nedjelja</string>
     <string name="generate">Generiraj trening</string>
     <string name="preference">Vaš cilj:</string>
     <string name="experience">Vaše iskustvo:</string>
     <string name="days">Koliko dana u tjednu želite vježbati:</string>
+    <string name="daysChoose">Odaberite kojim danima želite vježbat:</string>
     <string name="plan">Generirajte plan treninga</string>
     <string name="name">Ime:</string>
     <string name="lastname">Prezime:</string>

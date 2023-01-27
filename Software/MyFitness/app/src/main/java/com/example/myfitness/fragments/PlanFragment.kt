@@ -1,12 +1,12 @@
 package com.example.myfitness.fragments
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,18 +18,16 @@ import com.example.myfitness.adapters.PlanAdapter
 import com.example.myfitness.entities.Exercises
 import com.example.myfitness.entities.Plan
 import com.example.myfitness.entities.PlanPreferences
-import com.example.myfitness.entities.User
 import com.example.myfitness.helpers.NewGenerateProgramHelper
 import com.example.myfitness.utils.Notification
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 class PlanFragment : Fragment() {
     private lateinit var btnGenerate: FloatingActionButton
     private lateinit var temp: TextView
     private lateinit var recyclerView: RecyclerView
+    var listAllDays = listOf("Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota", "Nedjelja")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +48,6 @@ class PlanFragment : Fragment() {
     private fun loadPlan() {
         lifecycleScope.launch {
             val currentUser = UsersDAO.getCurrentUser(requireContext())
-            val service = Notification(requireContext().applicationContext)
             val planList: MutableList<Plan> = ExercisesDAO.getPlan(currentUser)
             if(!planList.isNullOrEmpty()) {
                 val planAdapter = PlanAdapter(planList)
@@ -58,41 +55,77 @@ class PlanFragment : Fragment() {
                 recyclerView.adapter = planAdapter
                 recyclerView.layoutManager = LinearLayoutManager(view?.context)
                 temp.text = "Prethodno generirani trening"
-
-                val daysList: List<String> = ExercisesDAO.getDays(currentUser)
-                service.showNotification(daysList)
             }
         }
     }
 
     private fun showDialog() {
         val newGenerateProgramView = LayoutInflater.from(context).inflate(R.layout.generate_program, null)
-        val dialogHelper = NewGenerateProgramHelper(newGenerateProgramView)
+        val dialogHelperPlan = NewGenerateProgramHelper(newGenerateProgramView)
+
+        val newSelectDaysView = LayoutInflater.from(context).inflate(R.layout.generate_program_pick_days, null)
+        val dialogHelperDays = NewGenerateProgramHelper(newSelectDaysView)
+
         val service = Notification(requireContext().applicationContext)
+        val days = arrayOf("Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota", "Nedjelja")
+        val bul = booleanArrayOf(false, false, false, false, false, false, false)
+        var listSelectedDays = mutableListOf<String>()
+        var increment = 0;
 
         AlertDialog.Builder(context)
             .setView(newGenerateProgramView)
             .setTitle("Generiranje plana treninga")
-            .setPositiveButton("Generiraj plan treninga") {_, _ ->
-                var newPlanPreferences = dialogHelper.buildPlan()
-                determinePlan(newPlanPreferences)
-                recyclerView.layoutManager = LinearLayoutManager(view?.context)
-                //service.showNotification(newPlanPreferences.days)
+            .setPositiveButton("Odaberi dane") {_, _ ->
+                var newPlanPreferences = dialogHelperPlan.buildPlan()
+                if(newPlanPreferences.days != 7) {
+                    AlertDialog.Builder(context)
+                        .setView(newSelectDaysView)
+                        .setMultiChoiceItems(days, bul) { _, item: Int, checked: Boolean ->
+                            if(checked) {
+                                if(increment < newPlanPreferences.days) {
+                                    increment++
+                                    if(!listSelectedDays.contains(days[item]))
+                                        listSelectedDays.add(days[item])
+                                }
+                                else {
+                                    increment++
+                                    bul[item] = false
+                                    Toast.makeText(context, "Ne možete odabrati više dana!", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            else {
+                                increment--
+                                if(listSelectedDays.contains(days[item]))
+                                    listSelectedDays.remove(days[item])
+                            }
+                        }
+                        .setPositiveButton("Generiraj plan treninga") {_, _ ->
+                            val sortedListDays = listSelectedDays.sortedWith(compareBy {days.indexOf(it)})
+                            determinePlan(newPlanPreferences, sortedListDays as MutableList<String>)
+                            recyclerView.layoutManager = LinearLayoutManager(view?.context)
+                            service.showNotification(newPlanPreferences.days)
+                        }.show()
+                }
+                else {
+                    determinePlan(newPlanPreferences)
+                    recyclerView.layoutManager = LinearLayoutManager(view?.context)
+                    service.showNotification(newPlanPreferences.days)
+                }
             }.show()
 
-        dialogHelper.populateSpinnerPreference()
-        dialogHelper.populateSpinnerExperience()
-        dialogHelper.populateSpinnerDays()
+        dialogHelperPlan.populateSpinnerPreference()
+        dialogHelperPlan.populateSpinnerExperience()
+        dialogHelperPlan.populateSpinnerDays()
     }
 
-    private fun determinePlan(newPlanPreferences: PlanPreferences) {
+    private fun determinePlan(newPlanPreferences: PlanPreferences, listSelectedDays: MutableList<String> = mutableListOf()) {
         when(newPlanPreferences.days) {
-            1 -> generateFullBody(newPlanPreferences)
-            2 -> generateUpperLower(newPlanPreferences)
-            3 -> generatePPL(newPlanPreferences)
-            4 -> generatePPSL(newPlanPreferences)
-            5 -> generateBroSplit(newPlanPreferences)
-            6 -> generate2xPPL(newPlanPreferences)
+            1 -> generateFullBody(newPlanPreferences, listSelectedDays)
+            2 -> generateUpperLower(newPlanPreferences, listSelectedDays)
+            3 -> generatePPL(newPlanPreferences, listSelectedDays)
+            4 -> generatePPSL(newPlanPreferences, listSelectedDays)
+            5 -> generateBroSplit(newPlanPreferences, listSelectedDays)
+            6 -> generate2xPPL(newPlanPreferences, listSelectedDays)
             7 -> generateBroUpperLower(newPlanPreferences)
         }
     }
@@ -124,9 +157,11 @@ class PlanFragment : Fragment() {
         }
     }
 
-    private fun generate2xPPL(newPlanPreferences: PlanPreferences) {
+    private fun generate2xPPL(newPlanPreferences: PlanPreferences, listSelectedDays: MutableList<String>) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
+            val tempDays = mutableListOf<String>()
+            tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience)
             val selectedExercisesPush1 = combineList(getList("Prsa", 3, difficulty), getList("Ramena", 1, difficulty), getList("Tricepsi", 1, difficulty), preference = newPlanPreferences.preference)
             val selectedExercisesPull1 = combineList(getList("Leđa", 4, difficulty), getList("Bicepsi", 1, difficulty), preference = newPlanPreferences.preference)
@@ -136,25 +171,39 @@ class PlanFragment : Fragment() {
             val selectedExercisesLegs2 = combineList(getList("Noge", 5, difficulty), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
-            finalList.add(Plan("Ponedjeljak", selectedExercisesPush1))
-            finalList.add(Plan("Utorak", selectedExercisesPull1))
-            finalList.add(Plan("Srijeda", selectedExercisesLegs1))
-            finalList.add(Plan("Četvrtak", listRest))
-            finalList.add(Plan("Petak", selectedExercisesPush2))
-            finalList.add(Plan("Subota", selectedExercisesPull2))
-            finalList.add(Plan("Nedjelja", selectedExercisesLegs2))
+
+            var increment = 1
+            for(day in listSelectedDays) {
+                when(increment) {
+                    1 -> finalList.add(Plan(day, selectedExercisesPush1))
+                    2 -> finalList.add(Plan(day, selectedExercisesPull1))
+                    3 -> finalList.add(Plan(day, selectedExercisesLegs1))
+                    4 -> finalList.add(Plan(day, selectedExercisesPush2))
+                    5 -> finalList.add(Plan(day, selectedExercisesPull2))
+                    6 -> finalList.add(Plan(day, selectedExercisesLegs2))
+                }
+                increment++
+                tempDays.remove(day)
+            }
+            for(day in tempDays) {
+                finalList.add(Plan(day, listRest))
+            }
+            val sortedFinalList = finalList.sortedWith(compareBy {listAllDays.indexOf(it.day)}) as MutableList
+
             var currentUser = UsersDAO.getCurrentUser(requireContext())
-            ExercisesDAO.addPlan(finalList, currentUser)
-            val planAdapter = PlanAdapter(finalList)
+            ExercisesDAO.addPlan(sortedFinalList, currentUser)
+            val planAdapter = PlanAdapter(sortedFinalList)
 
             recyclerView.adapter = planAdapter
             temp.text = "2xPush Pull Legs"
         }
     }
 
-    private fun generateBroSplit(newPlanPreferences: PlanPreferences) {
+    private fun generateBroSplit(newPlanPreferences: PlanPreferences, listSelectedDays: MutableList<String>) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
+            val tempDays = mutableListOf<String>()
+            tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience)
             val selectedExercisesChest = combineList(getList("Prsa", 5, difficulty), preference = newPlanPreferences.preference)
             val selectedExercisesBack = combineList(getList("Leđa", 5, difficulty), preference = newPlanPreferences.preference)
@@ -163,25 +212,38 @@ class PlanFragment : Fragment() {
             val selectedExercisesArms = combineList(getList("Bicepsi", 3, difficulty), getList("Tricepsi", 3, difficulty), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
-            finalList.add(Plan("Ponedjeljak", selectedExercisesChest))
-            finalList.add(Plan("Utorak", selectedExercisesBack))
-            finalList.add(Plan("Srijeda", selectedExcersisesShoulder))
-            finalList.add(Plan("Četvrtak", listRest))
-            finalList.add(Plan("Petak", selectedExercisesLegs))
-            finalList.add(Plan("Subota", selectedExercisesArms))
-            finalList.add(Plan("Nedjelja", listRest))
+
+            var increment = 1
+            for(day in listSelectedDays) {
+                when(increment) {
+                    1 -> finalList.add(Plan(day, selectedExercisesChest))
+                    2 -> finalList.add(Plan(day, selectedExercisesBack))
+                    3 -> finalList.add(Plan(day, selectedExcersisesShoulder))
+                    4 -> finalList.add(Plan(day, selectedExercisesLegs))
+                    5 -> finalList.add(Plan(day, selectedExercisesArms))
+                }
+                increment++
+                tempDays.remove(day)
+            }
+            for(day in tempDays) {
+                finalList.add(Plan(day, listRest))
+            }
+            val sortedFinalList = finalList.sortedWith(compareBy {listAllDays.indexOf(it.day)}) as MutableList
+
             var currentUser = UsersDAO.getCurrentUser(requireContext())
-            ExercisesDAO.addPlan(finalList, currentUser)
-            val planAdapter = PlanAdapter(finalList)
+            ExercisesDAO.addPlan(sortedFinalList, currentUser)
+            val planAdapter = PlanAdapter(sortedFinalList)
 
             recyclerView.adapter = planAdapter
             temp.text = "Bro Split"
         }
     }
 
-    private fun generatePPSL(newPlanPreferences: PlanPreferences) {
+    private fun generatePPSL(newPlanPreferences: PlanPreferences, listSelectedDays: MutableList<String>) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
+            val tempDays = mutableListOf<String>()
+            tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience)
             val selectedExercisesPush = combineList(getList("Prsa", 4, difficulty), getList("Tricepsi", 2, difficulty), preference = newPlanPreferences.preference)
             val selectedExercisesPull = combineList(getList("Leđa", 4, difficulty), getList("Bicepsi", 2, difficulty), preference = newPlanPreferences.preference)
@@ -189,88 +251,122 @@ class PlanFragment : Fragment() {
             val selectedExercisesLegs = combineList(getList("Noge", 5, difficulty), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
-            finalList.add(Plan("Ponedjeljak", selectedExercisesPush))
-            finalList.add(Plan("Utorak", selectedExercisesPull))
-            finalList.add(Plan("Srijeda", listRest))
-            finalList.add(Plan("Četvrtak", selectedExercisesLegs))
-            finalList.add(Plan("Petak", selectedExcersisesShoulder))
-            finalList.add(Plan("Subota", listRest))
-            finalList.add(Plan("Nedjelja", listRest))
+
+            var increment = 1
+            for(day in listSelectedDays) {
+                when(increment) {
+                    1 -> finalList.add(Plan(day, selectedExercisesPush))
+                    2 -> finalList.add(Plan(day, selectedExercisesPull))
+                    3 -> finalList.add(Plan(day, selectedExcersisesShoulder))
+                    4 -> finalList.add(Plan(day, selectedExercisesLegs))
+                }
+                increment++
+                tempDays.remove(day)
+            }
+            for(day in tempDays) {
+                finalList.add(Plan(day, listRest))
+            }
+            val sortedFinalList = finalList.sortedWith(compareBy {listAllDays.indexOf(it.day)}) as MutableList
+
             var currentUser = UsersDAO.getCurrentUser(requireContext())
-            ExercisesDAO.addPlan(finalList, currentUser)
-            val planAdapter = PlanAdapter(finalList)
+            ExercisesDAO.addPlan(sortedFinalList, currentUser)
+            val planAdapter = PlanAdapter(sortedFinalList)
 
             recyclerView.adapter = planAdapter
             temp.text = "Push Pull Shoulders Legs"
         }
     }
 
-    private fun generatePPL(newPlanPreferences: PlanPreferences) {
+    private fun generatePPL(newPlanPreferences: PlanPreferences, listSelectedDays: MutableList<String>) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
+            val tempDays = mutableListOf<String>()
+            tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience)
             val selectedExercisesPush = combineList(getList("Prsa", 2, difficulty), getList("Ramena", 2, difficulty), getList("Tricepsi", 2, difficulty), preference = newPlanPreferences.preference)
             val selectedExercisesPull = combineList(getList("Leđa", 4, difficulty), getList("Bicepsi", 2, difficulty), preference = newPlanPreferences.preference)
             val selectedExercisesLegs: List<Exercises> = combineList(getList("Noge", 5, difficulty), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
-            listRest.add(Exercises("Odmor"))
-            finalList.add(Plan("Ponedjeljak", selectedExercisesPush))
-            finalList.add(Plan("Utorak", listRest))
-            finalList.add(Plan("Srijeda", selectedExercisesPull))
-            finalList.add(Plan("Četvrtak", listRest))
-            finalList.add(Plan("Petak", selectedExercisesLegs))
-            finalList.add(Plan("Subota", listRest))
-            finalList.add(Plan("Nedjelja", listRest))
+
+            var increment = 1
+            for(day in listSelectedDays) {
+                when(increment) {
+                    1 -> finalList.add(Plan(day, selectedExercisesPush))
+                    2 -> finalList.add(Plan(day, selectedExercisesPull))
+                    3 -> finalList.add(Plan(day, selectedExercisesLegs))
+                }
+                increment++
+                tempDays.remove(day)
+            }
+            for(day in tempDays) {
+                finalList.add(Plan(day, listRest))
+            }
+            val sortedFinalList = finalList.sortedWith(compareBy {listAllDays.indexOf(it.day)}) as MutableList
+
             var currentUser = UsersDAO.getCurrentUser(requireContext())
-            ExercisesDAO.addPlan(finalList, currentUser)
-            val planAdapter = PlanAdapter(finalList)
+            ExercisesDAO.addPlan(sortedFinalList, currentUser)
+            val planAdapter = PlanAdapter(sortedFinalList)
 
             recyclerView.adapter = planAdapter
             temp.text = "Push Pull Legs"
         }
     }
 
-    private fun generateUpperLower(newPlanPreferences: PlanPreferences) {
+    private fun generateUpperLower(newPlanPreferences: PlanPreferences, listSelectedDays: MutableList<String>) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
+            val tempDays = mutableListOf<String>()
+            tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience)
             val selectedExercisesUpper = combineList(getList("Prsa", 2, difficulty), getList("Leđa", 2, difficulty), getList("Ramena", 1, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty), preference = newPlanPreferences.preference)
             val selectedExercisesLower = combineList(getList("Noge", 6, difficulty), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
-            listRest.add(Exercises("Odmor"))
-            finalList.add(Plan("Ponedjeljak", selectedExercisesUpper))
-            finalList.add(Plan("Utorak", listRest))
-            finalList.add(Plan("Srijeda", listRest))
-            finalList.add(Plan("Četvrtak", selectedExercisesLower))
-            finalList.add(Plan("Petak", listRest))
-            finalList.add(Plan("Subota", listRest))
-            finalList.add(Plan("Nedjelja", listRest))
+
+            var increment = 1
+            for(day in listSelectedDays) {
+                when(increment) {
+                    1 -> finalList.add(Plan(day, selectedExercisesUpper))
+                    2 -> finalList.add(Plan(day, selectedExercisesLower))
+                }
+                increment++
+                tempDays.remove(day)
+            }
+            for(day in tempDays) {
+                finalList.add(Plan(day, listRest))
+            }
+            val sortedFinalList = finalList.sortedWith(compareBy {listAllDays.indexOf(it.day)}) as MutableList
+
             var currentUser = UsersDAO.getCurrentUser(requireContext())
-            ExercisesDAO.addPlan(finalList, currentUser)
-            val planAdapter = PlanAdapter(finalList)
+            ExercisesDAO.addPlan(sortedFinalList, currentUser)
+            val planAdapter = PlanAdapter(sortedFinalList)
 
             recyclerView.adapter = planAdapter
             temp.text = "Upper Lower"
         }
     }
 
-    private fun generateFullBody(newPlanPreferences: PlanPreferences) {
+    private fun generateFullBody(newPlanPreferences: PlanPreferences, listSelectedDays: MutableList<String>) {
         lifecycleScope.launch {
             val finalList: MutableList<Plan> = arrayListOf()
+            val tempDays = mutableListOf<String>()
+            tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience)
             val selectedExercisesFinal = combineList(getList("Prsa", 2, difficulty), getList("Leđa", 2, difficulty), getList("Ramena", 2, difficulty), getList("Noge", 2, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
-            finalList.add(Plan("Ponedjeljak", selectedExercisesFinal))
-            finalList.add(Plan("Utorak", listRest))
-            finalList.add(Plan("Srijeda", listRest))
-            finalList.add(Plan("Četvrtak", listRest))
-            finalList.add(Plan("Petak", listRest))
-            finalList.add(Plan("Subota", listRest))
-            finalList.add(Plan("Nedjelja", listRest))
+
+            for(day in listSelectedDays) {
+                finalList.add(Plan(day, selectedExercisesFinal))
+                tempDays.remove(day)
+            }
+            for(day in tempDays) {
+                finalList.add(Plan(day, listRest))
+            }
+            val sortedFinalList = finalList.sortedWith(compareBy {listAllDays.indexOf(it.day)}) as MutableList
+
             var currentUser = UsersDAO.getCurrentUser(requireContext())
-            ExercisesDAO.addPlan(finalList, currentUser)
-            val planAdapter = PlanAdapter(finalList)
+            ExercisesDAO.addPlan(sortedFinalList, currentUser)
+            val planAdapter = PlanAdapter(sortedFinalList)
 
             recyclerView.adapter = planAdapter
             temp.text = "Full body"
