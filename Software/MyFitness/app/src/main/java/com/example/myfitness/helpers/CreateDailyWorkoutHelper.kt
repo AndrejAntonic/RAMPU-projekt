@@ -28,6 +28,7 @@ class CreateDailyWorkoutHelper(private val context: Context) {
     private val recycleView : RecyclerView
     private var selectedExercise : String = ""
     private val saveButton : Button
+    private val addButton : Button
     private val cancelButton : Button
     private var allExerciseNames : MutableList<String> = mutableListOf()
     private val setsInput : EditText
@@ -36,6 +37,8 @@ class CreateDailyWorkoutHelper(private val context: Context) {
     private val dateinput : EditText
     private val selectedDateTime : Calendar
     private val sdfDate : SimpleDateFormat
+
+    private val exerciseList = mutableListOf<DoneExercise>()
 
 
     //otvori prozorcic za kreiranje plana za dan
@@ -50,6 +53,7 @@ class CreateDailyWorkoutHelper(private val context: Context) {
         recycleView = dialog.findViewById(R.id.rv_exercise_picker1)
         selectedExercise = ""
         saveButton = dialog.findViewById(R.id.btn_save_doneexercise_dialog1)
+        addButton = dialog.findViewById(R.id.btn_add_doneexercise_dialog1)
         cancelButton = dialog.findViewById(R.id.btn_cancel_doneexercise_dialog1)
         allExerciseNames = mutableListOf()
         setsInput = dialog.findViewById(R.id.setsInput1)
@@ -98,9 +102,11 @@ class CreateDailyWorkoutHelper(private val context: Context) {
         }
 
 
-        //sprema u bazu klikom na save button za trenutnog korisnika
 
-        saveButton.setOnClickListener {
+
+        //sprema u listu
+
+        addButton.setOnClickListener {
             val inputValid = validateInput()
             if (!inputValid) {
                 return@setOnClickListener
@@ -108,7 +114,25 @@ class CreateDailyWorkoutHelper(private val context: Context) {
 
             val currentUser = UsersDAO.getCurrentUser(context)
             val exercise : DoneExercise = buildExercise()
-            DailyPlanDAO.add(exercise, currentUser)
+            exerciseList.add(exercise)
+            Toast.makeText(context, "Vjezba dodana u plan", Toast.LENGTH_SHORT).show()
+
+            //reset teksta nakon unosa jedne vjezbe i zakljucavanje datuma jer se radi za isti dan taj plan
+            searchExerciseEditText.text.clear()
+            setsInput.text.clear()
+            weightInput.text.clear()
+            repsInput.text.clear()
+            dateinput.isEnabled = false
+
+        }
+
+
+        //sprema u bazu iz liste klikom na save button za trenutnog korisnika
+
+        saveButton.setOnClickListener {
+
+            val currentUser = UsersDAO.getCurrentUser(context)
+            DailyPlanDAO.add(exerciseList, currentUser)
             dialog.dismiss()
             Toast.makeText(context, "Napravljen plan je spremljen", Toast.LENGTH_SHORT).show()
         }

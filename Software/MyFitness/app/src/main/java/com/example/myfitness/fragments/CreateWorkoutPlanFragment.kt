@@ -1,19 +1,14 @@
 package com.example.myfitness.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.myfitness.DataAccessObjects.ExerciseDAO
+import com.example.myfitness.DataAccessObjects.DailyPlanDAO
 import com.example.myfitness.R
-import com.example.myfitness.adapters.ExerciseRecyclerViewAdapter
-import com.example.myfitness.entities.Exercise
-import com.example.myfitness.helpers.AddDoneExerciseDialogHelper
+import com.example.myfitness.entities.DoneExercise
 import com.example.myfitness.helpers.CreateDailyWorkoutHelper
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
@@ -23,11 +18,9 @@ import kotlinx.coroutines.launch
 
 class CreateWorkoutPlanFragment : Fragment() {
 
-    //private lateinit var recyclerView: RecyclerView
-    //private val db = FirebaseFirestore.getInstance()
-    //private var exercises = mutableListOf<Exercise>()
 
-
+    private val exerciseInputs = mutableListOf<DoneExercise>()
+    //private val db = DailyPlanDAO()
 
 
     override fun onCreateView(
@@ -36,6 +29,16 @@ class CreateWorkoutPlanFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_create_daily_workout_withbtn, container, false)
+
+        /*
+        fun addExercise(doneExercise: DoneExercise) {
+            exerciseInputs.add(doneExercise)
+        }
+
+        fun saveAllExercises(username: String) {
+            DailyPlanDAO.add(exerciseInputs, username)
+            exerciseInputs.clear()
+        }*/
 
 
         val btnAddDoneExercise = v.findViewById<Button>(R.id.createNewPlan1)

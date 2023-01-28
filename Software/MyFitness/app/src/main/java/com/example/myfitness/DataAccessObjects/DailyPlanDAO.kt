@@ -6,17 +6,22 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 object DailyPlanDAO {
-    fun add(doneExercise: DoneExercise, username: String) : Boolean {
+    fun add(exercises: List<DoneExercise>, username: String) : Boolean {
         val db = Firebase.firestore
-        val exercise = hashMapOf(
-            "exerciseName" to doneExercise.exerciseName,
-            "weight" to doneExercise.weight,
-            "sets" to doneExercise.sets,
-            "reps" to doneExercise.reps,
-            "date" to doneExercise.date,
-        )
+        val batch = db.batch()
         try {
-            db.collection("dailyPlan").document(username).collection("savedDailyPlan").add(exercise)
+            for (exercise in exercises) {
+                val exerciseMap = hashMapOf(
+                    "exerciseName" to exercise.exerciseName,
+                    "weight" to exercise.weight,
+                    "sets" to exercise.sets,
+                    "reps" to exercise.reps,
+                    "date" to exercise.date,
+                )
+                val ref = db.collection("dailyPlan").document(username).collection("savedDailyPlan").document()
+                batch.set(ref, exerciseMap)
+            }
+            batch.commit()
             return true
         } catch (e: Exception) {
             return false
