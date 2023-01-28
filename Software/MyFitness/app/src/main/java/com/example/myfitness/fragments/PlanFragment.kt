@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myfitness.DataAccessObjects.DailyPlanDAO
 import com.example.myfitness.DataAccessObjects.ExercisesDAO
 import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
@@ -51,6 +52,7 @@ class PlanFragment : Fragment() {
         recyclerView = view.findViewById(R.id.rv_plan_main)
         temp = view.findViewById(R.id.id_test)
         loadPlan()
+        loadWorkout()
         btnGenerate.setOnClickListener { showDialog() }
 
         btnShowDailyPlan.setOnClickListener { showPlanDialog() }
@@ -73,6 +75,21 @@ class PlanFragment : Fragment() {
             }
         }
     }
+
+    private fun loadWorkout() {
+        lifecycleScope.launch {
+            val currentUser = UsersDAO.getCurrentUser(requireContext())
+            val dailyList: MutableList<DoneExercise> = ExercisesDAO.getDaily(currentUser, "Jan 17, 2023")
+            if(!dailyList.isNullOrEmpty()) {
+                val dailyWorkoutAdapter = DailyWorkoutAdapter(dailyList)
+
+                recyclerView.adapter = dailyWorkoutAdapter
+                recyclerView.layoutManager = LinearLayoutManager(view?.context)
+                temp.text = "Prethodno generirani trening"
+            }
+        }
+    }
+
 
     //biraj datum za koji zelis dohvatit trening
     private fun showPlanDialog() {

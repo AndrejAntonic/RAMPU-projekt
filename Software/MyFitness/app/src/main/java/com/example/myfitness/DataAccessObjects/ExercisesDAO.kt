@@ -2,6 +2,7 @@ package com.example.myfitness.DataAccessObjects
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.example.myfitness.entities.DoneExercise
 import com.example.myfitness.entities.Exercises
 import com.example.myfitness.entities.Plan
 import com.google.firebase.firestore.FieldValue
@@ -72,6 +73,26 @@ object ExercisesDAO {
     fun getListFromDB(day: String, username: String): Query {
         val db = Firebase.firestore
         return db.collection("workoutPlan").document(username).collection(day).orderBy("timeStamp", Query.Direction.DESCENDING).limit(1)
+    }
+
+
+    suspend fun getDaily(username: String, datePicked: String) : MutableList<DoneExercise> {
+        val plan = mutableListOf<DoneExercise>()
+
+        return try {
+            val lista = getListFromDB(datePicked, username).get().await()
+            for(document in lista) {
+                plan.add(DoneExercise(username, 1))
+            }
+            plan
+        } catch (e: Exception) {
+            mutableListOf()
+        }
+    }
+
+    fun getListFromDBDaily(datePicked: String, username: String): Query {
+        val db = Firebase.firestore
+        return db.collection("dailyPlan").document(username).collection(datePicked).limit(1)
     }
 
     fun getElements(document: QueryDocumentSnapshot): MutableList<Exercises> {
