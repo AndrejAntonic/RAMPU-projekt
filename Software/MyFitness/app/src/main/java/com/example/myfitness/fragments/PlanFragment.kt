@@ -1,10 +1,13 @@
 package com.example.myfitness.fragments
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -18,13 +21,18 @@ import com.example.myfitness.adapters.PlanAdapter
 import com.example.myfitness.entities.Exercises
 import com.example.myfitness.entities.Plan
 import com.example.myfitness.entities.PlanPreferences
+import com.example.myfitness.helpers.CreateDailyWorkoutHelper
 import com.example.myfitness.helpers.NewGenerateProgramHelper
+import com.example.myfitness.helpers.ShowDailyWorkoutHelper
 import com.example.myfitness.utils.Notification
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PlanFragment : Fragment() {
     private lateinit var btnGenerate: FloatingActionButton
+    private lateinit var btnShowDailyPlan: FloatingActionButton
     private lateinit var temp: TextView
     private lateinit var recyclerView: RecyclerView
     var listAllDays = listOf("Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota", "Nedjelja")
@@ -39,11 +47,18 @@ class PlanFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         btnGenerate = view.findViewById(R.id.id_fragment_profile_add_program)
+        btnShowDailyPlan = view.findViewById(R.id.id_pregledaj_dnevni_plan)
         recyclerView = view.findViewById(R.id.rv_plan_main)
         temp = view.findViewById(R.id.id_test)
         loadPlan()
         btnGenerate.setOnClickListener { showDialog() }
-    }
+
+        btnShowDailyPlan.setOnClickListener { showPlanDialog() }
+
+
+
+        }
+
 
     private fun loadPlan() {
         lifecycleScope.launch {
@@ -58,6 +73,22 @@ class PlanFragment : Fragment() {
             }
         }
     }
+
+    //biraj datum za koji zelis dohvatit trening
+    private fun showPlanDialog() {
+        val showDailyWorkoutHelper = LayoutInflater.from(context).inflate(R.layout.show_daily_exercises, null)
+        val dialogHelperDaily= ShowDailyWorkoutHelper(showDailyWorkoutHelper)
+
+        AlertDialog.Builder(context)
+            .setView(showDailyWorkoutHelper)
+            .setTitle("Generiranje plana treninga")
+            .setPositiveButton("Odaberi dane") {_, _ ->
+
+
+            }.show()
+    }
+
+
 
     private fun showDialog() {
         val newGenerateProgramView = LayoutInflater.from(context).inflate(R.layout.generate_program, null)
