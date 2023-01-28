@@ -18,11 +18,6 @@ import kotlinx.coroutines.launch
 
 class CreateWorkoutPlanFragment : Fragment() {
 
-
-    private val exerciseInputs = mutableListOf<DoneExercise>()
-    //private val db = DailyPlanDAO()
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,19 +25,10 @@ class CreateWorkoutPlanFragment : Fragment() {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_create_daily_workout_withbtn, container, false)
 
-        /*
-        fun addExercise(doneExercise: DoneExercise) {
-            exerciseInputs.add(doneExercise)
-        }
-
-        fun saveAllExercises(username: String) {
-            DailyPlanDAO.add(exerciseInputs, username)
-            exerciseInputs.clear()
-        }*/
 
 
-        val btnAddDoneExercise = v.findViewById<Button>(R.id.createNewPlan1)
-        btnAddDoneExercise.setOnClickListener {
+        val btnOpenPlanCreation = v.findViewById<Button>(R.id.createNewPlan1)
+        btnOpenPlanCreation.setOnClickListener {
 
             val CreateDailyWorkoutHelper =
                 CreateDailyWorkoutHelper(requireContext())
