@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myfitness.DataAccessObjects.DoneExercisesDAO
+import com.example.myfitness.DataAccessObjects.DailyPlanDAO
 import com.example.myfitness.DataAccessObjects.ExerciseDAO
 import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
@@ -108,9 +108,9 @@ class CreateDailyWorkoutHelper(private val context: Context) {
 
             val currentUser = UsersDAO.getCurrentUser(context)
             val exercise : DoneExercise = buildExercise()
-            DoneExercisesDAO.add(exercise, currentUser)
+            DailyPlanDAO.add(exercise, currentUser)
             dialog.dismiss()
-            Toast.makeText(context, "Napravljena vježba spremljena", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Napravljen plan je spremljen", Toast.LENGTH_SHORT).show()
         }
 
         cancelButton.setOnClickListener {

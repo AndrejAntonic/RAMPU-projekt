@@ -23,9 +23,9 @@ import kotlinx.coroutines.launch
 
 class CreateWorkoutPlanFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
-    private val db = FirebaseFirestore.getInstance()
-    private var exercises = mutableListOf<Exercise>()
+    //private lateinit var recyclerView: RecyclerView
+    //private val db = FirebaseFirestore.getInstance()
+    //private var exercises = mutableListOf<Exercise>()
 
 
 
