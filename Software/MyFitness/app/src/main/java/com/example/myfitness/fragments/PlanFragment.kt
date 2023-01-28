@@ -1,13 +1,10 @@
 package com.example.myfitness.fragments
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -17,25 +14,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitness.DataAccessObjects.ExercisesDAO
 import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
+import com.example.myfitness.adapters.DailyWorkoutAdapter
 import com.example.myfitness.adapters.PlanAdapter
+import com.example.myfitness.entities.DoneExercise
 import com.example.myfitness.entities.Exercises
 import com.example.myfitness.entities.Plan
 import com.example.myfitness.entities.PlanPreferences
-import com.example.myfitness.helpers.CreateDailyWorkoutHelper
 import com.example.myfitness.helpers.NewGenerateProgramHelper
 import com.example.myfitness.helpers.ShowDailyWorkoutHelper
 import com.example.myfitness.utils.Notification
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
+
 
 class PlanFragment : Fragment() {
     private lateinit var btnGenerate: FloatingActionButton
     private lateinit var btnShowDailyPlan: FloatingActionButton
     private lateinit var temp: TextView
     private lateinit var recyclerView: RecyclerView
+
     var listAllDays = listOf("Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota", "Nedjelja")
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,6 +76,10 @@ class PlanFragment : Fragment() {
 
     //biraj datum za koji zelis dohvatit trening
     private fun showPlanDialog() {
+
+        val db = FirebaseFirestore.getInstance()
+        val collectionRef = db.collection("savedDailyPlan")
+
         val showDailyWorkoutHelper = LayoutInflater.from(context).inflate(R.layout.show_daily_exercises, null)
         val dialogHelperDaily= ShowDailyWorkoutHelper(showDailyWorkoutHelper)
 
@@ -84,6 +88,13 @@ class PlanFragment : Fragment() {
             .setTitle("Generiranje plana treninga")
             .setPositiveButton("Odaberi dane") {_, _ ->
 
+                recyclerView.layoutManager = LinearLayoutManager(context)
+
+                val dailyWorkoutsList: MutableList<DoneExercise> = arrayListOf()
+
+                val dailyWorkoutAdapter = DailyWorkoutAdapter(dailyWorkoutsList)
+
+                recyclerView.adapter = dailyWorkoutAdapter
 
             }.show()
     }
