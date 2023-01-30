@@ -83,7 +83,7 @@ class PlanFragment : Fragment() {
             val currentUser = UsersDAO.getCurrentUser(requireContext())
             //dohvaca listu DoneExercise sa određenim datumom pomocu getDaily, proslijedi currentUser i Datum
             val dailyList : MutableList<DailyExercises> = ExercisesDAO.getDaily(currentUser, datumiranje)
-            Log.d("napisanitekst", dailyList[0].exerciseName)
+            //Log.d("napisanitekst", dailyList[0].exerciseName)
             //ako lista nije prazna ili null kreira se instanca DailyWorkoutAdapter i salje mu se lista dailyList
             if(!dailyList.isNullOrEmpty()) {
                 val dailyWorkoutAdapter = DailyWorkoutAdapter(dailyList)
@@ -92,6 +92,8 @@ class PlanFragment : Fragment() {
                 recyclerView.adapter = dailyWorkoutAdapter
                 recyclerView.layoutManager = LinearLayoutManager(view?.context)
                 temp.text = "Prethodno generirani trening"
+            }else{
+                Toast.makeText(context, "Ne postoje vježbe kreirane za taj datum!", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -114,12 +116,18 @@ class PlanFragment : Fragment() {
 
         AlertDialog.Builder(context)
             .setView(showDailyWorkoutHelper)
-            .setTitle("Dnevni treninzi")
+            .setTitle("Pretražite dnevne treninge")
             .setPositiveButton("Unesi datum") {_, _ ->
                 val uneseniDatum = showDailyWorkoutHelper.findViewById<EditText>(R.id.date_picker).text.toString()
+                val pattern = "^\\d{2}\\.\\d{2}\\.\\d{4}.\$"
 
-
-                loadWorkout(uneseniDatum)
+                if(!uneseniDatum.matches(pattern.toRegex())){
+                    Toast.makeText(context, "Unesite ispravan datum u formatu dd.mm.yyyy.", Toast.LENGTH_SHORT).show()
+                } else if(uneseniDatum.isEmpty()) {
+                    Toast.makeText(context, "Morate upisati neki datum!", Toast.LENGTH_SHORT).show()
+                }else{
+                    loadWorkout(uneseniDatum)
+                }
             }
             .show()
 

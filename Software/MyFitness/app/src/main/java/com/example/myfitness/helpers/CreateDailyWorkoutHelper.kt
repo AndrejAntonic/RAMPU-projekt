@@ -168,6 +168,7 @@ class CreateDailyWorkoutHelper(private val context: Context) {
 
     //provjere unosa
     private fun validateInput() : Boolean {
+        val pattern = "^\\d{2}\\.\\d{2}\\.\\d{4}.\$"
         var allValid = true
         if (selectedExercise.length == 0) {
             searchExerciseEditText.error = "Potrebno odabrati vježbu!"
@@ -187,6 +188,10 @@ class CreateDailyWorkoutHelper(private val context: Context) {
         }
         if (dateinput.text.length == 0) {
             dateinput.error = "Potrebno odabrati datum!"
+            allValid = false
+        }
+        if (!dateinput.text.matches(pattern.toRegex())) {
+            dateinput.error = "Unesite ispravan datum u formatu dd.mm.yyyy."
             allValid = false
         }
         return allValid

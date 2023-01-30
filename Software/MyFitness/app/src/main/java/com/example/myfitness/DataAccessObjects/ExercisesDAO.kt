@@ -2,6 +2,7 @@ package com.example.myfitness.DataAccessObjects
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import android.widget.Toast
 import com.example.myfitness.entities.DailyExercises
 import com.example.myfitness.entities.DoneExercise
 import com.example.myfitness.entities.Exercises
@@ -87,12 +88,12 @@ object ExercisesDAO {
             val listFromDB = getListFromDBDaily(datePicked, username).get().await()
             //za svaki dokument u listi konverta dokument u objekt DoneExercise
             for(document in listFromDB) {
-                Log.d(TAG, "${document.id} => ${document.data}")
+                //Log.d(TAG, "${document.id} => ${document.data}")
                 val exercise = document.toObject(DailyExercises::class.java)
                 //svaki konvertani objekt dodaje u listu dailyPlan
                 dailyPlan.add(exercise)
 
-                Log.d("proba", "$dailyPlan")
+                //Log.d("proba", "$dailyPlan")
 
             }
             dailyPlan
