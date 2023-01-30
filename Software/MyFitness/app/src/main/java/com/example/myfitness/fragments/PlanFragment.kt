@@ -103,13 +103,13 @@ class PlanFragment : Fragment() {
                             val sortedListDays = listSelectedDays.sortedWith(compareBy {days.indexOf(it)})
                             determinePlan(newPlanPreferences, sortedListDays as MutableList<String>)
                             recyclerView.layoutManager = LinearLayoutManager(view?.context)
-                            service.showNotification(newPlanPreferences.days)
+                            service.showNotification(sortedListDays)
                         }.show()
                 }
                 else {
                     determinePlan(newPlanPreferences)
                     recyclerView.layoutManager = LinearLayoutManager(view?.context)
-                    service.showNotification(newPlanPreferences.days)
+                    service.showNotification(listAllDays)
                 }
             }.show()
 
