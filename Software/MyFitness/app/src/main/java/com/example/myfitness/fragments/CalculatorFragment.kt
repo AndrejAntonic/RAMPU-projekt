@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.myfitness.R
 import java.math.BigDecimal
@@ -41,18 +42,42 @@ class CalculatorFragment : Fragment() {
         genderMale = view.findViewById(R.id.male1)
         genderFemale = view.findViewById(R.id.female1)
 
-        genderMale.setOnClickListener{
-            val firstEdit = editWeight.text.toString().toInt()
-            val secondEdit = editHeight.text.toString().toInt()
-            val thirdEdit = editAge.text.toString().toInt()
-            Male(firstEdit, secondEdit, thirdEdit)
+
+        genderMale.setOnClickListener {
+            if (editWeight.text.toString().isEmpty() ||
+                editHeight.text.toString().isEmpty() ||
+                editAge.text.toString().isEmpty()) {
+                Toast.makeText(context, "Morate unijeti sve podatke!", Toast.LENGTH_SHORT).show()
+            } else {
+                try {
+                    val firstEdit = editWeight.text.toString().toInt()
+                    val secondEdit = editHeight.text.toString().toInt()
+                    val thirdEdit = editAge.text.toString().toInt()
+
+                    Male(firstEdit, secondEdit, thirdEdit)
+                } catch (e: NumberFormatException) {
+                    Toast.makeText(context, "Smijete unositi isključivo brojeve!", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
+
         genderFemale.setOnClickListener {
-            val firstEdit = editWeight.text.toString().toInt()
-            val secondEdit = editHeight.text.toString().toInt()
-            val thirdEdit = editAge.text.toString().toInt()
-            Female(firstEdit, secondEdit, thirdEdit)
+            if (editWeight.text.toString().isEmpty() ||
+                editHeight.text.toString().isEmpty() ||
+                editAge.text.toString().isEmpty()) {
+                Toast.makeText(context, "Morate unijeti sve podatke!", Toast.LENGTH_SHORT).show()
+            } else {
+                try {
+                    val firstEdit = editWeight.text.toString().toInt()
+                    val secondEdit = editHeight.text.toString().toInt()
+                    val thirdEdit = editAge.text.toString().toInt()
+
+                    Female(firstEdit, secondEdit, thirdEdit)
+                } catch (e: NumberFormatException) {
+                    Toast.makeText(context, "Smijete unositi isključivo brojeve!", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

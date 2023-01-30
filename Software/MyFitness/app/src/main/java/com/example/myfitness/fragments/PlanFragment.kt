@@ -1,4 +1,4 @@
-package com.example.myfitness.fragments
+package com.example.myfitness
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -123,13 +123,14 @@ class PlanFragment : Fragment() {
                 val uneseniDatum = showDailyWorkoutHelper.findViewById<EditText>(R.id.date_picker).text.toString()
                 val pattern = "^\\d{2}\\.\\d{2}\\.\\d{4}.\$"
 
-                if(!uneseniDatum.matches(pattern.toRegex())){
-                    Toast.makeText(context, "Unesite ispravan datum u formatu dd.mm.yyyy.", Toast.LENGTH_SHORT).show()
-                } else if(uneseniDatum.isEmpty()) {
+                if(uneseniDatum.isEmpty()) {
                     Toast.makeText(context, "Morate upisati neki datum!", Toast.LENGTH_SHORT).show()
-                }else{
+                } else if(!uneseniDatum.matches(pattern.toRegex())){
+                    Toast.makeText(context, "Unesite ispravan datum u formatu dd.mm.yyyy.", Toast.LENGTH_SHORT).show()
+                } else{
                     loadWorkout(uneseniDatum)
                 }
+
             }
             .show()
 

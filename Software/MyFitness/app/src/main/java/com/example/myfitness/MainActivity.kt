@@ -63,8 +63,7 @@ class MainActivity : AppCompatActivity() {
 
         mainPagerAdapter.addFragment(
             MainPagerAdapter.FragmentItem(
-                R.string.day_workout_plan_title,
-                R.drawable.ic_baseline_person_24,
+                R.drawable.ic_baseline_date_range_24,
                 CreateWorkoutPlanFragment::class
             )
         )
