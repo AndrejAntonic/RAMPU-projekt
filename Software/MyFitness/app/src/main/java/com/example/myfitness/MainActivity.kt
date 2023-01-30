@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         mainPagerAdapter.addFragment(
             MainPagerAdapter.FragmentItem(
-                R.string.exercises_fragment_title,
                 R.drawable.ic_baseline_fitness_center_24,
                 ExercisesFragment::class
             )
@@ -37,7 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         mainPagerAdapter.addFragment(
             MainPagerAdapter.FragmentItem(
-                R.string.plan,
                 R.drawable.ic_baseline_wysiwyg_24,
                 PlanFragment::class
             )
@@ -45,7 +43,6 @@ class MainActivity : AppCompatActivity() {
 
         mainPagerAdapter.addFragment(
             MainPagerAdapter.FragmentItem(
-                R.string.progress_fragment_title,
                 R.drawable.ic_baseline_show_chart_24,
                 ProgressFragment::class
             )
@@ -53,23 +50,20 @@ class MainActivity : AppCompatActivity() {
 
         mainPagerAdapter.addFragment(
             MainPagerAdapter.FragmentItem(
-                R.string.profile_fragment_title,
-                R.drawable.ic_baseline_person_24,
-                ProfileFragment::class
+                R.drawable.ic_baseline_calculate,
+                CalculatorFragment::class
             )
         )
         mainPagerAdapter.addFragment(
             MainPagerAdapter.FragmentItem(
-                R.string.calculator_fragment_title,
                 R.drawable.ic_baseline_person_24,
-                CalculatorFragment::class
+                ProfileFragment::class
             )
         )
 
         viewPager2.adapter = mainPagerAdapter
 
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
-            tab.setText(mainPagerAdapter.fragmentItems[position].titleRes)
             tab.setIcon(mainPagerAdapter.fragmentItems[position].iconRes)
         }.attach()
     }
