@@ -22,86 +22,137 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.05" />
 
-    <EditText
-        android:id="@+id/userWeight"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/usernameLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/rounded_style"
-        android:backgroundTint="@color/bg_dark_2"
-        android:fontFamily="@font/montserratbold"
-        android:hint="@string/weight"
-        android:autofillHints="string/weight"
-        android:padding="14dp"
-        android:inputType="numberDecimal"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/usernameTV"
         android:textColor="@color/white"
-        android:textColorHint="@color/hint_color"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleEditProfile" />
-
 
     <EditText
         android:id="@+id/usernameEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="20dp"
+        android:autofillHints="@string/username"
         android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
         android:fontFamily="@font/montserratbold"
         android:hint="@string/username"
-        android:autofillHints="@string/username"
-        android:padding="14dp"
         android:inputType="textUri"
+        android:padding="14dp"
         android:textColor="@color/white"
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userWeight" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameLabel" />
+
+
+    <TextView
+        android:id="@+id/passwordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/passwordTV"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameEdit" />
 
     <EditText
         android:id="@+id/passwordEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="20dp"
+        android:autofillHints="@string/password"
         android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
         android:fontFamily="@font/montserratbold"
         android:hint="@string/password"
-        android:autofillHints="@string/password"
-        android:padding="14dp"
         android:inputType="textPassword"
+        android:padding="14dp"
         android:textColor="@color/white"
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordLabel" />
+
+    <TextView
+        android:id="@+id/emailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/emailTV"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEdit" />
 
     <EditText
         android:id="@+id/emailEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="52dp"
         android:layout_marginRight="20dp"
+        android:autofillHints="@string/email"
         android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
         android:fontFamily="@font/montserratbold"
         android:hint="@string/email"
-        android:autofillHints="@string/email"
-        android:padding="14dp"
         android:inputType="textEmailAddress"
+        android:padding="14dp"
         android:textColor="@color/white"
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordEdit" />
+
+    <TextView
+        android:id="@+id/weightLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/weightTV"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEdit" />
+
+
+    <EditText
+        android:id="@+id/userWeight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="20dp"
+        android:autofillHints="string/weight"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:fontFamily="@font/montserratbold"
+        android:hint="@string/weight"
+        android:inputType="numberDecimal"
+        android:padding="14dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/hint_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEdit" />
 
     <Button
         android:id="@+id/saveChangesBtn"
@@ -116,7 +167,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.746"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/userWeight" />
 
     <Button
         android:id="@+id/cancelBtn"

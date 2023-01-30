@@ -23,84 +23,119 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.053" />
 
-    <EditText
-        android:id="@+id/userWeight"
-        android:enabled="false"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/usernameLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/rounded_style"
-        android:backgroundTint="@color/bg_dark_2"
-        android:fontFamily="@font/montserratbold"
-        android:hint="@string/weight"
-        android:autofillHints="@string/weight"
-        android:padding="14dp"
-        android:inputType="numberDecimal"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/usernameTV"
         android:textColor="@color/white"
-        android:textColorHint="@color/hint_color"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleProfile" />
 
 
     <EditText
         android:id="@+id/username"
-        android:enabled="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="20dp"
+        android:autofillHints="@string/username"
         android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
+        android:enabled="false"
         android:fontFamily="@font/montserratbold"
         android:hint="@string/username"
-        android:autofillHints="@string/username"
-        android:padding="14dp"
         android:inputType="textUri"
+        android:padding="14dp"
         android:textColor="@color/white"
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userWeight" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameLabel" />
+
+    <TextView
+        android:id="@+id/emailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/emailTV"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <EditText
         android:id="@+id/email"
-        android:enabled="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="20dp"
+        android:autofillHints="@string/email"
         android:background="@drawable/rounded_style"
         android:backgroundTint="@color/bg_dark_2"
+        android:enabled="false"
         android:fontFamily="@font/montserratbold"
         android:hint="@string/email"
-        android:autofillHints="@string/email"
-        android:padding="14dp"
         android:inputType="textEmailAddress"
+        android:padding="14dp"
         android:textColor="@color/white"
         android:textColorHint="@color/hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/emailLabel" />
+
+    <TextView
+        android:id="@+id/weightLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/weightTV"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+
+    <EditText
+        android:id="@+id/userWeight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="20dp"
+        android:autofillHints="@string/weight"
+        android:background="@drawable/rounded_style"
+        android:backgroundTint="@color/bg_dark_2"
+        android:enabled="false"
+        android:fontFamily="@font/montserratbold"
+        android:hint="@string/weight"
+        android:inputType="numberDecimal"
+        android:padding="14dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/hint_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weightLabel" />
 
     <Button
         android:id="@+id/button_edit_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
-        android:layout_marginTop="176dp"
+        android:layout_marginTop="228dp"
         android:layout_marginRight="10dp"
         android:onClick="onButtonClick"
         android:text="@string/editProfileBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.863"
+        app:layout_constraintHorizontal_bias="0.83"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
-
 
     <ImageView
         android:id="@+id/btn_logout"
