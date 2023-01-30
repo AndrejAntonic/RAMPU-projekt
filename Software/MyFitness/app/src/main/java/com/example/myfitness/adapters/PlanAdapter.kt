@@ -31,11 +31,13 @@ class PlanAdapter(private val plan: MutableList<Plan>) : RecyclerView.Adapter<Pl
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanViewHolder {
+        //Kreiranje novog ViewHoldera koji sadrži pogled za svaki item u recycleview
         val planView = LayoutInflater.from(parent.context).inflate(R.layout.plan_list_item, parent, false)
         return PlanViewHolder(planView)
     }
 
     override fun onBindViewHolder(holder: PlanViewHolder, position: Int) {
+        //Prikazivanje podataka na određenim mjestima
         holder.bind(plan[position])
     }
 

@@ -20,6 +20,7 @@ class NewGenerateProgramHelper(private val view: View) {
 
 
     fun populateSpinnerPreference() {
+        //Popunjavanje spinnera za cilj korisnika
         var preference = arrayOf("Izgradnja mišića", "Mršavljenje", "Općenito zdravlje")
         val spinnerAdapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_item, preference)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -27,6 +28,7 @@ class NewGenerateProgramHelper(private val view: View) {
     }
 
     fun populateSpinnerExperience() {
+        //Popunjavanje spinnera o iskustvu korisnika
         var experience = arrayOf("Beginner", "Intermediate", "Advanced")
         val spinnerAdapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_item, experience)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -34,6 +36,7 @@ class NewGenerateProgramHelper(private val view: View) {
     }
 
     fun populateSpinnerDays() {
+        //Popunjavanje spinner o danima na koje korisnik želi vježbati
         var days = arrayOf(1, 2, 3, 4, 5, 6, 7)
         val spinnerAdapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_item, days)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -41,6 +44,7 @@ class NewGenerateProgramHelper(private val view: View) {
     }
 
     fun buildPlan(): PlanPreferences{
+        //Dohvaćanje odabrane vrijednosti i vraćanje
         val spinnerPreference = view.findViewById<Spinner>(R.id.spn_preference)
         val selectedPreference = spinnerPreference.selectedItem
         val spinnerExperience = view.findViewById<Spinner>(R.id.spn_experience)
