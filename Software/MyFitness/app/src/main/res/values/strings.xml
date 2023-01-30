@@ -47,8 +47,6 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
-        <item>4</item>
-        <item>5</item>
     </string-array>
 
     <string-array name="equipment_array">
@@ -89,5 +87,14 @@
     <string name="title_progress_fragment">Vaš napredak</string>
     <string name="notice_message_progress_unavailable">Još nemate spremljenih podataka o treningu</string>
     <string name="notif_logged_out">Odjavljeni ste</string>
+    <string name="usernameTV">Korisničko ime:</string>
+    <string name="passwordTV">Lozinka:</string>
+    <string name="emailTV">Email:</string>
+    <string name="weightTV">Težina:</string>
+    <string name="naziv">Naziv:</string>
+    <string name="opis">Opis:</string>
+    <string name="bodyPartTV">Odaberi dio tijela:</string>
+    <string name="difficulytTV">Odaberi težinu:</string>
+    <string name="equipmentTV">Oprema:</string>
 
 </resources>

@@ -117,19 +117,6 @@ class ExercisesFragment : Fragment() {
     }
 
 
-//    private fun loadExercises() {
-//        val scope = CoroutineScope(Dispatchers.Main)
-//        scope.launch {
-//            val exercisesFun = ExerciseDAO.getAllExercises()
-//            exercisesFun.forEach {
-//                Log.d("ExerciseFragment", "Exercise name: ${it.name}")
-//            }
-//            recyclerView.layoutManager = LinearLayoutManager(context)
-//            val adapter = ExerciseRecyclerViewAdapter(exercisesFun)
-//            recyclerView.adapter = adapter
-//        }
-//    }
-
     private fun loadExercises(selectedBodyType: String?, selectedDifficulty: String?) {
         val scope = CoroutineScope(Dispatchers.Main)
         val helpDifficulty = if (selectedDifficulty != "Odaberi težinu") selectedDifficulty?.toInt() else null
