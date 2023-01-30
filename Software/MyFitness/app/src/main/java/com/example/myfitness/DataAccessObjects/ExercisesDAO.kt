@@ -12,6 +12,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import java.security.Timestamp
 
 object ExercisesDAO {
     suspend fun getExercise(bodyPart: String, difficulty: Int): MutableList<Exercises> {
@@ -76,24 +77,34 @@ object ExercisesDAO {
     }
 
 
-    suspend fun getDaily(username: String, datePicked: String) : MutableList<DoneExercise> {
-        val plan = mutableListOf<DoneExercise>()
+    //suspend znaci da se funkcija moze pauzirati i kasnije opet nastaviti (kako bi drugi dijelovi koda mogli obaviti svoje)
+    suspend fun getDaily(username: String, datePicked: Timestamp) : MutableList<DoneExercise> {
+        val dailyPlan = mutableListOf<DoneExercise>()
 
         return try {
-            val lista = getListFromDB(datePicked, username).get().await()
-            for(document in lista) {
-                plan.add(DoneExercise(username, 1))
+            //salje izabrani datum i trenutnog korisnika u getListFromDBDaily
+            val listFromDB = getListFromDBDaily(datePicked, username).get().await()
+            //za svaki dokument u listi konverta dokument u objekt DoneExercise
+            for(document in listFromDB) {
+                Log.d(TAG, "${document.id} => ${document.data}")
+                val exercise = document.toObject(DoneExercise::class.java)
+                //svaki konvertani objekt dodaje u listu dailyPlan
+                dailyPlan.add(exercise)
             }
-            plan
+            dailyPlan
         } catch (e: Exception) {
+            //ako se dogodi greska vraca praznu listu
             mutableListOf()
         }
     }
 
-    fun getListFromDBDaily(datePicked: String, username: String): Query {
+
+    fun getListFromDBDaily(datePicked: Timestamp, username: String): Query {
         val db = Firebase.firestore
-        return db.collection("dailyPlan").document(username).collection(datePicked).limit(1)
+        //filtrira podatke koje ce dohvacati po usernameu i datumu i vraca ih
+        return db.collection("dailyPlan").document(username).collection("savedDailyPlan").whereEqualTo("date", datePicked)
     }
+
 
     fun getElements(document: QueryDocumentSnapshot): MutableList<Exercises> {
         val tempList = mutableListOf<Exercises>()
