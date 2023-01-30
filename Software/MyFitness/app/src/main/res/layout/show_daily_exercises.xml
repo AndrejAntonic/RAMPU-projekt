@@ -10,12 +10,12 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserratbold"
         android:labelFor="@id/spn_preference"
-        android:text="Izaberite datum:"
+        android:text="Upišite datum:"
         android:textSize="20dp" />
 
-    <DatePicker
+    <EditText
         android:id="@+id/date_picker"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:calendarViewShown="false" />
 

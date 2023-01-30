@@ -16,6 +16,7 @@ import com.example.myfitness.DataAccessObjects.ExerciseDAO
 import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
 import com.example.myfitness.adapters.ExerciseListRecyclerViewAdapter
+import com.example.myfitness.entities.DailyExercises
 import com.google.firebase.Timestamp
 import com.example.myfitness.entities.DoneExercise
 import java.text.SimpleDateFormat
@@ -38,7 +39,7 @@ class CreateDailyWorkoutHelper(private val context: Context) {
     private val selectedDateTime : Calendar
     private val sdfDate : SimpleDateFormat
 
-    private val exerciseList = mutableListOf<DoneExercise>()
+    private val exerciseList = mutableListOf<DailyExercises>()
 
 
     //otvori prozorcic za kreiranje plana za dan
@@ -113,7 +114,7 @@ class CreateDailyWorkoutHelper(private val context: Context) {
             }
 
             val currentUser = UsersDAO.getCurrentUser(context)
-            val exercise : DoneExercise = buildExercise()
+            val exercise : DailyExercises = buildExercise()
             exerciseList.add(exercise)
             Toast.makeText(context, "Vjezba dodana u plan", Toast.LENGTH_SHORT).show()
 
@@ -141,12 +142,12 @@ class CreateDailyWorkoutHelper(private val context: Context) {
             dialog.dismiss()
         }
 
-        activateDateTimeListeners()
+        //activateDateTimeListeners()
     }
 
     //biranje datuma iz EditTexta
 
-    fun activateDateTimeListeners() {
+    /*fun activateDateTimeListeners() {
         dateinput.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 DatePickerDialog(
@@ -163,7 +164,7 @@ class CreateDailyWorkoutHelper(private val context: Context) {
                 dateinput.error = null
             }
         }
-    }
+    }*/
 
     //provjere unosa
     private fun validateInput() : Boolean {
@@ -191,13 +192,13 @@ class CreateDailyWorkoutHelper(private val context: Context) {
         return allValid
     }
 
-    fun buildExercise() : DoneExercise {
-        return DoneExercise(
+    fun buildExercise() : DailyExercises {
+        return DailyExercises(
             selectedExercise,
             weightInput.text.toString().toInt(),
             setsInput.text.toString().toInt(),
             repsInput.text.toString().toInt(),
-            Timestamp(selectedDateTime.time)
+            dateinput.text.toString()
         )
     }
 }

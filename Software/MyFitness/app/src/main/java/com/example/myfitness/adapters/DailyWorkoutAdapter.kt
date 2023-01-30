@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfitness.R
+import com.example.myfitness.entities.DailyExercises
 import com.example.myfitness.entities.DoneExercise
 import com.example.myfitness.entities.Plan
 
-class DailyWorkoutAdapter(private val items: List<DoneExercise>) : RecyclerView.Adapter<DailyWorkoutAdapter.ViewHolder>() {
+class DailyWorkoutAdapter(private val items: List<DailyExercises>) : RecyclerView.Adapter<DailyWorkoutAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         //inflatea jedan item u listi i inflatea layout tog itema (definiran u plan_list_item)
         val view = LayoutInflater.from(parent.context).inflate(R.layout.plan_list_item, parent, false)
@@ -20,7 +21,7 @@ class DailyWorkoutAdapter(private val items: List<DoneExercise>) : RecyclerView.
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.property1.text = item.exerciseName
-        holder.property2.text = item.weight.toString()
+        holder.property2.text = item.weight.toString() +"kg " + item.sets.toString() + "x" + item.reps.toString()
         //holder.property3.text = item.sets.toString()
         //holder.property4.text = item.reps.toString()
     }

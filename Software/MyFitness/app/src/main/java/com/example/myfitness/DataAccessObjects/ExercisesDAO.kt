@@ -2,6 +2,7 @@ package com.example.myfitness.DataAccessObjects
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.example.myfitness.entities.DailyExercises
 import com.example.myfitness.entities.DoneExercise
 import com.example.myfitness.entities.Exercises
 import com.example.myfitness.entities.Plan
@@ -78,8 +79,8 @@ object ExercisesDAO {
 
 
     //suspend znaci da se funkcija moze pauzirati i kasnije opet nastaviti (kako bi drugi dijelovi koda mogli obaviti svoje)
-    suspend fun getDaily(username: String, datePicked: Timestamp) : MutableList<DoneExercise> {
-        val dailyPlan = mutableListOf<DoneExercise>()
+    suspend fun getDaily(username: String, datePicked: String) : MutableList<DailyExercises> {
+        val dailyPlan = mutableListOf<DailyExercises>()
 
         return try {
             //salje izabrani datum i trenutnog korisnika u getListFromDBDaily
@@ -87,9 +88,12 @@ object ExercisesDAO {
             //za svaki dokument u listi konverta dokument u objekt DoneExercise
             for(document in listFromDB) {
                 Log.d(TAG, "${document.id} => ${document.data}")
-                val exercise = document.toObject(DoneExercise::class.java)
+                val exercise = document.toObject(DailyExercises::class.java)
                 //svaki konvertani objekt dodaje u listu dailyPlan
                 dailyPlan.add(exercise)
+
+                Log.d("proba", "$dailyPlan")
+
             }
             dailyPlan
         } catch (e: Exception) {
@@ -99,7 +103,7 @@ object ExercisesDAO {
     }
 
 
-    fun getListFromDBDaily(datePicked: Timestamp, username: String): Query {
+    fun getListFromDBDaily(datePicked: String, username: String): Query {
         val db = Firebase.firestore
         //filtrira podatke koje ce dohvacati po usernameu i datumu i vraca ih
         return db.collection("dailyPlan").document(username).collection("savedDailyPlan").whereEqualTo("date", datePicked)

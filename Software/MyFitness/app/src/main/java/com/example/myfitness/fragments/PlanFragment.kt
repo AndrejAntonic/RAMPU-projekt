@@ -2,10 +2,12 @@ package com.example.myfitness.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -17,10 +19,7 @@ import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.R
 import com.example.myfitness.adapters.DailyWorkoutAdapter
 import com.example.myfitness.adapters.PlanAdapter
-import com.example.myfitness.entities.DoneExercise
-import com.example.myfitness.entities.Exercises
-import com.example.myfitness.entities.Plan
-import com.example.myfitness.entities.PlanPreferences
+import com.example.myfitness.entities.*
 import com.example.myfitness.helpers.NewGenerateProgramHelper
 import com.example.myfitness.utils.Notification
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -77,13 +76,14 @@ class PlanFragment : Fragment() {
         }
     }
 
-    private fun loadWorkout(timestamp : Timestamp) {
+    private fun loadWorkout(datumiranje : String) {
         //dohvaca trenutnog korisnika i sprema ga u varijablu currentUser
         lifecycleScope.launch {
 
             val currentUser = UsersDAO.getCurrentUser(requireContext())
             //dohvaca listu DoneExercise sa određenim datumom pomocu getDaily, proslijedi currentUser i Datum
-            val dailyList : MutableList<DoneExercise> = ExercisesDAO.getDaily(currentUser, timestamp)
+            val dailyList : MutableList<DailyExercises> = ExercisesDAO.getDaily(currentUser, datumiranje)
+            Log.d("napisanitekst", dailyList[0].exerciseName)
             //ako lista nije prazna ili null kreira se instanca DailyWorkoutAdapter i salje mu se lista dailyList
             if(!dailyList.isNullOrEmpty()) {
                 val dailyWorkoutAdapter = DailyWorkoutAdapter(dailyList)
@@ -104,26 +104,25 @@ class PlanFragment : Fragment() {
         val db = FirebaseFirestore.getInstance()
         val collectionRef = db.collection("dailyPlan")
 
-        val datePicker : DatePicker = view?.findViewById(R.id.date_picker) ?: DatePicker(context)
+        //val datePicker : DatePicker = view?.findViewById(R.id.date_picker) ?: DatePicker(context)
+
+
 
         val showDailyWorkoutHelper = LayoutInflater.from(context).inflate(R.layout.show_daily_exercises, null)
-
-        //val dialogHelperDaily = ShowDailyWorkoutHelper(showDailyWorkoutHelper)
 
         //stvara alert dijalog sa positive buttonom koji kad pritisnem postavlja recyclerView i adapter tipa DailyWorkoutAdapter, salje praznu listu od DoneExercise
 
         AlertDialog.Builder(context)
             .setView(showDailyWorkoutHelper)
             .setTitle("Dnevni treninzi")
-            .setPositiveButton("Odaberi datum") {_, _ ->
+            .setPositiveButton("Unesi datum") {_, _ ->
+                val uneseniDatum = showDailyWorkoutHelper.findViewById<EditText>(R.id.date_picker).text.toString()
 
-                /*val selectedDate = Calendar.getInstance().apply {
-                    set(datePicker.year, datePicker.month, datePicker.dayOfMonth)
-                }.time
-                val timestamp = Timestamp(selectedDate, )
-                loadWorkout(timestamp)*/
 
-            }.show()
+                loadWorkout(uneseniDatum)
+            }
+            .show()
+
     }
 
 
