@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    tools:context=".fragments.ExercisesFragment"
+    android:id="@+id/mainlayout">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Izrada dnevnog plana treninga"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:padding="15dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/linear_layout_spinners"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:visibility="visible"
+        android:orientation="horizontal">
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:layout_gravity="center_horizontal|bottom">
+
+        <Button
+            android:id="@+id/createNewPlan1"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/accent_color"
+            android:onClick="onAddExerciseButtonClick"
+
+            android:text="Izradi dnevni plan"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+
+</LinearLayout>

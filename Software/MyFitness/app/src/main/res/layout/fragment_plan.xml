@@ -24,6 +24,15 @@
         android:contentDescription="@string/generate"
         android:src="@drawable/ic_baseline_playlist_add_24" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/id_pregledaj_dnevni_plan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        android:contentDescription="@string/generate"
+        android:src="@drawable/ic_baseline_fitness_center_24" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_plan_main"
         android:layout_width="match_parent"

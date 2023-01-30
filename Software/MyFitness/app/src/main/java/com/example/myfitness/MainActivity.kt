@@ -61,6 +61,14 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
+        mainPagerAdapter.addFragment(
+            MainPagerAdapter.FragmentItem(
+                R.string.day_workout_plan_title,
+                R.drawable.ic_baseline_person_24,
+                CreateWorkoutPlanFragment::class
+            )
+        )
+
         viewPager2.adapter = mainPagerAdapter
 
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->

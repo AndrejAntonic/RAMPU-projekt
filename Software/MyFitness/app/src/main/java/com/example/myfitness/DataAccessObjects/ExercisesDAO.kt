@@ -2,6 +2,9 @@ package com.example.myfitness.DataAccessObjects
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import android.widget.Toast
+import com.example.myfitness.entities.DailyExercises
+import com.example.myfitness.entities.DoneExercise
 import com.example.myfitness.entities.Exercises
 import com.example.myfitness.entities.Plan
 import com.google.firebase.firestore.FieldValue
@@ -11,6 +14,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import java.security.Timestamp
 
 object ExercisesDAO {
     suspend fun getExercise(bodyPart: String, difficulty: Int): MutableList<Exercises> {
@@ -104,6 +108,38 @@ object ExercisesDAO {
         //Dohvaćanje plana za korisnika i određeni dan sortirano silazno po vremenu kreiranja plana
         val db = Firebase.firestore
         return db.collection("workoutPlan").document(username).collection(day).orderBy("timeStamp", Query.Direction.DESCENDING).limit(1)
+    }
+
+
+    //suspend znaci da se funkcija moze pauzirati i kasnije opet nastaviti (kako bi drugi dijelovi koda mogli obaviti svoje)
+    suspend fun getDaily(username: String, datePicked: String) : MutableList<DailyExercises> {
+        val dailyPlan = mutableListOf<DailyExercises>()
+
+        return try {
+            //salje izabrani datum i trenutnog korisnika u getListFromDBDaily
+            val listFromDB = getListFromDBDaily(datePicked, username).get().await()
+            //za svaki dokument u listi konverta dokument u objekt DoneExercise
+            for(document in listFromDB) {
+                //Log.d(TAG, "${document.id} => ${document.data}")
+                val exercise = document.toObject(DailyExercises::class.java)
+                //svaki konvertani objekt dodaje u listu dailyPlan
+                dailyPlan.add(exercise)
+
+                //Log.d("proba", "$dailyPlan")
+
+            }
+            dailyPlan
+        } catch (e: Exception) {
+            //ako se dogodi greska vraca praznu listu
+            mutableListOf()
+        }
+    }
+
+
+    fun getListFromDBDaily(datePicked: String, username: String): Query {
+        val db = Firebase.firestore
+        //filtrira podatke koje ce dohvacati po usernameu i datumu i vraca ih
+        return db.collection("dailyPlan").document(username).collection("savedDailyPlan").whereEqualTo("date", datePicked)
     }
 
     private fun getExerciseElements(document: QueryDocumentSnapshot): MutableList<Exercises> {
