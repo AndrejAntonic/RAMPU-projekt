@@ -83,7 +83,7 @@ class RegisterActivity : AppCompatActivity() {
                     editor.putString("username", providedUsername)
                     editor.apply()
 
-                    val intent = Intent(that, MainActivity::class.java)
+                    val intent = Intent(that, InputActivity::class.java)
                     startActivity(intent)
                 }
             }

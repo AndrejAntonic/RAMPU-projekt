@@ -1,24 +1,17 @@
 package com.example.myfitness
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import com.example.myfitness.DataAccessObjects.InputDAO
 import com.example.myfitness.DataAccessObjects.UsersDAO
 import com.example.myfitness.utils.Validator
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.math.BigDecimal
-import java.math.RoundingMode
 
 class InputActivity : AppCompatActivity() {
 
@@ -63,15 +56,22 @@ class InputActivity : AppCompatActivity() {
 
             val that = this
 
-            InputDAO.AddInput(providedWeight, providedHeight, providedAge, providedActivity, providedGender).addOnSuccessListener {
-                val prefs = getSharedPreferences("userInput", Context.MODE_PRIVATE)
-                val editor = prefs.edit()
-                editor.putString("weight", editWeight.toString())
-                editor.apply()
-
+            val scope = CoroutineScope(Dispatchers.IO)
+            scope.launch{
+                UsersDAO.AddToUser(that, providedWeight.toDouble(), providedHeight.toDouble(), providedAge, providedActivity, providedGender)
                 val intent = Intent(that, MainActivity::class.java)
                 startActivity(intent)
             }
+
+//            InputDAO.AddInput(providedWeight, providedHeight, providedAge, providedActivity, providedGender).addOnSuccessListener {
+//                val prefs = getSharedPreferences("userInput", Context.MODE_PRIVATE)
+//                val editor = prefs.edit()
+//                editor.putString("weight", editWeight.toString())
+//                editor.apply()
+//
+//                val intent = Intent(that, MainActivity::class.java)
+//                startActivity(intent)
+//            }
 
         }
     }

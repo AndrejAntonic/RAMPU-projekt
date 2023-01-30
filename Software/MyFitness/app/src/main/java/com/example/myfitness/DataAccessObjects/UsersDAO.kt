@@ -67,6 +67,28 @@ object UsersDAO {
         return credentialsValid
     }
 
+    suspend fun AddToUser(context: Context, weight: Double, height: Double, age: String, activity: String, gender: String) {
+        val db = Firebase.firestore
+        val currentUser = getCurrentUser(context)
+
+        val userRef = db.collection("users").whereEqualTo("username", currentUser)
+        val document = userRef.get().await()
+        if (document.size() > 0) {
+            val user = document.documents[0].reference
+            val updates = HashMap<String, Any>()
+            updates["weight"] = weight
+            updates["height"] = height
+            updates["age"] = age
+            updates["activity"] = activity
+            updates["gender"] = gender
+
+
+            user.update(updates).await()
+        } else {
+            Log.d("EditUser", "Nije moguce promijeniti podatke")
+        }
+    }
+
     suspend fun EditUser(context: Context, username: String, email: String, password: String, weight: Double) {
         val db = Firebase.firestore
         val currentUser = getCurrentUser(context)
