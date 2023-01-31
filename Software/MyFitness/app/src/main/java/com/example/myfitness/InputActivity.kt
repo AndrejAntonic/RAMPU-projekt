@@ -62,17 +62,6 @@ class InputActivity : AppCompatActivity() {
                 val intent = Intent(that, MainActivity::class.java)
                 startActivity(intent)
             }
-
-//            InputDAO.AddInput(providedWeight, providedHeight, providedAge, providedActivity, providedGender).addOnSuccessListener {
-//                val prefs = getSharedPreferences("userInput", Context.MODE_PRIVATE)
-//                val editor = prefs.edit()
-//                editor.putString("weight", editWeight.toString())
-//                editor.apply()
-//
-//                val intent = Intent(that, MainActivity::class.java)
-//                startActivity(intent)
-//            }
-
         }
     }
 }

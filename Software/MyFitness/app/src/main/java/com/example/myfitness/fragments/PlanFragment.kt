@@ -80,13 +80,13 @@ class PlanFragment : Fragment() {
 
     private fun loadWorkout(datumiranje : String) {
         //dohvaca trenutnog korisnika i sprema ga u varijablu currentUser
+        //lifecycleScope omogućuje pisanje asinkrono
         lifecycleScope.launch {
-
             val currentUser = UsersDAO.getCurrentUser(requireContext())
-            //dohvaca listu DoneExercise sa određenim datumom pomocu getDaily, proslijedi currentUser i Datum
+            //dohvaca listu DailyExercises sa određenim datumom pomocu getDaily, plan treninga za određeni datum
             val dailyList : MutableList<DailyExercises> = ExercisesDAO.getDaily(currentUser, datumiranje)
             //Log.d("napisanitekst", dailyList[0].exerciseName)
-            //ako lista nije prazna ili null kreira se instanca DailyWorkoutAdapter i salje mu se lista dailyList
+            //ako lista nije prazna ili null kreira se instanca DailyWorkoutAdapter i salje mu se lista dailyList - prikazuje listu u recycler viewu
             if(!dailyList.isNullOrEmpty()) {
                 val dailyWorkoutAdapter = DailyWorkoutAdapter(dailyList)
 
@@ -104,25 +104,19 @@ class PlanFragment : Fragment() {
     //biraj datum za koji zelis dohvatit trening
     private fun showPlanDialog() {
 
-        //firebase dohvaca kolekciju savedDailyPlan
-        val db = FirebaseFirestore.getInstance()
-        val collectionRef = db.collection("dailyPlan")
-
-        //val datePicker : DatePicker = view?.findViewById(R.id.date_picker) ?: DatePicker(context)
-
-
-
+        //instanca layouta koji ce se moći inflateati (inflatea se kao sadrđaj u Alert Dialogu)
         val showDailyWorkoutHelper = LayoutInflater.from(context).inflate(R.layout.show_daily_exercises, null)
 
-        //stvara alert dijalog sa positive buttonom koji kad pritisnem postavlja recyclerView i adapter tipa DailyWorkoutAdapter, salje praznu listu od DoneExercise
+        //stvara alert dijalog sa positive buttonom koji klikom
 
         AlertDialog.Builder(context)
             .setView(showDailyWorkoutHelper)
             .setTitle("Pretražite dnevne treninge")
             .setPositiveButton("Unesi datum") {_, _ ->
-                val uneseniDatum = showDailyWorkoutHelper.findViewById<EditText>(R.id.date_picker).text.toString()
+                val uneseniDatum = showDailyWorkoutHelper.findViewById<EditText>(R.id.date_picker).text.toString()   //dohvati input korisnika
                 val pattern = "^\\d{2}\\.\\d{2}\\.\\d{4}.\$"
 
+                //provjerava da li je input korisnika bio točno unesen
                 if(uneseniDatum.isEmpty()) {
                     Toast.makeText(context, "Morate upisati neki datum!", Toast.LENGTH_SHORT).show()
                 } else if(!uneseniDatum.matches(pattern.toRegex())){

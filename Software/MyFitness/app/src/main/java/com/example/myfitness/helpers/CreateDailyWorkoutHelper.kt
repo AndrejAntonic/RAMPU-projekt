@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class CreateDailyWorkoutHelper(private val context: Context) {
+    //kreiranje potrebnih varijabli koje ce se kasnije inicijalizirati
     private val dialog : AlertDialog
     private val dialogView : View
     private val searchExerciseEditText : EditText
@@ -42,7 +43,7 @@ class CreateDailyWorkoutHelper(private val context: Context) {
     private val exerciseList = mutableListOf<DailyExercises>()
 
 
-    //otvori prozorcic za kreiranje plana za dan
+    //inicijalizacija AlertDialoga, dialog se kreira iz XML layout filea, inflatea se layout te postavlja kao sadržaj AlertDialoga
     init {
         dialogView = LayoutInflater
             .from(context)
@@ -50,6 +51,7 @@ class CreateDailyWorkoutHelper(private val context: Context) {
         dialog = AlertDialog.Builder(context)
             .setView(dialogView).show()
 
+        //dodijeljivanje vrijednosti prethodno kreiranim varijablama
         searchExerciseEditText = dialog.findViewById(R.id.exercisePicker1)
         recycleView = dialog.findViewById(R.id.rv_exercise_picker1)
         selectedExercise = ""
@@ -65,14 +67,15 @@ class CreateDailyWorkoutHelper(private val context: Context) {
         sdfDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
     }
 
-    //dohvati sva imena za pretragu i biranje vjezbi
+    //ucitava podatke u recycler view
     suspend fun load() {
-
+        //dohvaća se lista svih vježbi i sprema u allExerciseNames
         allExerciseNames = ExerciseDAO.getAllExerciseNames()
         recycleView.layoutManager = LinearLayoutManager(context)
         val adapter = ExerciseListRecyclerViewAdapter(allExerciseNames)
         recycleView.adapter = adapter
 
+        //kada se pritisne na item iz recycler viewa, uzima poziciju itema te taj item postavlja kao odabrani item
         adapter.setOnItemClickListener(object : ExerciseListRecyclerViewAdapter.OnItemClickListener {
             override fun onItemClick(position: Int, item: String) {
                 selectedExercise = item
@@ -82,7 +85,7 @@ class CreateDailyWorkoutHelper(private val context: Context) {
             }
         })
 
-        //ako kliknes na njega vidis sve ponudene vjezbe, inace ne vidis
+        //ako kliknes na njega vidis sve ponudene vjezbe, inace ne vidis (kao combobox)
 
         searchExerciseEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -92,7 +95,7 @@ class CreateDailyWorkoutHelper(private val context: Context) {
             }
         }
 
-
+        //filtriranje vježbi u recycler viewu ovisno o unesenom tekstu
         searchExerciseEditText.addTextChangedListener {
             if (it.toString().isNotEmpty()) {
                 recycleView.visibility = View.VISIBLE
@@ -113,10 +116,11 @@ class CreateDailyWorkoutHelper(private val context: Context) {
                 return@setOnClickListener
             }
 
-            val currentUser = UsersDAO.getCurrentUser(context)
+            //val currentUser = UsersDAO.getCurrentUser(context)
             val exercise : DailyExercises = buildExercise()
+            //spremanje vježbe u listu
             exerciseList.add(exercise)
-            Toast.makeText(context, "Vjezba dodana u plan", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Vježba dodana u plan.", Toast.LENGTH_SHORT).show()
 
             //reset teksta nakon unosa jedne vjezbe i zakljucavanje datuma jer se radi za isti dan taj plan
             searchExerciseEditText.text.clear()
@@ -135,7 +139,7 @@ class CreateDailyWorkoutHelper(private val context: Context) {
             val currentUser = UsersDAO.getCurrentUser(context)
             DailyPlanDAO.add(exerciseList, currentUser)
             dialog.dismiss()
-            Toast.makeText(context, "Napravljen plan je spremljen", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Kreirani plan je spremljen.", Toast.LENGTH_SHORT).show()
         }
 
         cancelButton.setOnClickListener {
@@ -197,6 +201,8 @@ class CreateDailyWorkoutHelper(private val context: Context) {
         return allValid
     }
 
+    //reformatiranje vrijednosti u format koji se može koristiti za kreiranje nove instance DailyExercises
+    //uzimanje inputa korisnika
     fun buildExercise() : DailyExercises {
         return DailyExercises(
             selectedExercise,

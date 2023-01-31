@@ -128,7 +128,7 @@ object ExercisesDAO {
                 //Log.d("proba", "$dailyPlan")
 
             }
-            dailyPlan
+            dailyPlan          //vraca listu dailyPlan
         } catch (e: Exception) {
             //ako se dogodi greska vraca praznu listu
             mutableListOf()
