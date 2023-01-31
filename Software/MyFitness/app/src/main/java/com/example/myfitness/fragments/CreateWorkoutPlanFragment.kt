@@ -27,6 +27,7 @@ class CreateWorkoutPlanFragment : Fragment() {
 
 
 
+        //pritiskom na button kreira se instanca Helpera i ucitava ga
         val btnOpenPlanCreation = v.findViewById<Button>(R.id.createNewPlan1)
         btnOpenPlanCreation.setOnClickListener {
 
