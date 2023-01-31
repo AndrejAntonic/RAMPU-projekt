@@ -217,13 +217,13 @@ class PlanFragment : Fragment() {
             val finalList: MutableList<Plan> = arrayListOf()
             val difficulty = getExperience(newPlanPreferences.experience) //Određivanje iskustva
             //Dohvaćanje vježbi iz baze
-            val selectedExercisesChest = combineList(getList("Prsa", 5, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesBack = combineList(getList("Leđa", 5, difficulty), preference = newPlanPreferences.preference)
-            val selectedExcersisesShoulder = combineList(getList("Ramena", 5, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesLegs = combineList(getList("Noge", 5, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesArms = combineList(getList("Bicepsi", 3, difficulty), getList("Tricepsi", 3, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesUpper = combineList(getList("Prsa", 2, difficulty), getList("Leđa", 2, difficulty), getList("Ramena", 1, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesLower = combineList(getList("Noge", 5, difficulty), preference = newPlanPreferences.preference)
+            val selectedExercisesChest = combineList(getList("Prsa", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesBack = combineList(getList("Leđa", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExcersisesShoulder = combineList(getList("Ramena", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesLegs = combineList(getList("Noge", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesArms = combineList(getList("Bicepsi", 3, difficulty), getList("Tricepsi", 3, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesUpper = combineList(getList("Prsa", 2, difficulty), getCardio(newPlanPreferences.preference), getList("Leđa", 2, difficulty), getList("Ramena", 1, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty), preference = newPlanPreferences.preference)
+            val selectedExercisesLower = combineList(getList("Noge", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
             //Spremanje vježbi po određenim danima u listu
             finalList.add(Plan("Ponedjeljak", selectedExercisesChest))
             finalList.add(Plan("Utorak", selectedExercisesBack))
@@ -251,12 +251,12 @@ class PlanFragment : Fragment() {
             tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience) //Određivanje iskustva
             //Dohvaćanje vježbi iz baze
-            val selectedExercisesPush1 = combineList(getList("Prsa", 3, difficulty), getList("Ramena", 1, difficulty), getList("Tricepsi", 1, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesPull1 = combineList(getList("Leđa", 4, difficulty), getList("Bicepsi", 1, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesLegs1 = combineList(getList("Noge", 5, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesPush2 = combineList(getList("Prsa", 2, difficulty), getList("Ramena", 2, difficulty), getList("Tricepsi", 2, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesPull2 = combineList(getList("Leđa", 3, difficulty), getList("Bicepsi", 4, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesLegs2 = combineList(getList("Noge", 5, difficulty), preference = newPlanPreferences.preference)
+            val selectedExercisesPush1 = combineList(getList("Prsa", 3, difficulty), getList("Ramena", 1, difficulty), getList("Tricepsi", 1, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesPull1 = combineList(getList("Leđa", 4, difficulty), getList("Bicepsi", 1, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesLegs1 = combineList(getList("Noge", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesPush2 = combineList(getList("Prsa", 2, difficulty), getList("Ramena", 2, difficulty), getList("Tricepsi", 2, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesPull2 = combineList(getList("Leđa", 3, difficulty), getList("Bicepsi", 4, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesLegs2 = combineList(getList("Noge", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
 
@@ -303,11 +303,11 @@ class PlanFragment : Fragment() {
             val tempDays = mutableListOf<String>()
             tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience)
-            val selectedExercisesChest = combineList(getList("Prsa", 5, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesBack = combineList(getList("Leđa", 5, difficulty), preference = newPlanPreferences.preference)
-            val selectedExcersisesShoulder = combineList(getList("Ramena", 5, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesLegs = combineList(getList("Noge", 5, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesArms = combineList(getList("Bicepsi", 3, difficulty), getList("Tricepsi", 3, difficulty), preference = newPlanPreferences.preference)
+            val selectedExercisesChest = combineList(getList("Prsa", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesBack = combineList(getList("Leđa", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExcersisesShoulder = combineList(getList("Ramena", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesLegs = combineList(getList("Noge", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesArms = combineList(getList("Bicepsi", 3, difficulty), getList("Tricepsi", 3, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
 
@@ -346,10 +346,10 @@ class PlanFragment : Fragment() {
             val tempDays = mutableListOf<String>()
             tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience)
-            val selectedExercisesPush = combineList(getList("Prsa", 4, difficulty), getList("Tricepsi", 2, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesPull = combineList(getList("Leđa", 4, difficulty), getList("Bicepsi", 2, difficulty), preference = newPlanPreferences.preference)
-            val selectedExcersisesShoulder = combineList(getList("Ramena", 4, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesLegs = combineList(getList("Noge", 5, difficulty), preference = newPlanPreferences.preference)
+            val selectedExercisesPush = combineList(getList("Prsa", 4, difficulty), getList("Tricepsi", 2, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesPull = combineList(getList("Leđa", 4, difficulty), getList("Bicepsi", 2, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExcersisesShoulder = combineList(getList("Ramena", 4, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesLegs = combineList(getList("Noge", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
 
@@ -387,10 +387,11 @@ class PlanFragment : Fragment() {
             val tempDays = mutableListOf<String>()
             tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience)
-            val selectedExercisesPush = combineList(getList("Prsa", 2, difficulty), getList("Ramena", 2, difficulty), getList("Tricepsi", 2, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesPull = combineList(getList("Leđa", 4, difficulty), getList("Bicepsi", 2, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesLegs: List<Exercises> = combineList(getList("Noge", 5, difficulty), preference = newPlanPreferences.preference)
+            val selectedExercisesPush = combineList(getList("Prsa", 2, difficulty), getList("Ramena", 2, difficulty), getList("Tricepsi", 2, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesPull = combineList(getList("Leđa", 4, difficulty), getList("Bicepsi", 2, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesLegs: List<Exercises> = combineList(getList("Noge", 5, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
+            listRest.add(Exercises("Odmor"))
 
             var increment = 1
             for(day in listSelectedDays) {
@@ -425,9 +426,10 @@ class PlanFragment : Fragment() {
             val tempDays = mutableListOf<String>()
             tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience)
-            val selectedExercisesUpper = combineList(getList("Prsa", 2, difficulty), getList("Leđa", 2, difficulty), getList("Ramena", 1, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty), preference = newPlanPreferences.preference)
-            val selectedExercisesLower = combineList(getList("Noge", 6, difficulty), preference = newPlanPreferences.preference)
+            val selectedExercisesUpper = combineList(getList("Prsa", 2, difficulty), getList("Leđa", 2, difficulty), getList("Ramena", 1, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
+            val selectedExercisesLower = combineList(getList("Noge", 6, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
+            listRest.add(Exercises("Odmor"))
 
             var increment = 1
             for(day in listSelectedDays) {
@@ -461,7 +463,7 @@ class PlanFragment : Fragment() {
             val tempDays = mutableListOf<String>()
             tempDays.addAll(listAllDays)
             val difficulty = getExperience(newPlanPreferences.experience)
-            val selectedExercisesFinal = combineList(getList("Prsa", 2, difficulty), getList("Leđa", 2, difficulty), getList("Ramena", 2, difficulty), getList("Noge", 2, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty), preference = newPlanPreferences.preference)
+            val selectedExercisesFinal = combineList(getList("Prsa", 2, difficulty), getList("Leđa", 2, difficulty), getList("Ramena", 2, difficulty), getList("Noge", 2, difficulty), getList("Bicepsi", 1, difficulty), getList("Tricepsi", 1, difficulty), getCardio(newPlanPreferences.preference), preference = newPlanPreferences.preference)
             val listRest: MutableList<Exercises> = arrayListOf()
             listRest.add(Exercises("Odmor"))
 
@@ -481,6 +483,15 @@ class PlanFragment : Fragment() {
             recyclerView.adapter = planAdapter
             temp.text = "Full body"
         }
+    }
+
+    private fun getCardio(preference: String): List<Exercises> {
+        val listCardio : MutableList<Exercises> = ArrayList()
+        when(preference) {
+            "Mršavljenje" -> listCardio.add(Exercises("Cardio 30min"))
+            "Općenito zdravlje" -> listCardio.add(Exercises("Cardio 15min"))
+        }
+        return listCardio
     }
 
     private fun getExperience(experience: String): Int {
@@ -542,8 +553,12 @@ class PlanFragment : Fragment() {
         //Količinu rada vježbi kako bi se postigao neki cilj
         var result: List<Exercises> = ArrayList()
         for(list in lists) {
-            list.exercise += " " + (2..3).random() + "x" + (12..16).random()
-            result += list
+            if(list.exercise != "Cardio 15min") {
+                list.exercise += " " + (2..3).random() + "x" + (12..16).random()
+                result += list
+            }
+            else
+                result += list
         }
         return result
     }
@@ -552,8 +567,12 @@ class PlanFragment : Fragment() {
         //Isto kao gornja fukcija samo drugačiji brojevi za serije i ponavljanja
         var result: List<Exercises> = ArrayList()
         for(list in lists) {
-            list.exercise += " " + (3..4).random() + "x" + (10..12).random()
-            result += list
+            if(list.exercise != "Cardio 30min") {
+                list.exercise += " " + (3..4).random() + "x" + (10..12).random()
+                result += list
+            }
+            else
+                result += list
         }
         return result
     }
